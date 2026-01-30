@@ -8,6 +8,7 @@ import {
     Ruler, LayoutTemplate, PenTool
 } from 'lucide-react';
 import { generateRoomLayoutIdeas, analyzeRoomImage, generateRoomRender } from '../services/geminiService';
+import ProductClipper from './ProductClipper';
 
 const RoomBuilder: React.FC = () => {
   // Room Configuration State
@@ -15,10 +16,13 @@ const RoomBuilder: React.FC = () => {
   const [tempConfig, setTempConfig] = useState({width: 12, depth: 15});
   const [scale, setScale] = useState(1); // pixels per foot
   
+    // Data State
+    const [availableProducts, setAvailableProducts] = useState<Product[]>(MOCK_PRODUCTS);
   const [items, setItems] = useState<RoomItem[]>([]);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [viewMode, setViewMode] = useState<'2d' | '3d'>('2d');
+    const [showClipper, setShowClipper] = useState(false);
   
   // Search State
   const [searchQuery, setSearchQuery] = useState('');
@@ -88,6 +92,12 @@ const RoomBuilder: React.FC = () => {
     setItems(items.filter(i => i.uid !== uid));
     if (selectedItemId === uid) setSelectedItemId(null);
   };
+
+    const handleClipperSave = (newProduct: Product) => {
+        setAvailableProducts([newProduct, ...availableProducts]);
+        setShowClipper(false);
+        addItem(newProduct);
+    };
 
   const handleBackgroundUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -161,7 +171,7 @@ const RoomBuilder: React.FC = () => {
       setRenderUrl(url);
   }
 
-  const filteredProducts = MOCK_PRODUCTS.filter(p => {
+    const filteredProducts = availableProducts.filter(p => {
       const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.store.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = categoryFilter === 'all' || p.category === categoryFilter;
       return matchesSearch && matchesCategory;
@@ -234,17 +244,26 @@ const RoomBuilder: React.FC = () => {
   return (
     <div className="flex h-[calc(100vh-64px)] overflow-hidden bg-stone-100 select-none">
       {/* 1. Sidebar */}
-      <div className={`bg-white border-r border-stone-200 flex flex-col transition-all duration-300 z-20 ${isSidebarOpen ? 'w-96' : 'w-0'}`}>
-        <div className="p-4 border-b border-stone-200 bg-white">
+          <div className={`bg-white border-r border-stone-200 flex flex-col transition-all duration-300 z-20 ${isSidebarOpen ? 'w-[400px]' : 'w-0'}`}>
+              <div className="p-5 border-b border-stone-200 bg-white">
           <div className="flex justify-between items-center mb-4">
-              <h2 className="font-serif font-semibold text-lg text-stone-800">Design Studio</h2>
+                      <h2 className="font-serif font-semibold text-xl text-stone-800">My Collection</h2>
               <button onClick={() => setIsSidebarOpen(false)} className="md:hidden"><X size={20}/></button>
           </div>
+
+                  <button
+                      onClick={() => setShowClipper(true)}
+                      className="w-full bg-indigo-50 text-indigo-700 border border-indigo-100 py-3 rounded-xl font-medium hover:bg-indigo-100 transition flex items-center justify-center gap-2 mb-4 group"
+                  >
+                      <Camera size={18} className="group-hover:scale-110 transition" />
+                      Scan New Item
+                  </button>
+
           <div className="relative mb-3">
               <Search className="absolute left-3 top-2.5 text-stone-400" size={16} />
               <input 
                 type="text" 
-                placeholder="Search products..." 
+                          placeholder="Search collection..." 
                 className="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-stone-900"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -256,24 +275,30 @@ const RoomBuilder: React.FC = () => {
               ))}
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto p-4 grid grid-cols-2 gap-3 pb-20">
-           {filteredProducts.map(product => (
-             <div key={product.id} className="group relative bg-white border border-stone-100 rounded-lg overflow-hidden hover:shadow-lg transition cursor-pointer" onClick={() => addItem(product)}>
-               <div className="aspect-square bg-stone-50 relative">
-                 <img src={product.image} alt={product.name} className="w-full h-full object-cover mix-blend-multiply" />
-                 <div className="absolute top-2 right-2 bg-white/90 backdrop-blur px-1.5 py-0.5 rounded text-[10px] font-bold text-stone-600 uppercase">{product.store}</div>
-                 {product.dimensions && (
-                     <div className="absolute bottom-2 left-2 bg-black/50 text-white px-1.5 py-0.5 rounded text-[10px]">
-                         {product.dimensions.width}"w
-                     </div>
-                 )}
-               </div>
-               <div className="p-2">
-                 <p className="font-medium text-xs text-stone-900 truncate">{product.name}</p>
-                 <p className="text-xs text-stone-500 font-semibold mt-0.5">${product.price}</p>
-               </div>
-             </div>
-           ))}
+              <div className="flex-1 overflow-y-auto p-4 bg-stone-50">
+                  <div className="columns-2 gap-3 space-y-3 pb-20">
+                      {filteredProducts.map(product => (
+                <div key={product.id} className="break-inside-avoid group relative bg-white border border-stone-100 rounded-xl overflow-hidden hover:shadow-lg transition cursor-pointer" onClick={() => addItem(product)}>
+                    <div className="relative">
+                        <img src={product.image} alt={product.name} className="w-full h-auto object-cover" />
+                        {product.store === 'Uploaded' && (
+                            <div className="absolute top-2 right-2 bg-indigo-600 text-white px-1.5 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1">
+                                <Sparkles size={8} /> AI
+                            </div>
+                        )}
+                        {!product.store.includes('Uploaded') && (
+                            <div className="absolute top-2 right-2 bg-white/90 backdrop-blur px-1.5 py-0.5 rounded text-[10px] font-bold text-stone-600 uppercase">{product.store}</div>
+                        )}
+                    </div>
+                    <div className="p-3">
+                        <p className="font-semibold text-sm text-stone-900 leading-tight mb-1">{product.name}</p>
+                        {product.dimensions && (
+                            <p className="text-[10px] text-stone-500">{product.dimensions.width}"w x {product.dimensions.depth}"d</p>
+                        )}
+                    </div>
+                </div>
+            ))}
+                  </div>
         </div>
       </div>
 
@@ -299,7 +324,7 @@ const RoomBuilder: React.FC = () => {
             <div className="flex items-center gap-3">
                  <button onClick={() => setRoomConfig(null)} className="text-xs text-stone-500 hover:text-stone-900 underline mr-2">Resize Room</button>
                  <button onClick={handleGenerateRender} disabled={items.length === 0} className="hidden md:flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition shadow-md disabled:opacity-50"><Sparkles size={16} /> Generate Render</button>
-                 <button className="bg-stone-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-stone-800 transition">Checkout ({items.length})</button>
+                      <a href="#checkout" className="bg-stone-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-stone-800 transition">Complete Design ({items.length})</a>
             </div>
         </div>
 
@@ -371,6 +396,14 @@ const RoomBuilder: React.FC = () => {
             </div>
         </div>
       </div>
+
+          {/* Product Clipper Modal */}
+          {showClipper && (
+              <ProductClipper
+                  onClose={() => setShowClipper(false)}
+                  onSave={handleClipperSave}
+              />
+          )}
 
       {/* Render Modal */}
       {showRenderModal && (

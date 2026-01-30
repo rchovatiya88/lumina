@@ -105,3 +105,63 @@ export const generateRoomRender = async (items: string[], style: string, dimensi
         return "";
     }
 }
+
+export const analyzeFurnitureImage = async (base64Image: string): Promise<Partial<import('../types').Product>> => {
+  const base64Data = base64Image.split(',')[1];
+
+  if (!apiKey) {
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    return {
+      name: "Vintage Velvet Armchair",
+      category: 'chair',
+      style: 'mid-century modernish' as any,
+      description: "A beautiful teal velvet armchair with tapered wooden legs.",
+      colors: ['#008080', '#8b4513'],
+      dimensions: {width: 32, depth: 34, height: 38},
+      price: 0,
+      store: 'Uploaded'
+    };
+  }
+
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.0-flash',
+      contents: {
+        parts: [
+          {inlineData: {mimeType: 'image/jpeg', data: base64Data}},
+          {
+            text: `Analyze this furniture item. Extract these details into a JSON object:
+                  - name: A short descriptive name (e.g. "Tufted Leather Sofa")
+                  - category: one of ['sofa', 'chair', 'table', 'lamp', 'decor', 'rug', 'bed', 'storage']
+                  - style: one of ['modern', 'boho', 'industrial', 'classic', 'scandi', 'glam', 'contemporary', 'rustic', 'minimalist']
+                  - dimensions: Best guess estimation in inches {width, depth, height}. Standard sofa is ~84" wide. Standard chair ~30" wide. Be realistic.
+                  - start_color: Main hex color code
+                  - description: 1 sentence description
+                  ` }
+        ]
+      }
+    });
+
+    const text = response.text || "{}";
+    const jsonString = text.replace(/```json|```/g, '').trim();
+    const data = JSON.parse(jsonString);
+
+    return {
+      name: data.name || "Unknown Item",
+      category: (data.category || 'decor').toLowerCase(),
+      style: (data.style || 'modern').toLowerCase(),
+      dimensions: data.dimensions || {width: 24, depth: 24, height: 24},
+      description: data.description,
+      price: 0,
+      store: 'Uploaded',
+      colors: data.start_color ? [data.start_color] : []
+    };
+  } catch (e) {
+    console.error("Furniture Analysis Failed", e);
+    return {
+      name: "Scanned Item",
+      category: 'decor',
+      dimensions: {width: 24, depth: 24, height: 24}
+    };
+  }
+}

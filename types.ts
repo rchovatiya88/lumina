@@ -2,12 +2,15 @@ export interface Product {
   id: string;
   name: string;
   price: number;
-  image: string;
-  store: 'Amazon' | 'Wayfair' | 'West Elm' | 'CB2' | 'IKEA' | 'Lumina Exclusive' | 'Target' | 'Etsy';
+  image: string; // The cutout or processed image
+  originalImage?: string; // The user uploaded context image
+  store: 'Amazon' | 'Wayfair' | 'West Elm' | 'CB2' | 'IKEA' | 'Lumina Exclusive' | 'Target' | 'Etsy' | 'Uploaded';
   affiliateLink: string;
   category: 'sofa' | 'chair' | 'table' | 'lamp' | 'decor' | 'rug' | 'bed' | 'storage';
-  style: 'modern' | 'boho' | 'industrial' | 'classic' | 'scandi' | 'glam';
+  style: 'modern' | 'boho' | 'industrial' | 'classic' | 'scandi' | 'glam' | 'contemporary' | 'rustic' | 'minimalist';
   dimensions?: { width: number; depth: number; height: number }; // In inches
+  colors?: string[];
+  description?: string;
 }
 
 export interface RoomItem extends Product {
