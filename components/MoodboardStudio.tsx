@@ -1,13 +1,13 @@
 import React, { useState, Suspense, useRef, useEffect } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
-import { OrbitControls, Grid, Plane, Text, Html, useTexture, PointerLockControls } from '@react-three/drei';
+import {OrbitControls, Grid, Plane, Text, Html, useTexture, PointerLockControls, TransformControls} from '@react-three/drei';
 import * as THREE from 'three';
 import { MOCK_PRODUCTS } from '../constants';
 import { Product, RoomItem } from '../types';
 import { 
     Plus, Trash2, Search, X, Sparkles, Camera, 
     ArrowUp, ArrowDown, RotateCw, Image as ImageIcon, Download, Share2, Box,
-    PersonStanding, MousePointer2
+    PersonStanding, MousePointer2, Move
 } from 'lucide-react';
 import { generateRoomRender, analyzeRoomImage } from '../services/geminiService';
 import ProductClipper from './ProductClipper';
@@ -19,13 +19,11 @@ const BillboardItem = ({
     item, 
     isSelected, 
     onSelect, 
-    onChange,
     isLocked
 }: { 
     item: RoomItem, 
     isSelected: boolean, 
-    onSelect: () => void,
-    onChange: (updated: RoomItem) => void,
+        onSelect: () => void,
     isLocked: boolean
 }) => {
     const texture = useTexture(item.image);
@@ -48,10 +46,10 @@ const BillboardItem = ({
 
     // Rugs lie flat
     const finalRotation = isRug ? new THREE.Euler(-Math.PI / 2, 0, item.rotation * (Math.PI/180)) : new THREE.Euler(0, 0, 0);
-    const finalPosition = isRug ? [item.x, 0.02, item.y] : [item.x, item.height/200, item.y]; // Rugs just above floor
+    const geometryPosition = !isRug ? [0, height / 2, 0] : [0, 0, 0];
     
     return (
-        <group position={finalPosition as [number, number, number]} rotation={!isRug ? [0, item.rotation * (Math.PI/180), 0] : [0,0,0]}>
+        <group>
             <mesh 
                 ref={planeRef}
                 rotation={isRug ? finalRotation : [0,0,0]}
@@ -60,18 +58,10 @@ const BillboardItem = ({
                     e.stopPropagation(); 
                     onSelect(); 
                 }}
-                // For furniture, pivot is center. For rugs, pivot is center too, effectively.
-                position={!isRug ? [0, height/2, 0] : [0, 0, 0]} 
+                position={geometryPosition as [number, number, number]} 
             >
                 <planeGeometry args={[width, height]} />
                 <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} toneMapped={false} />
-                
-                {isSelected && (
-                    <lineSegments>
-                        <edgesGeometry args={[new THREE.PlaneGeometry(width, height)]} />
-                        <lineBasicMaterial color="#6366f1" linewidth={2} />
-                    </lineSegments>
-                )}
             </mesh>
             
             {/* Selection Text/Label */}
@@ -85,29 +75,6 @@ const BillboardItem = ({
         </group>
     );
 };
-
-const DraggablePlane = ({ 
-    onDragMove, 
-    onDragEnd 
-}: { 
-    onDragMove: (pt: THREE.Vector3) => void,
-    onDragEnd: () => void 
-}) => {
-    return (
-        <mesh 
-            rotation={[-Math.PI / 2, 0, 0]} 
-            position={[0, 0.001, 0]} 
-            visible={false} // Invisible raycast plane
-            onPointerMove={(e) => {
-                onDragMove(e.point);
-            }}
-            onPointerUp={onDragEnd}
-        >
-            <planeGeometry args={[100, 100]} />
-        </mesh>
-    );
-}
-
 
 // --- Main App Component ---
 
@@ -126,22 +93,28 @@ const MoodboardStudio: React.FC = () => {
   const [availableProducts, setAvailableProducts] = useState<Product[]>(MOCK_PRODUCTS);
   const [items, setItems] = useState<RoomItem[]>([]);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Default open on desktop
   const [showClipper, setShowClipper] = useState(false);
-  
-  // Interaction State
-  const [draggedItem, setDraggedItem] = useState<string | null>(null); 
-  
+
   // Search State
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   
   // AI State
   const [showRenderModal, setShowRenderModal] = useState(false);
-  const [renderUrl, setRenderUrl] = useState<string | null>(null);
 
-  const addItem = (product: Product) => {
-    // Add logic to drop in front of camera later? For now, add at center of Living Room (0,0)
+    // Responsive Sidebar Logic
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) setIsSidebarOpen(false);
+            else setIsSidebarOpen(true);
+        };
+        handleResize(); // Init
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const addItem = (product: Product) => {
     const newItem: RoomItem = {
       ...product,
       uid: Math.random().toString(36).substr(2, 9),
@@ -154,6 +127,8 @@ const MoodboardStudio: React.FC = () => {
     };
     setItems([...items, newItem]);
     setSelectedItemId(newItem.uid);
+      // On mobile, close sidebar after adding to see the item
+      if (window.innerWidth < 768) setIsSidebarOpen(false);
   };
 
   const removeItem = (uid: string) => {
@@ -174,7 +149,6 @@ const MoodboardStudio: React.FC = () => {
   const handleItemSelect = (uid: string) => {
       if (mode === 'walk') return;
       setSelectedItemId(uid);
-      setDraggedItem(uid); 
   };
 
   const filteredProducts = availableProducts.filter(p => {
@@ -185,25 +159,29 @@ const MoodboardStudio: React.FC = () => {
   
   const handleSceneClick = () => {
      if (mode === 'walk') return;
-     setSelectedItemId(null);
-     setDraggedItem(null);
+      setSelectedItemId(null);
   };
 
   return (
-    <div className="flex h-[calc(100vh-64px)] overflow-hidden bg-stone-50 select-none font-sans">
-      {/* 1. Sidebar - Visual Asset Library */}
-      <div className={`bg-white border-r border-stone-200 flex flex-col transition-all duration-300 z-30 ${isSidebarOpen ? 'w-80' : 'w-0'}`}>
+      <div className="flex h-[calc(100vh-64px)] overflow-hidden bg-stone-50 select-none font-sans relative">
+          {/* 1. Sidebar - Responsive Overlay on Mobile */}
+          <div
+              className={`bg-white border-r border-stone-200 flex flex-col transition-all duration-300 z-40 
+            ${isSidebarOpen ? 'w-80 translate-x-0' : 'w-0 -translate-x-full md:w-0 md:translate-x-0'}
+            absolute md:relative h-full shadow-2xl md:shadow-none
+        `}
+          >
         <div className="p-4 border-b border-stone-200 bg-white">
           <div className="flex justify-between items-center mb-4">
               <h2 className="font-serif font-semibold text-lg text-stone-900">3D Assets</h2>
-              <button onClick={() => setIsSidebarOpen(false)} className="md:hidden"><X size={20}/></button>
+                      <button onClick={() => setIsSidebarOpen(false)} className="p-1 hover:bg-stone-100 rounded-md"><X size={20} /></button>
           </div>
           
           <button 
             onClick={() => setShowClipper(true)}
-            className="w-full bg-stone-900 text-white py-2.5 rounded-lg font-medium hover:bg-stone-800 transition flex items-center justify-center gap-2 mb-4 shadow-sm"
+                      className="w-full bg-stone-900 text-white py-3 rounded-xl font-medium hover:bg-stone-800 transition flex items-center justify-center gap-2 mb-4 shadow-sm active:scale-95"
           >
-            <Camera size={16} /> 
+                      <Camera size={18} /> 
             Add New Item
           </button>
 
@@ -219,14 +197,14 @@ const MoodboardStudio: React.FC = () => {
           </div>
           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
               {['all', 'sofa', 'chair', 'table', 'lamp', 'rug'].map(cat => (
-                  <button key={cat} onClick={() => setCategoryFilter(cat)} className={`px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap transition-colors ${categoryFilter === cat ? 'bg-stone-200 text-stone-900' : 'text-stone-500 hover:bg-stone-100'}`}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</button>
+                  <button key={cat} onClick={() => setCategoryFilter(cat)} className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors border ${categoryFilter === cat ? 'bg-stone-900 text-white border-stone-900' : 'text-stone-500 border-stone-200 hover:bg-stone-50'}`}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</button>
               ))}
           </div>
         </div>
         
         <div className="flex-1 overflow-y-auto p-3 grid grid-cols-2 gap-2 bg-stone-50/50 pb-20">
            {filteredProducts.map(product => (
-             <div key={product.id} className="group relative bg-white border border-stone-200 rounded-lg overflow-hidden hover:border-stone-400 transition cursor-pointer shadow-sm" onClick={() => addItem(product)}>
+               <div key={product.id} className="group relative bg-white border border-stone-200 rounded-xl overflow-hidden hover:border-stone-400 transition cursor-pointer shadow-sm active:scale-95" onClick={() => addItem(product)}>
                <div className="aspect-square bg-white relative p-2 flex items-center justify-center">
                  <img src={product.image} alt={product.name} className="max-w-full max-h-full object-contain" />
                  {product.store === 'Uploaded' && (
@@ -243,58 +221,50 @@ const MoodboardStudio: React.FC = () => {
       {/* 2. Main 3D Viewport */}
       <div className="flex-1 relative flex flex-col h-full bg-stone-100 overflow-hidden">
         {!isSidebarOpen && (
-             <button onClick={() => setIsSidebarOpen(true)} className="absolute top-20 left-4 z-20 bg-white p-2.5 rounded-full shadow-lg border border-stone-200 text-stone-900 hover:scale-105 transition"><Plus size={20} /></button>
+                  <button onClick={() => setIsSidebarOpen(true)} className="absolute top-24 left-4 z-20 bg-white p-3 rounded-full shadow-lg border border-stone-200 text-stone-900 hover:scale-105 transition"><Plus size={24} /></button>
         )}
 
-        {/* Toolbar */}
-        <div className="bg-white border-b border-stone-200 px-6 py-3 flex justify-between items-center shadow-sm z-20 h-16">
-            <div className="flex items-center gap-4">
-                 <h1 className="font-serif text-lg text-stone-900">3D Studio</h1>
-                 <div className="h-4 w-px bg-stone-300"></div>
+              {/* Toolbar - Mobile Optimized */}
+              <div className="bg-white/90 backdrop-blur-md border-b border-stone-200 px-4 py-3 flex justify-between items-center shadow-sm z-20 h-16 sticky top-0">
+                  <div className="flex items-center gap-2 md:gap-4">
+                      <h1 className="font-serif text-lg text-stone-900 hidden md:block">3D Studio</h1>
                  
                  {/* Mode Toggle */}
-                 <div className="flex bg-stone-100 p-1 rounded-lg">
+                      <div className="flex bg-stone-100 p-1 rounded-xl">
                     <button 
                         onClick={() => setMode('design')}
-                        className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition ${mode === 'design' ? 'bg-white shadow text-stone-900' : 'text-stone-500 hover:text-stone-900'}`}
+                              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition ${mode === 'design' ? 'bg-white shadow-sm text-stone-900' : 'text-stone-500'}`}
                     >
-                        <MousePointer2 size={16} /> Design
+                              <MousePointer2 size={18} /> <span className="hidden sm:inline">Design</span>
                     </button>
                     <button 
                         onClick={() => setMode('decor')}
-                        className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition ${mode === 'decor' ? 'bg-white shadow text-stone-900' : 'text-stone-500 hover:text-stone-900'}`}
+                              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition ${mode === 'decor' ? 'bg-white shadow-sm text-stone-900' : 'text-stone-500'}`}
                     >
-                        <Sparkles size={16} /> Decor
+                              <Sparkles size={18} /> <span className="hidden sm:inline">Decor</span>
                     </button>
                     <button 
                         onClick={() => setMode('walk')}
-                        className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition ${mode === 'walk' ? 'bg-white shadow text-stone-900' : 'text-stone-500 hover:text-stone-900'}`}
+                              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition ${mode === 'walk' ? 'bg-white shadow-sm text-stone-900' : 'text-stone-500'}`}
                     >
-                        <PersonStanding size={16} /> Walk
+                              <PersonStanding size={18} /> <span className="hidden sm:inline">Walk</span>
                     </button>
-                 </div>
-                 
-                 <div className="text-xs text-stone-400 ml-2 hidden lg:block">
-                    {mode === 'design' && 'Right-click to Pan • Drag items'}
-                    {mode === 'decor' && 'Customize walls and floors'}
-                    {mode === 'walk' && 'WASD / Arrows to Walk'}
-                 </div>
+                      </div>
             </div>
-            
-            {/* ... Right side actions ... */}
+
             <div className="flex items-center gap-3">
-                 <button onClick={() => setShowRenderModal(true)} disabled={items.length === 0} className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
-                    <Sparkles size={16} /> 
-                    Visualize Reality
+                      <button onClick={() => setShowRenderModal(true)} disabled={items.length === 0} className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 disabled:opacity-50">
+                          <Sparkles size={18} />
+                          <span className="hidden sm:inline">Visualize</span>
                  </button>
             </div>
         </div>
         
-        {/* Decor Panel (Only in Decor Mode) */}
+              {/* Decor Panel */}
         {mode === 'decor' && (
             <div className="absolute top-20 right-4 z-30 bg-white p-4 rounded-xl shadow-xl border border-stone-200 w-64 animate-in slide-in-from-right-4">
                 <h3 className="font-serif font-bold text-stone-900 mb-4">Room Styler</h3>
-                
+                      {/* ... existing decor controls ... */}
                 <div className="mb-4">
                     <label className="text-xs font-bold text-stone-400 uppercase mb-2 block">Living Room Floor</label>
                     <div className="flex gap-2">
@@ -302,7 +272,7 @@ const MoodboardStudio: React.FC = () => {
                              <button 
                                 key={c} 
                                 onClick={() => setAptStyles({...aptStyles, living: {...aptStyles.living, floor: c}})}
-                                className={`w-8 h-8 rounded-full border-2 ${aptStyles.living.floor === c ? 'border-indigo-600' : 'border-transparent'}`}
+                                 className={`w-10 h-10 rounded-full border-2 ${aptStyles.living.floor === c ? 'border-indigo-600' : 'border-transparent'}`}
                                 style={{backgroundColor: c}}
                              />
                          ))}
@@ -316,7 +286,7 @@ const MoodboardStudio: React.FC = () => {
                              <button 
                                 key={c} 
                                 onClick={() => setAptStyles({...aptStyles, living: {...aptStyles.living, wall: c}})}
-                                className={`w-8 h-8 rounded-full border-2 ${aptStyles.living.wall === c ? 'border-indigo-600' : 'border-transparent'}`}
+                                 className={`w-10 h-10 rounded-full border-2 ${aptStyles.living.wall === c ? 'border-indigo-600' : 'border-transparent'}`}
                                 style={{backgroundColor: c}}
                              />
                          ))}
@@ -328,58 +298,72 @@ const MoodboardStudio: React.FC = () => {
         {/* 3D Canvas */}
         <div className="flex-1 w-full h-full cursor-crosshair relative" onClick={handleSceneClick}>
             
-            {/* Overlay Controls for Selected Item (Only in Design Mode) */}
+                  {/* Selected Item Controls (Mobile Friendly) */}
             {selectedItemId && mode === 'design' && (
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 bg-white rounded-full shadow-xl px-6 py-3 flex items-center gap-4 border border-stone-200 animate-in slide-in-from-bottom-4">
-                     <span className="text-xs font-bold uppercase text-stone-400">Selected Item</span>
-                     <div className="h-4 w-px bg-stone-200"></div>
-                     <button onClick={(e) => { e.stopPropagation(); updateItem(selectedItemId, { rotation: (items.find(i=>i.uid===selectedItemId)?.rotation || 0) + 45 }) }} className="hover:bg-stone-100 p-2 rounded-full" title="Rotate"><RotateCw size={18} /></button>
-                     <div className="h-4 w-px bg-stone-200"></div>
-                     <button onClick={(e) => { e.stopPropagation(); removeItem(selectedItemId) }} className="hover:bg-red-50 text-red-500 p-2 rounded-full"><Trash2 size={18} /></button>
+                      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 bg-white/90 backdrop-blur rounded-full shadow-xl px-6 py-3 flex items-center gap-6 border border-stone-200 animate-in slide-in-from-bottom-4">
+                          <button onClick={(e) => {e.stopPropagation(); updateItem(selectedItemId, {rotation: (items.find(i => i.uid === selectedItemId)?.rotation || 0) + 45})}} className="hover:bg-stone-100 p-3 rounded-full active:scale-95 transition" title="Rotate"><RotateCw size={24} /></button>
+                          <div className="h-6 w-px bg-stone-300"></div>
+                          <button onClick={(e) => {e.stopPropagation(); removeItem(selectedItemId)}} className="hover:bg-red-50 text-red-500 p-3 rounded-full active:scale-95 transition"><Trash2 size={24} /></button>
                 </div>
             )}
             
             {mode === 'walk' && (
-                <div className="absolute top-20 left-1/2 -translate-x-1/2 z-30 bg-black/50 text-white px-4 py-2 rounded-full text-sm backdrop-blur-sm pointer-events-none">
-                    Click to capture mouse. ESC to exit walk mode.
+                      <div className="absolute top-24 left-1/2 -translate-x-1/2 z-30 bg-black/50 text-white px-6 py-3 rounded-full text-sm backdrop-blur-sm pointer-events-none text-center w-max max-w-[90%]">
+                          Tap to start. Drag to look. Joystick/WASD to move.
                 </div>
             )}
 
             <Canvas shadows camera={{ position: [5, 5, 5], fov: 60 }} onPointerMissed={handleSceneClick}>
                 <color attach="background" args={['#e5e7eb']} />
-                
-                {/* Lighting */}
+
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[10, 20, 5]} intensity={1} castShadow shadow-mapSize={[2048, 2048]} />
-                
-                {/* Environment */}
+
                 <Grid infiniteGrid cellSize={1} sectionSize={5} fadeDistance={30} sectionColor="#9ca3af" cellColor="#e5e7eb" position={[0, -0.01, 0]} />
-                
-                {/* The Apartment Geometry */}
+
                 <Suspense fallback={null}>
                     <ApartmentComplex styles={aptStyles} />
                     
                     {items.map(item => (
-                        <BillboardItem 
-                            key={item.uid} 
-                            item={item} 
-                            isSelected={selectedItemId === item.uid}
-                            onSelect={() => handleItemSelect(item.uid)}
-                            onChange={(u) => updateItem(item.uid, u)}
-                            isLocked={mode === 'walk'}
-                        />
+                        <group key={item.uid}>
+                            {/* The Content */}
+                            <BillboardItem 
+                                item={item}
+                                isSelected={selectedItemId === item.uid}
+                                onSelect={() => handleItemSelect(item.uid)}
+                                isLocked={mode === 'walk'}
+                            />
+
+                            {/* The Gizmo (Wrapped around the content's position conceptually) */}
+                            {selectedItemId === item.uid && mode === 'design' && (
+                                <TransformControls
+                                    object={undefined}
+                                    position={[item.x, 0, item.y]} // Gizmo origin
+                                    mode="translate"
+                                    showY={false} // Lock to floor
+                                    translationSnap={0.1}
+                                    onObjectChange={(e: any) => {
+                                        // Update state from gizmo movement
+                                        // The gizmo moves a helper object; we read its position
+                                        if (e?.target?.object) {
+                                            updateItem(item.uid, {
+                                                x: e.target.object.position.x,
+                                                y: e.target.object.position.z
+                                            });
+                                        }
+                                    }}
+                                >
+                                    {/* Invisible helper object that the gizmo actually moves */}
+                                    <mesh visible={false}>
+                                        <boxGeometry args={[1, 1, 1]} />
+                                    </mesh>
+                                </TransformControls>
+                            )}
+                        </group>
                     ))}
                 </Suspense>
 
-                {/* Draggable Logic Layer - Only active in Design Mode */}
-                {draggedItem && mode === 'design' && (
-                    <DraggablePlane 
-                        onDragMove={(pt) => updateItem(draggedItem, { x: pt.x, y: pt.z })}
-                        onDragEnd={() => setDraggedItem(null)}
-                    />
-                )}
-
-                {/* Controls - Orbit in Design/Decor, Locked in Walk */}
+                      {/* Orbit Controls (Disabled when using Gizmo usually handled by drei automatically, but we check makeDefault) */}
                 {mode !== 'walk' ? (
                     <OrbitControls makeDefault minPolarAngle={0} maxPolarAngle={Math.PI / 2.1} />
                 ) : (
