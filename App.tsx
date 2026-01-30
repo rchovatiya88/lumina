@@ -2,7 +2,7 @@ import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
-import RoomBuilder from './components/RoomBuilder';
+import MoodboardStudio from './components/MoodboardStudio';
 import Services from './pages/Services';
 import Dashboard from './pages/Dashboard';
 import AIStyleQuiz from './pages/AIStyleQuiz';
@@ -15,7 +15,7 @@ const App: React.FC = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/room-builder" element={<RoomBuilder />} />
+          <Route path="/studio" element={<MoodboardStudio />} />
           <Route path="/services" element={<Services />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/style-quiz" element={<AIStyleQuiz />} />

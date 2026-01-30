@@ -34,7 +34,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <Link to="/" className={isActive('/')}>Home</Link>
               <Link to="/journal" className={isActive('/journal')}>Journal</Link>
               <Link to="/services" className={isActive('/services')}>Services</Link>
-              <Link to="/room-builder" className={isActive('/room-builder')}>Room Builder</Link>
+              <Link to="/studio" className={isActive('/studio')}>Moodboard Studio</Link>
               <Link to="/style-quiz" className={`flex items-center gap-1 ${isActive('/style-quiz')}`}>
                 <Sparkles size={16} /> AI Quiz
               </Link>
@@ -65,7 +65,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Home</Link>
               <Link to="/journal" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Journal</Link>
               <Link to="/services" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Services</Link>
-              <Link to="/room-builder" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Room Builder</Link>
+              <Link to="/studio" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Studio</Link>
               <Link to="/style-quiz" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">AI Style Quiz</Link>
               <Link to="/dashboard" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Dashboard</Link>
               <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Login</Link>
@@ -78,37 +78,39 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {children}
       </main>
 
-      <footer className="bg-stone-900 text-stone-400 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="col-span-1 md:col-span-2">
-            <h3 className="text-white font-serif text-2xl mb-4">Lumina</h3>
-            <p className="max-w-xs text-sm leading-relaxed">
-              Elevating interior design through technology and curated aesthetics. 
-              Create your dream space today.
-            </p>
+      {!location.pathname.includes('studio') && (
+        <footer className="bg-stone-900 text-stone-400 py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="col-span-1 md:col-span-2">
+              <h3 className="text-white font-serif text-2xl mb-4">Lumina</h3>
+              <p className="max-w-xs text-sm leading-relaxed">
+                Elevating interior design through technology and curated aesthetics.
+                Create your dream space today.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-white font-medium mb-4">Platform</h4>
+              <ul className="space-y-2 text-sm">
+                <li><Link to="/studio" className="hover:text-white transition">Moodboard Studio</Link></li>
+                <li><Link to="/journal" className="hover:text-white transition">Journal</Link></li>
+                <li><Link to="/services" className="hover:text-white transition">Design Services</Link></li>
+                <li><Link to="/style-quiz" className="hover:text-white transition">Style Quiz</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-medium mb-4">Connect</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="#" className="hover:text-white transition">Instagram</a></li>
+                <li><a href="#" className="hover:text-white transition">Pinterest</a></li>
+                <li><a href="#" className="hover:text-white transition">Contact Us</a></li>
+              </ul>
+            </div>
           </div>
-          <div>
-            <h4 className="text-white font-medium mb-4">Platform</h4>
-            <ul className="space-y-2 text-sm">
-              <li><Link to="/room-builder" className="hover:text-white transition">Room Builder</Link></li>
-              <li><Link to="/journal" className="hover:text-white transition">Journal</Link></li>
-              <li><Link to="/services" className="hover:text-white transition">Design Services</Link></li>
-              <li><Link to="/style-quiz" className="hover:text-white transition">Style Quiz</Link></li>
-            </ul>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-stone-800 text-xs text-center">
+            © {new Date().getFullYear()} Lumina Interiors. All rights reserved.
           </div>
-          <div>
-            <h4 className="text-white font-medium mb-4">Connect</h4>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#" className="hover:text-white transition">Instagram</a></li>
-              <li><a href="#" className="hover:text-white transition">Pinterest</a></li>
-              <li><a href="#" className="hover:text-white transition">Contact Us</a></li>
-            </ul>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-stone-800 text-xs text-center">
-          © {new Date().getFullYear()} Lumina Interiors. All rights reserved.
-        </div>
-      </footer>
+        </footer>
+      )}
     </div>
   );
 };
