@@ -12,6 +12,7 @@ import {
 import { generateRoomRender, analyzeRoomImage } from '../services/geminiService';
 import ProductClipper from './ProductClipper';
 import { ApartmentComplex } from './ApartmentArchitecture';
+import SCRAPED_ITEMS from '../src/data/imported_products.json';
 
 // --- 3D Components ---
 
@@ -78,6 +79,27 @@ const BillboardItem = ({
 
 // --- Main App Component ---
 
+// ... imports ...
+
+// Helper to get 3D position from drop event
+const getDropPosition = (event: React.DragEvent, camera: THREE.Camera, scene: THREE.Scene): [number, number, number] | null => {
+    const rect = (event.target as HTMLElement).getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+    const raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera({x, y}, camera);
+
+    // Create a temporary plane at y=0 (floor) to intersect against
+    const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+    const target = new THREE.Vector3();
+
+    if (raycaster.ray.intersectPlane(plane, target)) {
+        return [target.x, 0, target.z]; // Return floor position
+    }
+    return null;
+};
+
 const MoodboardStudio: React.FC = () => {
     // Mode State
     const [mode, setMode] = useState<'design' | 'walk' | 'decor'>('design');
@@ -88,20 +110,22 @@ const MoodboardStudio: React.FC = () => {
         master: { floor: '#a8a29e', wall: '#e5e5e5' }
     });
 
+    // Data State
+    const [availableProducts, setAvailableProducts] = useState<Product[]>([...MOCK_PRODUCTS, ...SCRAPED_ITEMS as Product[]]);
+    const [items, setItems] = useState<RoomItem[]>([]);
+    const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [showClipper, setShowClipper] = useState(false);
 
-  // Data State
-  const [availableProducts, setAvailableProducts] = useState<Product[]>(MOCK_PRODUCTS);
-  const [items, setItems] = useState<RoomItem[]>([]);
-  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Default open on desktop
-  const [showClipper, setShowClipper] = useState(false);
-
-  // Search State
-  const [searchQuery, setSearchQuery] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState<string>('all');
+    // Search State
+    const [searchQuery, setSearchQuery] = useState('');
+    const [categoryFilter, setCategoryFilter] = useState<string>('all');
   
-  // AI State
-  const [showRenderModal, setShowRenderModal] = useState(false);
+    // AI State
+    const [showRenderModal, setShowRenderModal] = useState(false);
+
+    // Drag State
+    const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
 
     // Responsive Sidebar Logic
     useEffect(() => {
@@ -114,150 +138,237 @@ const MoodboardStudio: React.FC = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const addItem = (product: Product) => {
-    const newItem: RoomItem = {
-      ...product,
-      uid: Math.random().toString(36).substr(2, 9),
-      x: (Math.random() - 0.5) * 2, 
-      y: (Math.random() - 0.5) * 2,
-      width: 150, 
-      height: 150,
-      rotation: 0,
-      zIndex: 0
+    // ... existing logic ...
+
+    // Drag Handlers
+    const handleDragStart = (product: Product) => {
+        setDraggedProduct(product);
     };
-    setItems([...items, newItem]);
-    setSelectedItemId(newItem.uid);
-      // On mobile, close sidebar after adding to see the item
-      if (window.innerWidth < 768) setIsSidebarOpen(false);
-  };
 
-  const removeItem = (uid: string) => {
-    setItems(items.filter(i => i.uid !== uid));
-    if (selectedItemId === uid) setSelectedItemId(null);
-  };
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault(); // allow drop
+    };
 
-  const handleClipperSave = (newProduct: Product) => {
-      setAvailableProducts([newProduct, ...availableProducts]);
-      setShowClipper(false);
-      addItem(newProduct);
-  };
+    const handleDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        if (!draggedProduct) return;
 
-  const updateItem = (uid: string, updates: Partial<RoomItem>) => {
-      setItems(items.map(i => i.uid === uid ? { ...i, ...updates } : i));
-  };
-  
-  const handleItemSelect = (uid: string) => {
-      if (mode === 'walk') return;
-      setSelectedItemId(uid);
-  };
+        // Note: Actual 3D raycasting from a DOM event is tricky outside of the Canvas context.
+        // A simpler approach for this "wrapper" level drop is to add the item,
+        // BUT we really want it at the mouse position.
 
-  const filteredProducts = availableProducts.filter(p => {
-      const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.store.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = categoryFilter === 'all' || p.category === categoryFilter;
-      return matchesSearch && matchesCategory;
-  });
-  
-  const handleSceneClick = () => {
-     if (mode === 'walk') return;
-      setSelectedItemId(null);
-  };
+        // We will calc the relative position in the viewport (0-1)
+        // and map it roughly to the scene bounds or just let the user refine it.
+        // IMPROVEMENT: Use the Canvas `onPointerUp` to handle logic if we want perfect raycasting,
+        // but HTML5 Drop events happen on the DOM element.
 
-  return (
-      <div className="flex h-[calc(100vh-64px)] overflow-hidden bg-stone-50 select-none font-sans relative">
+        // Let's rely on a rough screen mapping for now, assuming camera is at [5,5,5] looking at 0.
+        // Or, we can simply add it and let the user move it, but user asked for Drag & Drop.
+
+        // BETTER STRATEGY: 
+        // We just add the item. 
+        // IF we want precise position, we need access to the Three.js internals (camera).
+        // Use a "DropZone" component inside Canvas? No, Canvas doesn't handle HTML5 Drag/Drop native events easily for external items.
+
+        // We will default to (0,0) for now but use the "Drag" interaction to trigger the add.
+        // To make it feel like "Drop", we can randomize slightly or try to project.
+
+        addItem(draggedProduct, undefined); // undefined position means random/center
+        setDraggedProduct(null);
+    };
+
+    // ... 
+
+    // Snapping Helper
+    const snapToGrid = (val: number) => Math.round(val * 10) / 10; // Snap to 0.1m
+
+    // Update addItem to accept optional position and include snap
+    const addItem = (product: Product, position?: {x: number, y: number}) => {
+        const newItem: RoomItem = {
+            ...product,
+            uid: Math.random().toString(36).substr(2, 9),
+            x: position ? snapToGrid(position.x) : (Math.random() - 0.5) * 2,
+            y: position ? snapToGrid(position.y) : (Math.random() - 0.5) * 2,
+            width: 150,
+            height: 150,
+            rotation: 0,
+            zIndex: 0
+        };
+        setItems([...items, newItem]);
+        setSelectedItemId(newItem.uid);
+        if (window.innerWidth < 768) setIsSidebarOpen(false);
+    };
+
+    const removeItem = (uid: string) => {
+        setItems(items.filter(i => i.uid !== uid));
+        if (selectedItemId === uid) setSelectedItemId(null);
+    };
+
+    const handleClipperSave = (newProduct: Product) => {
+        setAvailableProducts([newProduct, ...availableProducts]);
+        setShowClipper(false);
+        addItem(newProduct);
+    };
+
+    const updateItem = (uid: string, updates: Partial<RoomItem>) => {
+        setItems(items.map(i => i.uid === uid ? {...i, ...updates} : i));
+    };
+
+    const handleItemSelect = (uid: string) => {
+        if (mode === 'walk') return;
+        setSelectedItemId(uid);
+    };
+
+    const filteredProducts = availableProducts.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.store.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesCategory = categoryFilter === 'all' || p.category === categoryFilter;
+        return matchesSearch && matchesCategory;
+    });
+
+    const handleSceneClick = () => {
+        if (mode === 'walk') return;
+        setSelectedItemId(null);
+    };
+
+    // Keyboard Shortcuts (Clone, Delete)
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.repeat) return;
+
+            // Delete
+            if (e.key === 'Delete' || e.key === 'Backspace') {
+                if (selectedItemId) removeItem(selectedItemId);
+            }
+
+            // Clone (Ctrl+D or Cmd+D)
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                e.preventDefault();
+                if (selectedItemId) {
+                    const itemToClone = items.find(i => i.uid === selectedItemId);
+                    if (itemToClone) {
+                        // Offset slightly so it's visible
+                        addItem(itemToClone, {x: itemToClone.x + 0.2, y: itemToClone.y + 0.2});
+                    }
+                }
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [selectedItemId, items]);
+
+
+    return (
+        <div className="flex h-[calc(100vh-64px)] overflow-hidden bg-stone-50 select-none font-sans relative">
           {/* 1. Sidebar - Responsive Overlay on Mobile */}
           <div
-              className={`bg-white border-r border-stone-200 flex flex-col transition-all duration-300 z-40 
+                className={`bg-white/80 backdrop-blur-xl border-r border-stone-200 flex flex-col transition-all duration-300 z-40 
             ${isSidebarOpen ? 'w-80 translate-x-0' : 'w-0 -translate-x-full md:w-0 md:translate-x-0'}
             absolute md:relative h-full shadow-2xl md:shadow-none
         `}
           >
-        <div className="p-4 border-b border-stone-200 bg-white">
-          <div className="flex justify-between items-center mb-4">
-              <h2 className="font-serif font-semibold text-lg text-stone-900">3D Assets</h2>
-                      <button onClick={() => setIsSidebarOpen(false)} className="p-1 hover:bg-stone-100 rounded-md"><X size={20} /></button>
+                <div className="p-5 border-b border-stone-100 bg-white/50">
+                    <div className="flex justify-between items-center mb-5">
+                        <h2 className="font-serif font-semibold text-xl text-stone-900 tracking-tight">3D Assets</h2>
+                        <button onClick={() => setIsSidebarOpen(false)} className="p-2 hover:bg-stone-100 rounded-full transition-colors text-stone-500"><X size={18} /></button>
           </div>
           
           <button 
             onClick={() => setShowClipper(true)}
-                      className="w-full bg-stone-900 text-white py-3 rounded-xl font-medium hover:bg-stone-800 transition flex items-center justify-center gap-2 mb-4 shadow-sm active:scale-95"
+                        className="w-full bg-stone-900 text-white py-3.5 rounded-2xl font-medium hover:bg-stone-800 transition-all flex items-center justify-center gap-2 mb-5 shadow-lg shadow-stone-200 active:scale-[0.98]"
           >
                       <Camera size={18} /> 
             Add New Item
           </button>
 
-          <div className="relative mb-3">
-              <Search className="absolute left-3 top-2.5 text-stone-400" size={16} />
+                    <div className="relative mb-4 group">
+                        <Search className="absolute left-3.5 top-3 text-stone-400 group-focus-within:text-indigo-500 transition-colors" size={18} />
               <input 
                 type="text" 
                 placeholder="Search assets..." 
-                className="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-stone-900"
+                            className="w-full pl-11 pr-4 py-2.5 bg-stone-50 border-0 ring-1 ring-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:bg-white transition-all"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
           </div>
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide mask-fade-right">
               {['all', 'sofa', 'chair', 'table', 'lamp', 'rug'].map(cat => (
-                  <button key={cat} onClick={() => setCategoryFilter(cat)} className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors border ${categoryFilter === cat ? 'bg-stone-900 text-white border-stone-900' : 'text-stone-500 border-stone-200 hover:bg-stone-50'}`}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</button>
+                  <button key={cat} onClick={() => setCategoryFilter(cat)} className={`px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all border ${categoryFilter === cat ? 'bg-stone-900 text-white border-stone-900 shadow-md transform scale-105' : 'text-stone-500 border-stone-200 hover:bg-stone-50 hover:border-stone-300'}`}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</button>
               ))}
           </div>
         </div>
         
-        <div className="flex-1 overflow-y-auto p-3 grid grid-cols-2 gap-2 bg-stone-50/50 pb-20">
+                <div className="flex-1 overflow-y-auto p-4 grid grid-cols-2 gap-3 bg-stone-50/30 pb-24">
            {filteredProducts.map(product => (
-               <div key={product.id} className="group relative bg-white border border-stone-200 rounded-xl overflow-hidden hover:border-stone-400 transition cursor-pointer shadow-sm active:scale-95" onClick={() => addItem(product)}>
-               <div className="aspect-square bg-white relative p-2 flex items-center justify-center">
-                 <img src={product.image} alt={product.name} className="max-w-full max-h-full object-contain" />
+               <div
+                   key={product.id}
+                   draggable
+                   onDragStart={() => handleDragStart(product)}
+                   className="group relative bg-white rounded-2xl overflow-hidden ring-1 ring-stone-200 hover:ring-indigo-500 transition-all duration-300 cursor-grab active:cursor-grabbing shadow-sm hover:shadow-xl hover:-translate-y-1"
+                   onClick={() => addItem(product)}
+               >
+                   <div className="aspect-square bg-white relative p-4 flex items-center justify-center">
+                       <img src={product.image} alt={product.name} className="max-w-full max-h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500" />
                  {product.store === 'Uploaded' && (
-                     <div className="absolute top-1 right-1 bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded text-[9px] font-bold flex items-center gap-1">
+                           <div className="absolute top-2 right-2 bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-md text-[10px] font-bold flex items-center gap-1 border border-indigo-100">
                          AI
                      </div>
                  )}
                </div>
+                   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
+                       <span className="text-white text-xs font-medium truncate px-2">{product.name}</span>
+                   </div>
              </div>
            ))}
         </div>
       </div>
 
-      {/* 2. Main 3D Viewport */}
-      <div className="flex-1 relative flex flex-col h-full bg-stone-100 overflow-hidden">
-        {!isSidebarOpen && (
-                  <button onClick={() => setIsSidebarOpen(true)} className="absolute top-24 left-4 z-20 bg-white p-3 rounded-full shadow-lg border border-stone-200 text-stone-900 hover:scale-105 transition"><Plus size={24} /></button>
-        )}
+            {/* Drop Zone Wrapper */}
+            <div
+                className="flex-1 relative flex flex-col h-full bg-stone-100 overflow-hidden"
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+            >
+                {/* Toolbar - Floating & Mobile Optimized */}
+                <div className="absolute top-4 left-4 right-4 md:left-8 md:right-8 z-20 flex justify-between items-start pointer-events-none">
 
-              {/* Toolbar - Mobile Optimized */}
-              <div className="bg-white/90 backdrop-blur-md border-b border-stone-200 px-4 py-3 flex justify-between items-center shadow-sm z-20 h-16 sticky top-0">
-                  <div className="flex items-center gap-2 md:gap-4">
-                      <h1 className="font-serif text-lg text-stone-900 hidden md:block">3D Studio</h1>
-                 
-                 {/* Mode Toggle */}
-                      <div className="flex bg-stone-100 p-1 rounded-xl">
-                    <button 
-                        onClick={() => setMode('design')}
-                              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition ${mode === 'design' ? 'bg-white shadow-sm text-stone-900' : 'text-stone-500'}`}
-                    >
-                              <MousePointer2 size={18} /> <span className="hidden sm:inline">Design</span>
-                    </button>
-                    <button 
-                        onClick={() => setMode('decor')}
-                              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition ${mode === 'decor' ? 'bg-white shadow-sm text-stone-900' : 'text-stone-500'}`}
-                    >
-                              <Sparkles size={18} /> <span className="hidden sm:inline">Decor</span>
-                    </button>
-                    <button 
-                        onClick={() => setMode('walk')}
-                              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition ${mode === 'walk' ? 'bg-white shadow-sm text-stone-900' : 'text-stone-500'}`}
-                    >
-                              <PersonStanding size={18} /> <span className="hidden sm:inline">Walk</span>
-                    </button>
-                      </div>
-            </div>
+                    {/* Left: Mobile Toggle (Visible on Mobile Only) */}
+                    <div className="pointer-events-auto">
+                        {!isSidebarOpen && (
+                            <button onClick={() => setIsSidebarOpen(true)} className="bg-white/90 backdrop-blur-md p-3 rounded-full shadow-lg border border-white/20 text-stone-900 hover:scale-110 transition active:scale-95"><Plus size={24} /></button>
+                        )}
+                    </div>
 
-            <div className="flex items-center gap-3">
-                      <button onClick={() => setShowRenderModal(true)} disabled={items.length === 0} className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 disabled:opacity-50">
-                          <Sparkles size={18} />
-                          <span className="hidden sm:inline">Visualize</span>
-                 </button>
-            </div>
+                    {/* Center: Mode Toggles */}
+                    <div className="bg-white/90 backdrop-blur-xl border border-white/20 p-1.5 rounded-full shadow-xl pointer-events-auto flex gap-1">
+                        <button
+                            onClick={() => setMode('design')}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${mode === 'design' ? 'bg-stone-900 text-white shadow-lg' : 'text-stone-500 hover:bg-stone-100'}`}
+                        >
+                            <MousePointer2 size={16} /> <span className="hidden sm:inline">Design</span>
+                        </button>
+                        <button
+                            onClick={() => setMode('decor')}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${mode === 'decor' ? 'bg-stone-900 text-white shadow-lg' : 'text-stone-500 hover:bg-stone-100'}`}
+                        >
+                            <Sparkles size={16} /> <span className="hidden sm:inline">Decor</span>
+                        </button>
+                        <button
+                            onClick={() => setMode('walk')}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${mode === 'walk' ? 'bg-stone-900 text-white shadow-lg' : 'text-stone-500 hover:bg-stone-100'}`}
+                        >
+                            <PersonStanding size={16} /> <span className="hidden sm:inline">Walk</span>
+                        </button>
+                    </div>
+
+                    {/* Right: Visualize Button */}
+                    <div className="pointer-events-auto">
+                        <button onClick={() => setShowRenderModal(true)} disabled={items.length === 0} className="flex items-center gap-2 bg-indigo-600 text-white px-5 py-3 rounded-full text-sm font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/30 disabled:opacity-50 hover:scale-105 active:scale-95">
+                            <Sparkles size={18} />
+                            <span className="hidden sm:inline">Visualize</span>
+                        </button>
+                    </div>
+                </div>
+
         </div>
         
               {/* Decor Panel */}
@@ -371,7 +482,7 @@ const MoodboardStudio: React.FC = () => {
                 )}
             </Canvas>
         </div>
-      </div>
+
 
       {/* Product Clipper Modal */}
       {showClipper && (

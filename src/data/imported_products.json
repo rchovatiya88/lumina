@@ -1,0 +1,842 @@
+[
+  {
+    "id": "scraped-1769846540670-0",
+    "name": "Persian Rug",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540670-0.webp",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540670-1",
+    "name": "Persian Rug",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540670-1.webp",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540671-2",
+    "name": "Persian Rug",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540671-2.webp",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540671-3",
+    "name": "Persian Rug",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540671-3.webp",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540672-4",
+    "name": "Persian Rug",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540672-4.webp",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540672-5",
+    "name": "Oriental Medallion Red Area Rug Persian ",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540672-5.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540672-6",
+    "name": "9x12 Persian Rug – Blue Parakeet Rugs",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540672-6.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540673-7",
+    "name": "Nain Authentic Hand-Knotted Persian Rug ",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540673-7.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540673-8",
+    "name": "Vintage Persian Heriz Rug – Mehraban Rug",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540673-8.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540674-9",
+    "name": "JONATHAN Y Palmette Modern Persian ...",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540674-9.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540674-10",
+    "name": "Tabriz Persian Rug Red 470 x 300 cm",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540674-10.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540674-11",
+    "name": "Oriental Area Rug – Oriental Rug ...",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540674-11.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540675-12",
+    "name": "Antique Persian Serapi area rug – Woven ",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540675-12.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540675-13",
+    "name": "Persian Rugs ...",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540675-13.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540676-14",
+    "name": "Antique Persian Bibikabad Rug 4'7\"x6'8 .",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540676-14.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540676-15",
+    "name": "Persian Rugs: Timeless Elegance in ...",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540676-15.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540676-16",
+    "name": "Blue New Authentic Persian Isfahan Hand ",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540676-16.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540677-17",
+    "name": "Persian Hand-knotted Tribal Hamadan ...",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540677-17.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540677-18",
+    "name": "Hand Knotted Orangey Red Persian Wool ..",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540677-18.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846540678-19",
+    "name": "Antique Persian Rug 2x3, Small Red ...",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846540678-19.jpg",
+    "category": "rug",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533142-0",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533142-0.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533143-1",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533143-1.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533143-2",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533143-2.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533143-3",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533143-3.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533143-4",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533143-4.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533144-5",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533144-5.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533145-6",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533145-6.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533275-7",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533275-7.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533320-8",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533320-8.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533399-9",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533399-9.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533422-10",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533422-10.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533447-11",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533447-11.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533474-12",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533474-12.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533513-13",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533513-13.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533542-14",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533542-14.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533571-15",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533571-15.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533598-16",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533598-16.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533621-17",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533621-17.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533646-18",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533646-18.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846533669-19",
+    "name": "Wooden Coffee Table",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846533669-19.webp",
+    "category": "table",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524280-0",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524280-0.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524280-1",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524280-1.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524281-2",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524281-2.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524281-3",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524281-3.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524281-4",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524281-4.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524282-5",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524282-5.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524282-6",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524282-6.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524403-7",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524403-7.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524460-8",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524460-8.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524498-9",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524498-9.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524554-10",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524554-10.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524579-11",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524579-11.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524605-12",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524605-12.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524630-13",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524630-13.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524655-14",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524655-14.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524689-15",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524689-15.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524713-16",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524713-16.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524736-17",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524736-17.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524759-18",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524759-18.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1769846524787-19",
+    "name": "Modern Sofa",
+    "price": 0,
+    "image": "/products/scraped/scraped-1769846524787-19.webp",
+    "category": "sofa",
+    "store": "Google Search",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  }
+]
