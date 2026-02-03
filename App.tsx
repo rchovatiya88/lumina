@@ -3,6 +3,8 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import MoodboardStudio from './components/MoodboardStudio';
+import RoomDesign from './pages/RoomDesign';
+import ProductDiscovery from './pages/ProductDiscovery';
 import Services from './pages/Services';
 import Dashboard from './pages/Dashboard';
 import AIStyleQuiz from './pages/AIStyleQuiz';
@@ -15,7 +17,8 @@ const App: React.FC = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/studio" element={<MoodboardStudio />} />
+          <Route path="/studio" element={<ProductDiscovery />} />
+          <Route path="/design" element={<RoomDesign />} />
           <Route path="/services" element={<Services />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/style-quiz" element={<AIStyleQuiz />} />

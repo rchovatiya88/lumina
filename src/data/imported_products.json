@@ -1,9 +1,1941 @@
 [
   {
+    "id": "scraped-1770092878656-3",
+    "name": "Amazoncom  VODUR Wishbone Chair",
+    "price": 568,
+    "image": "products/scraped/scraped-1770092878656-3.jpg",
+    "category": "chair",
+    "style": "scandi",
+    "store": "Wayfair",
+    "buyUrl": "https://www.google.com/search?q=wishbone%20chair%20natural%20wood",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878657-4",
+    "name": "Natural Wood Wishbone Chair  Party",
+    "price": 218,
+    "image": "products/scraped/scraped-1770092878657-4.jpg",
+    "category": "chair",
+    "style": "scandi",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=wishbone%20chair%20natural%20wood",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878657-5",
+    "name": "Amazoncom  Polynices Wishbone Chair",
+    "price": 535,
+    "image": "products/scraped/scraped-1770092878657-5.jpg",
+    "category": "chair",
+    "style": "scandi",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=wishbone%20chair%20natural%20wood",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878657-6",
+    "name": "Grey Hand Woven Wool Area Rug  Nordic",
+    "price": 480,
+    "image": "products/scraped/scraped-1770092878657-6.jpg",
+    "category": "rug",
+    "style": "scandi",
+    "store": "Wayfair",
+    "buyUrl": "https://www.google.com/search?q=scandi%20grey%20wool%20rug%20woven",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878658-7",
+    "name": "Grey Wool Rug 5 X 8 Modern Hand Woven",
+    "price": 209,
+    "image": "products/scraped/scraped-1770092878658-7.jpg",
+    "category": "rug",
+    "style": "scandi",
+    "store": "Article",
+    "buyUrl": "https://www.google.com/search?q=scandi%20grey%20wool%20rug%20woven",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878658-8",
+    "name": "Hand Woven Grey Wool Rug 5 X 8 Modern",
+    "price": 355,
+    "image": "products/scraped/scraped-1770092878658-8.jpg",
+    "category": "rug",
+    "style": "scandi",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=scandi%20grey%20wool%20rug%20woven",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878658-9",
+    "name": "PH Minimalist White Pendant Lamp",
+    "price": 130,
+    "image": "products/scraped/scraped-1770092878658-9.jpg",
+    "category": "lamp",
+    "style": "scandi",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=minimalist%20white%20pendant%20light",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878659-10",
+    "name": "Lampsmodern Pendant Light Nordic Light",
+    "price": 144,
+    "image": "products/scraped/scraped-1770092878659-10.jpg",
+    "category": "lamp",
+    "style": "scandi",
+    "store": "Wayfair",
+    "buyUrl": "https://www.google.com/search?q=minimalist%20white%20pendant%20light",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878659-11",
+    "name": "Ceramic Pendant Lighting",
+    "price": 194,
+    "image": "products/scraped/scraped-1770092878659-11.jpg",
+    "category": "lamp",
+    "style": "scandi",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=minimalist%20white%20pendant%20light",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878659-12",
+    "name": "Lvases Snuggle Hollow Ceramic Vase Set",
+    "price": 132,
+    "image": "products/scraped/scraped-1770092878659-12.jpg",
+    "category": "decor",
+    "style": "scandi",
+    "store": "CB2",
+    "buyUrl": "https://www.google.com/search?q=scandinavian%20ceramic%20vase%20set",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878660-13",
+    "name": "Lvases Snuggle Hollow Ceramic Vase Set",
+    "price": 112,
+    "image": "products/scraped/scraped-1770092878660-13.jpg",
+    "category": "decor",
+    "style": "scandi",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=scandinavian%20ceramic%20vase%20set",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878660-14",
+    "name": "Modern Ceramic Vase Set",
+    "price": 135,
+    "image": "products/scraped/scraped-1770092878660-14.jpg",
+    "category": "decor",
+    "style": "scandi",
+    "store": "Article",
+    "buyUrl": "https://www.google.com/search?q=scandinavian%20ceramic%20vase%20set",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878660-15",
+    "name": "Seater Sofa Couch Tufted Back Sofa",
+    "price": 904,
+    "image": "products/scraped/scraped-1770092878660-15.jpg",
+    "category": "sofa",
+    "style": "scandi",
+    "store": "CB2",
+    "buyUrl": "https://www.google.com/search?q=light%20grey%20fabric%20sofa%20wooden%20legs",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878661-16",
+    "name": "Timber Pebble Gray Fabric  Solid Wood",
+    "price": 1759,
+    "image": "products/scraped/scraped-1770092878661-16.jpg",
+    "category": "sofa",
+    "style": "scandi",
+    "store": "Article",
+    "buyUrl": "https://www.google.com/search?q=light%20grey%20fabric%20sofa%20wooden%20legs",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092878661-17",
+    "name": "3 Seat Storage Sofa Couch with Armrest",
+    "price": 1252,
+    "image": "products/scraped/scraped-1770092878661-17.jpg",
+    "category": "sofa",
+    "style": "scandi",
+    "store": "CB2",
+    "buyUrl": "https://www.google.com/search?q=light%20grey%20fabric%20sofa%20wooden%20legs",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859802-3",
+    "name": "Eames All Black Lounge Chair  Ottoman",
+    "price": 1042,
+    "image": "products/scraped/scraped-1770092859802-3.jpg",
+    "category": "chair",
+    "style": "mcm",
+    "store": "CB2",
+    "buyUrl": "https://www.google.com/search?q=eames%20style%20lounge%20chair%20black%20leather",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859802-4",
+    "name": "ottoman aniline leather Black Armchair",
+    "price": 1470,
+    "image": "products/scraped/scraped-1770092859802-4.jpg",
+    "category": "chair",
+    "style": "mcm",
+    "store": "AllModern",
+    "buyUrl": "https://www.google.com/search?q=eames%20style%20lounge%20chair%20black%20leather",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859803-5",
+    "name": "Eames Lounge Chair and Ottoman  Eames",
+    "price": 853,
+    "image": "products/scraped/scraped-1770092859803-5.jpg",
+    "category": "chair",
+    "style": "mcm",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=eames%20style%20lounge%20chair%20black%20leather",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859803-6",
+    "name": "MidCentury Tripod Floor Lamp  West Elm",
+    "price": 183,
+    "image": "products/scraped/scraped-1770092859803-6.jpg",
+    "category": "lamp",
+    "style": "mcm",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=mid%20century%20modern%20tripod%20floor%20lamp",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859803-7",
+    "name": "Mid Century Modern Tripod Floor Lamp",
+    "price": 151,
+    "image": "products/scraped/scraped-1770092859803-7.jpg",
+    "category": "lamp",
+    "style": "mcm",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=mid%20century%20modern%20tripod%20floor%20lamp",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859804-8",
+    "name": "Mid Century Modern Tripod Floor Lamp",
+    "price": 230,
+    "image": "products/scraped/scraped-1770092859804-8.jpg",
+    "category": "lamp",
+    "style": "mcm",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=mid%20century%20modern%20tripod%20floor%20lamp",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859804-9",
+    "name": "Rug Vintage Inspired Floor Mat",
+    "price": 477,
+    "image": "products/scraped/scraped-1770092859804-9.jpg",
+    "category": "rug",
+    "style": "mcm",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=geometric%20mid%20century%20rug%20orange",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859805-10",
+    "name": "Amazoncom Mid Century Terracotta",
+    "price": 379,
+    "image": "products/scraped/scraped-1770092859805-10.jpg",
+    "category": "rug",
+    "style": "mcm",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=geometric%20mid%20century%20rug%20orange",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859805-11",
+    "name": "Mid Century Modern Geometric Groovy",
+    "price": 306,
+    "image": "products/scraped/scraped-1770092859805-11.jpg",
+    "category": "rug",
+    "style": "mcm",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=geometric%20mid%20century%20rug%20orange",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859806-12",
+    "name": "83 MidCentury Modern PU Leather Sofa",
+    "price": 1724,
+    "image": "products/scraped/scraped-1770092859806-12.jpg",
+    "category": "sofa",
+    "style": "mcm",
+    "store": "CB2",
+    "buyUrl": "https://www.google.com/search?q=mid%20century%20modern%20sofa%20tapered%20legs",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859806-13",
+    "name": "Modernikeacrate  Barrel Sofachair",
+    "price": 2488,
+    "image": "products/scraped/scraped-1770092859806-13.jpg",
+    "category": "sofa",
+    "style": "mcm",
+    "store": "AllModern",
+    "buyUrl": "https://www.google.com/search?q=mid%20century%20modern%20sofa%20tapered%20legs",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859806-14",
+    "name": "Long Vintage MCM Sofa on Tapered Legs",
+    "price": 2418,
+    "image": "products/scraped/scraped-1770092859806-14.jpg",
+    "category": "sofa",
+    "style": "mcm",
+    "store": "CB2",
+    "buyUrl": "https://www.google.com/search?q=mid%20century%20modern%20sofa%20tapered%20legs",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859807-15",
+    "name": "Handmade Mid Century Starburst Clock",
+    "price": 271,
+    "image": "products/scraped/scraped-1770092859807-15.jpg",
+    "category": "decor",
+    "style": "mcm",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=sunburst%20clock%20mid%20century",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859807-16",
+    "name": "Mid Century Starburst Clock Teak",
+    "price": 164,
+    "image": "products/scraped/scraped-1770092859807-16.jpg",
+    "category": "decor",
+    "style": "mcm",
+    "store": "AllModern",
+    "buyUrl": "https://www.google.com/search?q=sunburst%20clock%20mid%20century",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092859807-17",
+    "name": "Ingraham Starburst Sunburst Wall Clock",
+    "price": 126,
+    "image": "products/scraped/scraped-1770092859807-17.jpg",
+    "category": "decor",
+    "style": "mcm",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=sunburst%20clock%20mid%20century",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468783-0",
+    "name": "Curved Sectional Sofa",
+    "price": 3667,
+    "image": "products/scraped/scraped-1770092468783-0.jpg",
+    "category": "sofa",
+    "style": "modern",
+    "store": "CB2",
+    "buyUrl": "https://www.google.com/search?q=curved%20velvet%20sofa%20boucle%20white",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468785-1",
+    "name": "Curved SofaModern Boucle Upholstered",
+    "price": 3067,
+    "image": "products/scraped/scraped-1770092468785-1.jpg",
+    "category": "sofa",
+    "style": "modern",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=curved%20velvet%20sofa%20boucle%20white",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468785-2",
+    "name": "Modern Velvet Curved Sofa",
+    "price": 2971,
+    "image": "products/scraped/scraped-1770092468785-2.jpg",
+    "category": "sofa",
+    "style": "modern",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=curved%20velvet%20sofa%20boucle%20white",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468786-3",
+    "name": "Travertine Coffee Table 44  West Elm",
+    "price": 1377,
+    "image": "products/scraped/scraped-1770092468786-3.jpg",
+    "category": "table",
+    "style": "modern",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=travertine%20coffee%20table",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468786-4",
+    "name": "Modern Travertine Square Coffee Table",
+    "price": 1006,
+    "image": "products/scraped/scraped-1770092468786-4.jpg",
+    "category": "table",
+    "style": "modern",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=travertine%20coffee%20table",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468787-5",
+    "name": "Albie Travertine Round Coffee Table",
+    "price": 1028,
+    "image": "products/scraped/scraped-1770092468787-5.jpg",
+    "category": "table",
+    "style": "modern",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=travertine%20coffee%20table",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468787-6",
+    "name": "Elon Undyed Modern Geometric Wool",
+    "price": 461,
+    "image": "products/scraped/scraped-1770092468787-6.jpg",
+    "category": "rug",
+    "style": "modern",
+    "store": "Wayfair",
+    "buyUrl": "https://www.google.com/search?q=modern%20geometric%20wool%20rug",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468788-7",
+    "name": "Modern Geometric Wool Area Rug",
+    "price": 945,
+    "image": "products/scraped/scraped-1770092468788-7.jpg",
+    "category": "rug",
+    "style": "modern",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=modern%20geometric%20wool%20rug",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468788-8",
+    "name": "Alexander Home Kanarra HandTufted",
+    "price": 971,
+    "image": "products/scraped/scraped-1770092468788-8.jpg",
+    "category": "rug",
+    "style": "modern",
+    "store": "Article",
+    "buyUrl": "https://www.google.com/search?q=modern%20geometric%20wool%20rug",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468789-9",
+    "name": "Brightech Luna Drop 75 in Antique",
+    "price": 274,
+    "image": "products/scraped/scraped-1770092468789-9.jpg",
+    "category": "lamp",
+    "style": "modern",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=modern%20brass%20floor%20lamp%20globe",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468789-10",
+    "name": "Lights Dimmable Arc Floor Lamp",
+    "price": 500,
+    "image": "products/scraped/scraped-1770092468789-10.jpg",
+    "category": "lamp",
+    "style": "modern",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=modern%20brass%20floor%20lamp%20globe",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468790-11",
+    "name": "Modern Brass Floor Lamp  Floor Lamp",
+    "price": 329,
+    "image": "products/scraped/scraped-1770092468790-11.png",
+    "category": "lamp",
+    "style": "modern",
+    "store": "Wayfair",
+    "buyUrl": "https://www.google.com/search?q=modern%20brass%20floor%20lamp%20globe",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468790-12",
+    "name": "Creative Floral Decoration Modern Art",
+    "price": 82,
+    "image": "products/scraped/scraped-1770092468790-12.jpg",
+    "category": "decor",
+    "style": "modern",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=modern%20sculptural%20vase%20ceramic",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468791-13",
+    "name": "Modern Ceramic Vase Set  Sculptural",
+    "price": 173,
+    "image": "products/scraped/scraped-1770092468791-13.jpg",
+    "category": "decor",
+    "style": "modern",
+    "store": "CB2",
+    "buyUrl": "https://www.google.com/search?q=modern%20sculptural%20vase%20ceramic",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468791-14",
+    "name": "Set of 2 Modern Ceramic Vases  Elegant",
+    "price": 63,
+    "image": "products/scraped/scraped-1770092468791-14.jpg",
+    "category": "decor",
+    "style": "modern",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=modern%20sculptural%20vase%20ceramic",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468792-15",
+    "name": "Modern Boucle Swivel Barrel Chair",
+    "price": 781,
+    "image": "products/scraped/scraped-1770092468792-15.jpg",
+    "category": "chair",
+    "style": "modern",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=boucle%20accent%20chair%20swivel",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468792-16",
+    "name": "Taupe Boucle Swivel Accent Chair",
+    "price": 941,
+    "image": "products/scraped/scraped-1770092468792-16.jpg",
+    "category": "chair",
+    "style": "modern",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=boucle%20accent%20chair%20swivel",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092468793-17",
+    "name": "Nora Boucle Upholstered Swivel Chair by",
+    "price": 923,
+    "image": "products/scraped/scraped-1770092468793-17.jpg",
+    "category": "chair",
+    "style": "modern",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=boucle%20accent%20chair%20swivel",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451149-0",
+    "name": "Honey Rattan Daybed",
+    "price": 1310,
+    "image": "products/scraped/scraped-1770092451149-0.jpg",
+    "category": "sofa",
+    "style": "boho",
+    "store": "Article",
+    "buyUrl": "https://www.google.com/search?q=boho%20rattan%20sofa%20daybed",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451151-1",
+    "name": "Rattan Twin Daybed 3Seater Sofa",
+    "price": 1552,
+    "image": "products/scraped/scraped-1770092451151-1.jpg",
+    "category": "sofa",
+    "style": "boho",
+    "store": "Wayfair",
+    "buyUrl": "https://www.google.com/search?q=boho%20rattan%20sofa%20daybed",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451151-2",
+    "name": "Honey Rattan Daybed Frame  World Market",
+    "price": 877,
+    "image": "products/scraped/scraped-1770092451151-2.jpg",
+    "category": "sofa",
+    "style": "boho",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=boho%20rattan%20sofa%20daybed",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451152-3",
+    "name": "Premium Leather Pouf Unstuffed Moroccan",
+    "price": 161,
+    "image": "products/scraped/scraped-1770092451152-3.jpg",
+    "category": "chair",
+    "style": "boho",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=moroccan%20pouf%20leather%20ottoman",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451152-4",
+    "name": "Stitched HandKnotted Moroccan Leather",
+    "price": 256,
+    "image": "products/scraped/scraped-1770092451152-4.jpg",
+    "category": "chair",
+    "style": "boho",
+    "store": "CB2",
+    "buyUrl": "https://www.google.com/search?q=moroccan%20pouf%20leather%20ottoman",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451153-5",
+    "name": "Moroccan Leather Pouf  Salt  Sundry",
+    "price": 162,
+    "image": "products/scraped/scraped-1770092451153-5.jpg",
+    "category": "chair",
+    "style": "boho",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=moroccan%20pouf%20leather%20ottoman",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451153-6",
+    "name": "Vintage Turkish Kilim Rug 49 X 35",
+    "price": 576,
+    "image": "products/scraped/scraped-1770092451153-6.jpg",
+    "category": "rug",
+    "style": "boho",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=colorful%20vintage%20kilim%20rug",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451154-7",
+    "name": "4 x 6 Vintage Turkish Kilim Rug",
+    "price": 406,
+    "image": "products/scraped/scraped-1770092451154-7.jpg",
+    "category": "rug",
+    "style": "boho",
+    "store": "Wayfair",
+    "buyUrl": "https://www.google.com/search?q=colorful%20vintage%20kilim%20rug",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451154-8",
+    "name": "Vintage Moroccan Kilim 73022",
+    "price": 206,
+    "image": "products/scraped/scraped-1770092451154-8.jpg",
+    "category": "rug",
+    "style": "boho",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=colorful%20vintage%20kilim%20rug",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451155-9",
+    "name": "WalmHomie 1 Light Rattan Pendant Light",
+    "price": 219,
+    "image": "products/scraped/scraped-1770092451155-9.jpg",
+    "category": "lamp",
+    "style": "boho",
+    "store": "AllModern",
+    "buyUrl": "https://www.google.com/search?q=rattan%20pendant%20light",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451155-10",
+    "name": "ARTURESTHOME 60W 1Light Handwoven",
+    "price": 238,
+    "image": "products/scraped/scraped-1770092451155-10.jpg",
+    "category": "lamp",
+    "style": "boho",
+    "store": "Wayfair",
+    "buyUrl": "https://www.google.com/search?q=rattan%20pendant%20light",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451156-11",
+    "name": "LAMSU 1Light Rattan Pendant Lights",
+    "price": 174,
+    "image": "products/scraped/scraped-1770092451156-11.jpg",
+    "category": "lamp",
+    "style": "boho",
+    "store": "Article",
+    "buyUrl": "https://www.google.com/search?q=rattan%20pendant%20light",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451156-12",
+    "name": "Large Macrame Wall Tapestry  SOFT HILLS",
+    "price": 119,
+    "image": "products/scraped/scraped-1770092451156-12.jpg",
+    "category": "decor",
+    "style": "boho",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=macrame%20wall%20hanging%20large",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451156-13",
+    "name": "Jakalin Large Macrame Wall Decor Panels",
+    "price": 139,
+    "image": "products/scraped/scraped-1770092451156-13.jpg",
+    "category": "decor",
+    "style": "boho",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=macrame%20wall%20hanging%20large",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451157-14",
+    "name": "Large macrame wall hanging  MARIA",
+    "price": 124,
+    "image": "products/scraped/scraped-1770092451157-14.jpg",
+    "category": "decor",
+    "style": "boho",
+    "store": "Wayfair",
+    "buyUrl": "https://www.google.com/search?q=macrame%20wall%20hanging%20large",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451157-15",
+    "name": "bali  pari Abriella Rattan BOHO",
+    "price": 594,
+    "image": "products/scraped/scraped-1770092451157-15.jpg",
+    "category": "chair",
+    "style": "boho",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=peacock%20chair%20rattan",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451158-16",
+    "name": "KOUBOO Peacock Grand Peacock Chair",
+    "price": 446,
+    "image": "products/scraped/scraped-1770092451158-16.jpg",
+    "category": "chair",
+    "style": "boho",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=peacock%20chair%20rattan",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092451158-17",
+    "name": "bali  pari Nerita Rattan BOHO Two",
+    "price": 306,
+    "image": "products/scraped/scraped-1770092451158-17.jpg",
+    "category": "chair",
+    "style": "boho",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=peacock%20chair%20rattan",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434289-0",
+    "name": "Portofino Industrial 94 Sofa in Geisha",
+    "price": 3333,
+    "image": "products/scraped/scraped-1770092434289-0.jpg",
+    "category": "sofa",
+    "style": "industrial",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=cognac%20leather%20sofa%20modern%20industrial",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434290-1",
+    "name": "Ruby Cognac Leather Sofa  Luxury",
+    "price": 2402,
+    "image": "products/scraped/scraped-1770092434290-1.jpg",
+    "category": "sofa",
+    "style": "industrial",
+    "store": "Article",
+    "buyUrl": "https://www.google.com/search?q=cognac%20leather%20sofa%20modern%20industrial",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434290-2",
+    "name": "Emma Mid Century Modern Luxury Cognac",
+    "price": 1543,
+    "image": "products/scraped/scraped-1770092434290-2.jpg",
+    "category": "sofa",
+    "style": "industrial",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=cognac%20leather%20sofa%20modern%20industrial",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434291-3",
+    "name": "Powder Coated Black Steel Coffee Table",
+    "price": 453,
+    "image": "products/scraped/scraped-1770092434291-3.jpg",
+    "category": "table",
+    "style": "industrial",
+    "store": "Wayfair",
+    "buyUrl": "https://www.google.com/search?q=industrial%20concrete%20coffee%20table%20metal%20legs",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434291-4",
+    "name": "Concrete Square Coffee Table Unique",
+    "price": 448,
+    "image": "products/scraped/scraped-1770092434291-4.jpg",
+    "category": "table",
+    "style": "industrial",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=industrial%20concrete%20coffee%20table%20metal%20legs",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434292-5",
+    "name": "CENSI 315 Round Coffee Table",
+    "price": 1053,
+    "image": "products/scraped/scraped-1770092434292-5.jpg",
+    "category": "table",
+    "style": "industrial",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=industrial%20concrete%20coffee%20table%20metal%20legs",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434292-6",
+    "name": "64x93 Turkish Rugs Black Distressed",
+    "price": 566,
+    "image": "products/scraped/scraped-1770092434292-6.jpg",
+    "category": "rug",
+    "style": "industrial",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=distressed%20vintage%20turkish%20rug%20dark",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434293-7",
+    "name": "Distressed Vintage Turkish Rug",
+    "price": 374,
+    "image": "products/scraped/scraped-1770092434293-7.jpg",
+    "category": "rug",
+    "style": "industrial",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=distressed%20vintage%20turkish%20rug%20dark",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434293-8",
+    "name": "5x9 Distressed Farmhouse Rug Vintage",
+    "price": 259,
+    "image": "products/scraped/scraped-1770092434293-8.jpg",
+    "category": "rug",
+    "style": "industrial",
+    "store": "CB2",
+    "buyUrl": "https://www.google.com/search?q=distressed%20vintage%20turkish%20rug%20dark",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434294-9",
+    "name": "PARTPHONER Industrial Floor Lamp",
+    "price": 257,
+    "image": "products/scraped/scraped-1770092434294-9.jpg",
+    "category": "lamp",
+    "style": "industrial",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=black%20metal%20floor%20lamp%20industrial",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434294-10",
+    "name": "ORE International 6325 in Industrial",
+    "price": 228,
+    "image": "products/scraped/scraped-1770092434294-10.png",
+    "category": "lamp",
+    "style": "industrial",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=black%20metal%20floor%20lamp%20industrial",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434295-11",
+    "name": "Modern Arc Floor Lamp with Metal",
+    "price": 241,
+    "image": "products/scraped/scraped-1770092434295-11.jpg",
+    "category": "lamp",
+    "style": "industrial",
+    "store": "CB2",
+    "buyUrl": "https://www.google.com/search?q=black%20metal%20floor%20lamp%20industrial",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434295-12",
+    "name": "Metal Shelving Units",
+    "price": 527,
+    "image": "products/scraped/scraped-1770092434295-12.jpg",
+    "category": "decor",
+    "style": "industrial",
+    "store": "AllModern",
+    "buyUrl": "https://www.google.com/search?q=industrial%20metal%20shelving%20unit",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434295-13",
+    "name": "Heavy Duty Garage Shelving Unit with",
+    "price": 504,
+    "image": "products/scraped/scraped-1770092434295-13.jpg",
+    "category": "decor",
+    "style": "industrial",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=industrial%20metal%20shelving%20unit",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434296-14",
+    "name": "Industrial Steel Shelving  Shelving",
+    "price": 566,
+    "image": "products/scraped/scraped-1770092434296-14.jpg",
+    "category": "decor",
+    "style": "industrial",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=industrial%20metal%20shelving%20unit",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434296-15",
+    "name": "Contemporary Black Leather Salon",
+    "price": 384,
+    "image": "products/scraped/scraped-1770092434296-15.jpg",
+    "category": "chair",
+    "style": "industrial",
+    "store": "AllModern",
+    "buyUrl": "https://www.google.com/search?q=black%20leather%20arm%20chair%20metal%20frame",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434297-16",
+    "name": "Mid Century Modern Accent Chair",
+    "price": 630,
+    "image": "products/scraped/scraped-1770092434297-16.jpg",
+    "category": "chair",
+    "style": "industrial",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=black%20leather%20arm%20chair%20metal%20frame",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092434297-17",
+    "name": "Faux Leather Arm Chair with Steel Frame",
+    "price": 454,
+    "image": "products/scraped/scraped-1770092434297-17.jpg",
+    "category": "chair",
+    "style": "industrial",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=black%20leather%20arm%20chair%20metal%20frame",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417929-0",
+    "name": "Ojai Sofa  Stone Beige Linen  Wide",
+    "price": 2063,
+    "image": "products/scraped/scraped-1770092417929-0.jpg",
+    "category": "sofa",
+    "style": "japandi",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=japandi%20low%20profile%20sofa%20cream%20linen",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417930-1",
+    "name": "JASIWAY Japandi Solid Ash Wood Sofa",
+    "price": 2628,
+    "image": "products/scraped/scraped-1770092417930-1.jpg",
+    "category": "sofa",
+    "style": "japandi",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=japandi%20low%20profile%20sofa%20cream%20linen",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417931-2",
+    "name": "JASIWAY Modern Beige 3Seat Upholstered",
+    "price": 1553,
+    "image": "products/scraped/scraped-1770092417931-2.jpg",
+    "category": "sofa",
+    "style": "japandi",
+    "store": "AllModern",
+    "buyUrl": "https://www.google.com/search?q=japandi%20low%20profile%20sofa%20cream%20linen",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417931-3",
+    "name": "Japandi Cloud Shape Coffee Table",
+    "price": 734,
+    "image": "products/scraped/scraped-1770092417931-3.jpg",
+    "category": "table",
+    "style": "japandi",
+    "store": "Crate & Barrel",
+    "buyUrl": "https://www.google.com/search?q=japandi%20wood%20coffee%20table%20organic%20shape",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417932-4",
+    "name": "Organisk Organic Low Coffee Table",
+    "price": 333,
+    "image": "products/scraped/scraped-1770092417932-4.jpg",
+    "category": "table",
+    "style": "japandi",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=japandi%20wood%20coffee%20table%20organic%20shape",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417932-5",
+    "name": "Japandi Cloud Shape Coffee Table",
+    "price": 647,
+    "image": "products/scraped/scraped-1770092417932-5.jpg",
+    "category": "table",
+    "style": "japandi",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=japandi%20wood%20coffee%20table%20organic%20shape",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417932-6",
+    "name": "Japandi Minimalist Rugs  LoveRugs",
+    "price": 766,
+    "image": "products/scraped/scraped-1770092417932-6.jpg",
+    "category": "rug",
+    "style": "japandi",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=japandi%20wool%20area%20rug%20beige%20textured",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417933-7",
+    "name": "Japandi Beige Tiled Trellis Rug",
+    "price": 294,
+    "image": "products/scraped/scraped-1770092417933-7.jpg",
+    "category": "rug",
+    "style": "japandi",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=japandi%20wool%20area%20rug%20beige%20textured",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417933-8",
+    "name": "Japandi Popcorn Textured Rug",
+    "price": 668,
+    "image": "products/scraped/scraped-1770092417933-8.jpg",
+    "category": "rug",
+    "style": "japandi",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=japandi%20wool%20area%20rug%20beige%20textured",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417934-9",
+    "name": "Akari Lantern Floor Lamp",
+    "price": 330,
+    "image": "products/scraped/scraped-1770092417934-9.jpg",
+    "category": "lamp",
+    "style": "japandi",
+    "store": "Wayfair",
+    "buyUrl": "https://www.google.com/search?q=noguchi%20style%20paper%20floor%20lamp",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417934-10",
+    "name": "Akari 10A  The Noguchi Museum",
+    "price": 383,
+    "image": "products/scraped/scraped-1770092417934-10.jpg",
+    "category": "lamp",
+    "style": "japandi",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=noguchi%20style%20paper%20floor%20lamp",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417935-11",
+    "name": "CMHSYTKE Noguchi Style Akari Floor Lamp",
+    "price": 303,
+    "image": "products/scraped/scraped-1770092417935-11.jpg",
+    "category": "lamp",
+    "style": "japandi",
+    "store": "Wayfair",
+    "buyUrl": "https://www.google.com/search?q=noguchi%20style%20paper%20floor%20lamp",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417935-12",
+    "name": "Abstract Canvas Wall Art",
+    "price": 123,
+    "image": "products/scraped/scraped-1770092417935-12.jpg",
+    "category": "decor",
+    "style": "japandi",
+    "store": "Article",
+    "buyUrl": "https://www.google.com/search?q=minimalist%20beige%20abstract%20canvas%20art",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417936-13",
+    "name": "Boho Minimalist Canvas Wall Art",
+    "price": 93,
+    "image": "products/scraped/scraped-1770092417936-13.jpg",
+    "category": "decor",
+    "style": "japandi",
+    "store": "Lulu and Georgia",
+    "buyUrl": "https://www.google.com/search?q=minimalist%20beige%20abstract%20canvas%20art",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417936-14",
+    "name": "Beige Canvas Art Large Beige Abstract Art",
+    "price": 180,
+    "image": "products/scraped/scraped-1770092417936-14.jpg",
+    "category": "decor",
+    "style": "japandi",
+    "store": "Anthropologie",
+    "buyUrl": "https://www.google.com/search?q=minimalist%20beige%20abstract%20canvas%20art",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417936-15",
+    "name": "bali  pari Ballerina Rattan and",
+    "price": 257,
+    "image": "products/scraped/scraped-1770092417936-15.jpg",
+    "category": "chair",
+    "style": "japandi",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=japandi%20dining%20chair%20wood%20weave",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417937-16",
+    "name": "Japandi Woven Chair x2",
+    "price": 345,
+    "image": "products/scraped/scraped-1770092417937-16.jpg",
+    "category": "chair",
+    "style": "japandi",
+    "store": "West Elm",
+    "buyUrl": "https://www.google.com/search?q=japandi%20dining%20chair%20wood%20weave",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770092417937-17",
+    "name": "Archic Walnut Japandi Rattan Dining",
+    "price": 245,
+    "image": "products/scraped/scraped-1770092417937-17.jpg",
+    "category": "chair",
+    "style": "japandi",
+    "store": "Article",
+    "buyUrl": "https://www.google.com/search?q=japandi%20dining%20chair%20wood%20weave",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519784-0",
+    "name": "Wayfaircom  Online Home Store for ",
+    "price": 433,
+    "image": "products/scraped/scraped-1770088519784-0.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Wayfaircom%20%20Online%20Home%20Store%20for%20",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519785-1",
+    "name": "Wayfaircom  Online Home Store for ",
+    "price": 852,
+    "image": "products/scraped/scraped-1770088519785-1.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Wayfaircom%20%20Online%20Home%20Store%20for%20",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519785-2",
+    "name": "Wayfaircom  Online Home Store for ",
+    "price": 542,
+    "image": "products/scraped/scraped-1770088519785-2.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Wayfaircom%20%20Online%20Home%20Store%20for%20",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519786-3",
+    "name": "18 Oval Office Design Updates Wed Love ",
+    "price": 236,
+    "image": "products/scraped/scraped-1770088519786-3.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=18%20Oval%20Office%20Design%20Updates%20Wed%20Love%20",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519786-4",
+    "name": "Gingerbread Curtains  Wayfair",
+    "price": 434,
+    "image": "products/scraped/scraped-1770088519786-4.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Gingerbread%20Curtains%20%20Wayfair",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519787-5",
+    "name": "Watt Microwave Drawer with Sensor ",
+    "price": 1842,
+    "image": "products/scraped/scraped-1770088519787-5.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Watt%20Microwave%20Drawer%20with%20Sensor%20",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519787-6",
+    "name": "Imagery 101  Sell With Wayfair",
+    "price": 309,
+    "image": "products/scraped/scraped-1770088519787-6.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Imagery%20101%20%20Sell%20With%20Wayfair",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519788-7",
+    "name": "What is a SKU  Sell With Wayfair",
+    "price": 838,
+    "image": "products/scraped/scraped-1770088519788-7.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=What%20is%20a%20SKU%20%20Sell%20With%20Wayfair",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519788-8",
+    "name": "Wayfair Sleep  Wayfair",
+    "price": 1415,
+    "image": "products/scraped/scraped-1770088519788-8.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Wayfair%20Sleep%20%20Wayfair",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519789-9",
+    "name": "Become a Wayfair Creator",
+    "price": 795,
+    "image": "products/scraped/scraped-1770088519789-9.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Become%20a%20Wayfair%20Creator",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519789-10",
+    "name": "Lauren Ralph Lauren  Wayfair",
+    "price": 1887,
+    "image": "products/scraped/scraped-1770088519789-10.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Lauren%20Ralph%20Lauren%20%20Wayfair",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519790-11",
+    "name": "Wayfaircom  Online Home Store for ",
+    "price": 629,
+    "image": "products/scraped/scraped-1770088519790-11.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Wayfaircom%20%20Online%20Home%20Store%20for%20",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519790-12",
+    "name": "HENCKELS Graphite 14Piece Self ",
+    "price": 424,
+    "image": "products/scraped/scraped-1770088519790-12.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=HENCKELS%20Graphite%2014Piece%20Self%20",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519791-13",
+    "name": "Simply Summer Recipes Cookbook  Wayfair",
+    "price": 321,
+    "image": "products/scraped/scraped-1770088519791-13.png",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Simply%20Summer%20Recipes%20Cookbook%20%20Wayfair",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519791-14",
+    "name": "Ninja Food Processor Professional Plus ",
+    "price": 1840,
+    "image": "products/scraped/scraped-1770088519791-14.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Ninja%20Food%20Processor%20Professional%20Plus%20",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519792-15",
+    "name": "Prokan 96 Inch European Ledge 5b Island ",
+    "price": 677,
+    "image": "products/scraped/scraped-1770088519792-15.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Prokan%2096%20Inch%20European%20Ledge%205b%20Island%20",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519792-16",
+    "name": "Soup  Stock Pots Youll Love  Wayfair",
+    "price": 1676,
+    "image": "products/scraped/scraped-1770088519792-16.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Soup%20%20Stock%20Pots%20Youll%20Love%20%20Wayfair",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519792-17",
+    "name": "Wayfair Professional  Join Today",
+    "price": 1672,
+    "image": "products/scraped/scraped-1770088519792-17.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Wayfair%20Professional%20%20Join%20Today",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519793-18",
+    "name": "Wayfair Careers  How We Work",
+    "price": 1127,
+    "image": "products/scraped/scraped-1770088519793-18.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Wayfair%20Careers%20%20How%20We%20Work",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
+    "id": "scraped-1770088519793-19",
+    "name": "Small Kitchen Appliances",
+    "price": 811,
+    "image": "products/scraped/scraped-1770088519793-19.jpg",
+    "category": "scraped",
+    "store": "Wayfair",
+    "buyUrl": "https://www.wayfair.com/keyword.php?keyword=Small%20Kitchen%20Appliances",
+    "dimensions": {
+      "width": 1.5,
+      "depth": 0.8,
+      "height": 0.8
+    },
+    "rotation": 0
+  },
+  {
     "id": "scraped-1769846540670-0",
     "name": "Persian Rug",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540670-0.webp",
+    "image": "products/scraped/scraped-1769846540670-0.webp",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -17,7 +1949,7 @@
     "id": "scraped-1769846540670-1",
     "name": "Persian Rug",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540670-1.webp",
+    "image": "products/scraped/scraped-1769846540670-1.webp",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -31,7 +1963,7 @@
     "id": "scraped-1769846540671-2",
     "name": "Persian Rug",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540671-2.webp",
+    "image": "products/scraped/scraped-1769846540671-2.webp",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -45,7 +1977,7 @@
     "id": "scraped-1769846540671-3",
     "name": "Persian Rug",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540671-3.webp",
+    "image": "products/scraped/scraped-1769846540671-3.webp",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -59,7 +1991,7 @@
     "id": "scraped-1769846540672-4",
     "name": "Persian Rug",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540672-4.webp",
+    "image": "products/scraped/scraped-1769846540672-4.webp",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -73,7 +2005,7 @@
     "id": "scraped-1769846540672-5",
     "name": "Oriental Medallion Red Area Rug Persian ",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540672-5.jpg",
+    "image": "products/scraped/scraped-1769846540672-5.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -87,7 +2019,7 @@
     "id": "scraped-1769846540672-6",
     "name": "9x12 Persian Rug – Blue Parakeet Rugs",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540672-6.jpg",
+    "image": "products/scraped/scraped-1769846540672-6.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -101,7 +2033,7 @@
     "id": "scraped-1769846540673-7",
     "name": "Nain Authentic Hand-Knotted Persian Rug ",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540673-7.jpg",
+    "image": "products/scraped/scraped-1769846540673-7.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -115,7 +2047,7 @@
     "id": "scraped-1769846540673-8",
     "name": "Vintage Persian Heriz Rug – Mehraban Rug",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540673-8.jpg",
+    "image": "products/scraped/scraped-1769846540673-8.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -129,7 +2061,7 @@
     "id": "scraped-1769846540674-9",
     "name": "JONATHAN Y Palmette Modern Persian ...",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540674-9.jpg",
+    "image": "products/scraped/scraped-1769846540674-9.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -143,7 +2075,7 @@
     "id": "scraped-1769846540674-10",
     "name": "Tabriz Persian Rug Red 470 x 300 cm",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540674-10.jpg",
+    "image": "products/scraped/scraped-1769846540674-10.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -157,7 +2089,7 @@
     "id": "scraped-1769846540674-11",
     "name": "Oriental Area Rug – Oriental Rug ...",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540674-11.jpg",
+    "image": "products/scraped/scraped-1769846540674-11.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -171,7 +2103,7 @@
     "id": "scraped-1769846540675-12",
     "name": "Antique Persian Serapi area rug – Woven ",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540675-12.jpg",
+    "image": "products/scraped/scraped-1769846540675-12.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -185,7 +2117,7 @@
     "id": "scraped-1769846540675-13",
     "name": "Persian Rugs ...",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540675-13.jpg",
+    "image": "products/scraped/scraped-1769846540675-13.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -199,7 +2131,7 @@
     "id": "scraped-1769846540676-14",
     "name": "Antique Persian Bibikabad Rug 4'7\"x6'8 .",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540676-14.jpg",
+    "image": "products/scraped/scraped-1769846540676-14.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -213,7 +2145,7 @@
     "id": "scraped-1769846540676-15",
     "name": "Persian Rugs: Timeless Elegance in ...",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540676-15.jpg",
+    "image": "products/scraped/scraped-1769846540676-15.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -227,7 +2159,7 @@
     "id": "scraped-1769846540676-16",
     "name": "Blue New Authentic Persian Isfahan Hand ",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540676-16.jpg",
+    "image": "products/scraped/scraped-1769846540676-16.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -241,7 +2173,7 @@
     "id": "scraped-1769846540677-17",
     "name": "Persian Hand-knotted Tribal Hamadan ...",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540677-17.jpg",
+    "image": "products/scraped/scraped-1769846540677-17.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -255,7 +2187,7 @@
     "id": "scraped-1769846540677-18",
     "name": "Hand Knotted Orangey Red Persian Wool ..",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540677-18.jpg",
+    "image": "products/scraped/scraped-1769846540677-18.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -269,7 +2201,7 @@
     "id": "scraped-1769846540678-19",
     "name": "Antique Persian Rug 2x3, Small Red ...",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846540678-19.jpg",
+    "image": "products/scraped/scraped-1769846540678-19.jpg",
     "category": "rug",
     "store": "Google Search",
     "dimensions": {
@@ -283,7 +2215,7 @@
     "id": "scraped-1769846533142-0",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533142-0.webp",
+    "image": "products/scraped/scraped-1769846533142-0.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -297,7 +2229,7 @@
     "id": "scraped-1769846533143-1",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533143-1.webp",
+    "image": "products/scraped/scraped-1769846533143-1.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -311,7 +2243,7 @@
     "id": "scraped-1769846533143-2",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533143-2.webp",
+    "image": "products/scraped/scraped-1769846533143-2.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -325,7 +2257,7 @@
     "id": "scraped-1769846533143-3",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533143-3.webp",
+    "image": "products/scraped/scraped-1769846533143-3.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -339,7 +2271,7 @@
     "id": "scraped-1769846533143-4",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533143-4.webp",
+    "image": "products/scraped/scraped-1769846533143-4.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -353,7 +2285,7 @@
     "id": "scraped-1769846533144-5",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533144-5.webp",
+    "image": "products/scraped/scraped-1769846533144-5.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -367,7 +2299,7 @@
     "id": "scraped-1769846533145-6",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533145-6.webp",
+    "image": "products/scraped/scraped-1769846533145-6.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -381,7 +2313,7 @@
     "id": "scraped-1769846533275-7",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533275-7.webp",
+    "image": "products/scraped/scraped-1769846533275-7.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -395,7 +2327,7 @@
     "id": "scraped-1769846533320-8",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533320-8.webp",
+    "image": "products/scraped/scraped-1769846533320-8.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -409,7 +2341,7 @@
     "id": "scraped-1769846533399-9",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533399-9.webp",
+    "image": "products/scraped/scraped-1769846533399-9.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -423,7 +2355,7 @@
     "id": "scraped-1769846533422-10",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533422-10.webp",
+    "image": "products/scraped/scraped-1769846533422-10.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -437,7 +2369,7 @@
     "id": "scraped-1769846533447-11",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533447-11.webp",
+    "image": "products/scraped/scraped-1769846533447-11.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -451,7 +2383,7 @@
     "id": "scraped-1769846533474-12",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533474-12.webp",
+    "image": "products/scraped/scraped-1769846533474-12.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -465,7 +2397,7 @@
     "id": "scraped-1769846533513-13",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533513-13.webp",
+    "image": "products/scraped/scraped-1769846533513-13.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -479,7 +2411,7 @@
     "id": "scraped-1769846533542-14",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533542-14.webp",
+    "image": "products/scraped/scraped-1769846533542-14.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -493,7 +2425,7 @@
     "id": "scraped-1769846533571-15",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533571-15.webp",
+    "image": "products/scraped/scraped-1769846533571-15.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -507,7 +2439,7 @@
     "id": "scraped-1769846533598-16",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533598-16.webp",
+    "image": "products/scraped/scraped-1769846533598-16.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -521,7 +2453,7 @@
     "id": "scraped-1769846533621-17",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533621-17.webp",
+    "image": "products/scraped/scraped-1769846533621-17.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -535,7 +2467,7 @@
     "id": "scraped-1769846533646-18",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533646-18.webp",
+    "image": "products/scraped/scraped-1769846533646-18.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -549,7 +2481,7 @@
     "id": "scraped-1769846533669-19",
     "name": "Wooden Coffee Table",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846533669-19.webp",
+    "image": "products/scraped/scraped-1769846533669-19.webp",
     "category": "table",
     "store": "Google Search",
     "dimensions": {
@@ -563,7 +2495,7 @@
     "id": "scraped-1769846524280-0",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524280-0.webp",
+    "image": "products/scraped/scraped-1769846524280-0.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -577,7 +2509,7 @@
     "id": "scraped-1769846524280-1",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524280-1.webp",
+    "image": "products/scraped/scraped-1769846524280-1.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -591,7 +2523,7 @@
     "id": "scraped-1769846524281-2",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524281-2.webp",
+    "image": "products/scraped/scraped-1769846524281-2.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -605,7 +2537,7 @@
     "id": "scraped-1769846524281-3",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524281-3.webp",
+    "image": "products/scraped/scraped-1769846524281-3.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -619,7 +2551,7 @@
     "id": "scraped-1769846524281-4",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524281-4.webp",
+    "image": "products/scraped/scraped-1769846524281-4.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -633,7 +2565,7 @@
     "id": "scraped-1769846524282-5",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524282-5.webp",
+    "image": "products/scraped/scraped-1769846524282-5.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -647,7 +2579,7 @@
     "id": "scraped-1769846524282-6",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524282-6.webp",
+    "image": "products/scraped/scraped-1769846524282-6.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -661,7 +2593,7 @@
     "id": "scraped-1769846524403-7",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524403-7.webp",
+    "image": "products/scraped/scraped-1769846524403-7.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -675,7 +2607,7 @@
     "id": "scraped-1769846524460-8",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524460-8.webp",
+    "image": "products/scraped/scraped-1769846524460-8.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -689,7 +2621,7 @@
     "id": "scraped-1769846524498-9",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524498-9.webp",
+    "image": "products/scraped/scraped-1769846524498-9.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -703,7 +2635,7 @@
     "id": "scraped-1769846524554-10",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524554-10.webp",
+    "image": "products/scraped/scraped-1769846524554-10.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -717,7 +2649,7 @@
     "id": "scraped-1769846524579-11",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524579-11.webp",
+    "image": "products/scraped/scraped-1769846524579-11.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -731,7 +2663,7 @@
     "id": "scraped-1769846524605-12",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524605-12.webp",
+    "image": "products/scraped/scraped-1769846524605-12.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -745,7 +2677,7 @@
     "id": "scraped-1769846524630-13",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524630-13.webp",
+    "image": "products/scraped/scraped-1769846524630-13.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -759,7 +2691,7 @@
     "id": "scraped-1769846524655-14",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524655-14.webp",
+    "image": "products/scraped/scraped-1769846524655-14.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -773,7 +2705,7 @@
     "id": "scraped-1769846524689-15",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524689-15.webp",
+    "image": "products/scraped/scraped-1769846524689-15.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -787,7 +2719,7 @@
     "id": "scraped-1769846524713-16",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524713-16.webp",
+    "image": "products/scraped/scraped-1769846524713-16.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -801,7 +2733,7 @@
     "id": "scraped-1769846524736-17",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524736-17.webp",
+    "image": "products/scraped/scraped-1769846524736-17.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -815,7 +2747,7 @@
     "id": "scraped-1769846524759-18",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524759-18.webp",
+    "image": "products/scraped/scraped-1769846524759-18.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {
@@ -829,7 +2761,7 @@
     "id": "scraped-1769846524787-19",
     "name": "Modern Sofa",
     "price": 0,
-    "image": "/products/scraped/scraped-1769846524787-19.webp",
+    "image": "products/scraped/scraped-1769846524787-19.webp",
     "category": "sofa",
     "store": "Google Search",
     "dimensions": {

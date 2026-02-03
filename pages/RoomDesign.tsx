@@ -1,17 +1,15 @@
 import React, { useState, Suspense, useRef, useEffect } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
-import {OrbitControls, Grid, Plane, Text, Html, useTexture, PointerLockControls, TransformControls} from '@react-three/drei';
+import {OrbitControls, Grid, Html, useTexture, PointerLockControls, TransformControls} from '@react-three/drei';
 import * as THREE from 'three';
 import { MOCK_PRODUCTS } from '../constants';
 import { Product, RoomItem } from '../types';
 import { 
     Plus, Trash2, Search, X, Sparkles, Camera, 
-    ArrowUp, ArrowDown, RotateCw, Image as ImageIcon, Download, Share2, Box,
-    PersonStanding, MousePointer2, Move, ShoppingCart, ExternalLink
+    RotateCw, MousePointer2, PersonStanding, ExternalLink
 } from 'lucide-react';
-import { generateRoomRender, analyzeRoomImage } from '../services/geminiService';
-import ProductClipper from './ProductClipper';
-import { ApartmentComplex } from './ApartmentArchitecture';
+import ProductClipper from '../components/ProductClipper';
+import { ApartmentComplex } from '../components/ApartmentArchitecture';
 import SCRAPED_ITEMS from '../src/data/imported_products.json';
 
 // --- 3D Components ---
@@ -29,7 +27,6 @@ const BillboardItem = ({
 }) => {
     const texture = useTexture(item.image);
     const planeRef = useRef<THREE.Mesh>(null);
-    const { camera } = useThree();
     
     // Scale factor: assume 1 unit = 1 meter approx. 
     const width = item.width / 100; 
@@ -99,26 +96,7 @@ const BillboardItem = ({
 
 // --- Main App Component ---
 
-// Helper to get 3D position from drop event
-const getDropPosition = (event: React.DragEvent, camera: THREE.Camera, scene: THREE.Scene): [number, number, number] | null => {
-    const rect = (event.target as HTMLElement).getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera({x, y}, camera);
-
-    // Create a temporary plane at y=0 (floor) to intersect against
-    const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
-    const target = new THREE.Vector3();
-
-    if (raycaster.ray.intersectPlane(plane, target)) {
-        return [target.x, 0, target.z]; // Return floor position
-    }
-    return null;
-};
-
-const MoodboardStudio: React.FC = () => {
+const RoomDesign: React.FC = () => {
     // Mode State
     const [mode, setMode] = useState<'design' | 'walk' | 'decor'>('design');
     
@@ -300,7 +278,12 @@ const MoodboardStudio: React.FC = () => {
                    onClick={() => addItem(product)}
                >
                    <div className="aspect-square bg-white relative p-4 flex items-center justify-center">
-                       <img src={product.image} alt={product.name} onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/150?text=Error'; e.currentTarget.onerror = null; }} className="max-w-full max-h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500" />
+                       <img 
+                          src={product.image} 
+                          alt={product.name} 
+                          onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/150?text=Error'; e.currentTarget.onerror = null; }}
+                          className="max-w-full max-h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500" 
+                        />
                        {/* Tags */}
                        <div className="absolute top-2 right-2 flex flex-col items-end gap-1">
                             {product.store === 'Uploaded' && (
@@ -504,4 +487,4 @@ const MoodboardStudio: React.FC = () => {
   );
 };
 
-export default MoodboardStudio;
+export default RoomDesign;

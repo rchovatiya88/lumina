@@ -4,9 +4,10 @@ export interface Product {
   price: number;
   image: string; // The cutout or processed image
   originalImage?: string; // The user uploaded context image
-  store: 'Amazon' | 'Wayfair' | 'West Elm' | 'CB2' | 'IKEA' | 'Lumina Exclusive' | 'Target' | 'Etsy' | 'Uploaded';
-  affiliateLink: string;
-  category: 'sofa' | 'chair' | 'table' | 'lamp' | 'decor' | 'rug' | 'bed' | 'storage';
+  store: 'Amazon' | 'Wayfair' | 'West Elm' | 'CB2' | 'IKEA' | 'Lumina Exclusive' | 'Target' | 'Etsy' | 'Uploaded' | 'Google Search';
+  affiliateLink?: string;
+  buyUrl?: string; // Add this
+  category: 'sofa' | 'chair' | 'table' | 'lamp' | 'decor' | 'rug' | 'bed' | 'storage' | 'scraped'; // Add scraped
   style: 'modern' | 'boho' | 'industrial' | 'classic' | 'scandi' | 'glam' | 'contemporary' | 'rustic' | 'minimalist';
   dimensions?: { width: number; depth: number; height: number }; // In inches
   colors?: string[];

@@ -34,7 +34,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <Link to="/" className={isActive('/')}>Home</Link>
               <Link to="/journal" className={isActive('/journal')}>Journal</Link>
               <Link to="/services" className={isActive('/services')}>Services</Link>
-              <Link to="/studio" className={isActive('/studio')}>Moodboard Studio</Link>
+              <Link to="/studio" className={isActive('/studio')}>Studio</Link>
+              <Link to="/design" className={isActive('/design')}>3D Builder</Link>
               <Link to="/style-quiz" className={`flex items-center gap-1 ${isActive('/style-quiz')}`}>
                 <Sparkles size={16} /> AI Quiz
               </Link>
@@ -66,6 +67,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <Link to="/journal" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Journal</Link>
               <Link to="/services" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Services</Link>
               <Link to="/studio" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Studio</Link>
+              <Link to="/design" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">3D Builder</Link>
               <Link to="/style-quiz" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">AI Style Quiz</Link>
               <Link to="/dashboard" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Dashboard</Link>
               <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Login</Link>
