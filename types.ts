@@ -12,6 +12,7 @@ export interface Product {
   dimensions?: { width: number; depth: number; height: number }; // In inches
   colors?: string[];
   description?: string;
+  isPro?: boolean; // Premium items
 }
 
 export interface RoomItem extends Product {

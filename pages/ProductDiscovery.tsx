@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Heart, MessageCircle, ExternalLink, Plus, Filter, LayoutGrid, ArrowUpDown, X, Check, Eye } from 'lucide-react';
+import { Search, Heart, MessageCircle, ExternalLink, Plus, Filter, LayoutGrid, ArrowUpDown, X, Check, Eye, Sparkles } from 'lucide-react';
 import { MOCK_PRODUCTS } from '../constants';
 import SCRAPED_ITEMS from '../src/data/imported_products.json';
 import { Product } from '../types';
@@ -112,7 +112,8 @@ const ProductDiscovery: React.FC = () => {
     const [styleFilter, setStyleFilter] = useState('all');
 
     // Combine Data
-    const allProducts = [...MOCK_PRODUCTS, ...SCRAPED_ITEMS as Product[]];
+    const scrapedProducts = Array.isArray(SCRAPED_ITEMS) ? SCRAPED_ITEMS : [];
+    const allProducts = [...MOCK_PRODUCTS, ...scrapedProducts as Product[]];
 
     // Filter Logic
     const filteredProducts = allProducts.filter(product => {
@@ -241,74 +242,80 @@ const ProductDiscovery: React.FC = () => {
 
             {/* Product Grid */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {sortedProducts.map(product => (
-                        <div key={product.id} className="group bg-white rounded-2xl border border-stone-100 overflow-hidden hover:shadow-2xl hover:border-stone-200 hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
+                        <div key={product.id} className="group bg-white rounded-3xl border border-stone-100 overflow-hidden hover:shadow-2xl hover:border-stone-200 hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
                             {/* Image Area */}
                             <div 
-                                className="aspect-[4/3] bg-stone-50 relative p-6 flex items-center justify-center overflow-hidden cursor-pointer"
+                                className="aspect-square bg-stone-50 relative p-8 flex items-center justify-center overflow-hidden cursor-pointer"
                                 onClick={() => setSelectedProduct(product)}
                             >
                                 <img 
                                     src={product.image} 
                                     alt={product.name}
-                                    onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/400?text=Image+Unavailable'; }}
-                                    className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-500 mix-blend-multiply"
+                                    onError={(e) => { e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBwcmVzZXJ2ZUFzcGVjdHJhdGlvPSJ4TWlkWU1pZCBzbGljZSIgZm9jdXNhYmxlPSJmYWxzZSIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJQbGFjZWhvbGRlciI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y1ZjVmNSI+PC9yZWN0Pjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmaWxsPSIjYThhMjllIiBkeT0iLjNlbSIgc3R5bGU9ImZvbnQtZmFtaWx5OnNhbnMtc2VyaWY7Zm9udC1zaXplOjE0cHg7dGV4dC1hbmNob3I6bWlkZGxlIj5JbWFnZSBVbmF2YWlsYWJsZTwvdGV4dD48L3N2Zz4='; }}
+                                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 mix-blend-multiply"
                                 />
                                 
+                                {/* Price Tag - Overlay */}
+                                {product.price > 0 && (
+                                    <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md text-stone-900 text-sm font-bold px-3 py-1.5 rounded-full shadow-sm border border-stone-100 flex items-center gap-1">
+                                        <span>${product.price.toLocaleString()}</span>
+                                    </div>
+                                )}
+
                                 {/* Overlay Actions */}
-                                <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity translate-x-2 group-hover:translate-x-0 duration-300">
+                                <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity translate-x-2 group-hover:translate-x-0 duration-300">
                                     <button 
                                         onClick={(e) => { e.stopPropagation(); toggleLike(product.id); }}
-                                        className={`p-2.5 rounded-full shadow-md hover:scale-110 transition ${likedItems.has(product.id) ? "bg-red-50 text-red-500" : "bg-white text-stone-400 hover:text-stone-900"}`}
+                                        className={`p-3 rounded-full shadow-lg hover:scale-110 transition ${likedItems.has(product.id) ? "bg-red-50 text-red-500" : "bg-white text-stone-400 hover:text-stone-900"}`}
                                     >
-                                        <Heart size={18} fill={likedItems.has(product.id) ? "currentColor" : "none"} />
+                                        <Heart size={20} fill={likedItems.has(product.id) ? "currentColor" : "none"} />
                                     </button>
                                     <button 
-                                        className="p-2.5 bg-white rounded-full shadow-md hover:scale-110 transition text-stone-400 hover:text-indigo-600"
+                                        className="p-3 bg-white rounded-full shadow-lg hover:scale-110 transition text-stone-400 hover:text-indigo-600"
                                         onClick={(e) => { e.stopPropagation(); setSelectedProduct(product); }}
                                     >
-                                        <Eye size={18} />
+                                        <Eye size={20} />
                                     </button>
                                 </div>
 
-                                <div className="absolute top-3 left-3">
-                                    <span className="bg-white/90 backdrop-blur text-stone-600 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide border border-stone-100 shadow-sm">
+                                <div className="absolute top-4 left-4 flex flex-col gap-2 items-start">
+                                    {product.isPro && (
+                                        <span className="bg-stone-900 text-white text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wide border border-stone-800 shadow-sm flex items-center gap-1">
+                                            <Sparkles size={12} /> PRO
+                                        </span>
+                                    )}
+                                    <span className="bg-white/90 backdrop-blur text-stone-500 text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wide border border-stone-100 shadow-sm">
                                         {product.store}
                                     </span>
                                 </div>
                             </div>
 
                             {/* Info Area */}
-                            <div className="p-5 flex flex-col flex-grow">
-                                <div className="flex justify-between items-start gap-3 mb-2">
+                            <div className="p-6 flex flex-col flex-grow">
+                                <div className="mb-4">
                                     <h3 
-                                        className="font-bold text-stone-900 text-sm line-clamp-2 leading-snug cursor-pointer hover:text-indigo-600 transition"
+                                        className="font-serif font-bold text-stone-900 text-xl leading-tight cursor-pointer hover:text-indigo-600 transition mb-1"
                                         onClick={() => setSelectedProduct(product)}
                                     >
                                         {product.name}
                                     </h3>
-                                    {product.price > 0 && (
-                                        <span className="font-serif font-bold text-stone-900 shrink-0 bg-stone-50 px-2 py-1 rounded-md text-xs border border-stone-100">
-                                            ${product.price}
-                                        </span>
-                                    )}
+                                    <p className="text-stone-500 text-sm line-clamp-2">{product.description || "A curated piece for your sanctuary."}</p>
                                 </div>
                                 
-                                <div className="mt-auto flex items-center justify-between pt-4 border-t border-stone-50">
-                                    <div className="flex gap-3 text-stone-400">
-                                        <span className="text-[10px] font-bold uppercase tracking-wider bg-stone-50 px-2 py-1 rounded-full">{product.category}</span>
-                                    </div>
+                                <div className="mt-auto flex items-center justify-between pt-4 border-t border-stone-100">
+                                    <span className="text-xs font-bold uppercase tracking-wider text-stone-400">{product.category}</span>
                                     
                                     {product.buyUrl && (
                                         <a 
                                             href={product.buyUrl} 
                                             target="_blank" 
                                             rel="noopener noreferrer"
-                                            className="text-xs font-bold text-indigo-600 hover:text-indigo-700 flex items-center gap-1 group/link"
+                                            className="text-sm font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 group/link bg-indigo-50 px-3 py-1.5 rounded-full hover:bg-indigo-100 transition-colors"
                                             onClick={(e) => e.stopPropagation()}
                                         >
-                                            Visit Store <ExternalLink size={12} className="group-hover/link:translate-x-0.5 transition-transform" />
+                                            Check Price <ExternalLink size={14} className="group-hover/link:translate-x-0.5 transition-transform" />
                                         </a>
                                     )}
                                 </div>

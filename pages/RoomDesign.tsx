@@ -281,7 +281,7 @@ const RoomDesign: React.FC = () => {
                        <img 
                           src={product.image} 
                           alt={product.name} 
-                          onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/150?text=Error'; e.currentTarget.onerror = null; }}
+                          onError={(e) => { e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBwcmVzZXJ2ZUFzcGVjdHJhdGlvPSJ4TWlkWU1pZCBzbGljZSIgZm9jdXNhYmxlPSJmYWxzZSIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJQbGFjZWhvbGRlciI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y1ZjVmNSI+PC9yZWN0Pjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmaWxsPSIjYThhMjllIiBkeT0iLjNlbSIgc3R5bGU9ImZvbnQtZmFtaWx5OnNhbnMtc2VyaWY7Zm9udC1zaXplOjE0cHg7dGV4dC1hbmNob3I6bWlkZGxlIj5JbWFnZSBVbmF2YWlsYWJsZTwvdGV4dD48L3N2Zz4='; e.currentTarget.onerror = null; }}
                           className="max-w-full max-h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500" 
                         />
                        {/* Tags */}
@@ -472,14 +472,45 @@ const RoomDesign: React.FC = () => {
           />
       )}
 
-      {/* Render Modal */}
+      {/* Render Modal / Project Summary */}
       {showRenderModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/90 backdrop-blur-md p-4 animate-in fade-in duration-300">
-               <div className="bg-white p-8 rounded-lg text-center">
-                   <Sparkles size={48} className="mx-auto text-indigo-500 mb-4 animate-pulse" />
-                   <h2 className="text-2xl font-serif mb-2">Generating 3D Render...</h2>
-                   <p className="text-stone-500 mb-6">Taking a snapshot of your 3D scene arrangement...</p>
-                   <button onClick={() => setShowRenderModal(false)} className="text-sm underline">Close</button>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/60 backdrop-blur-md p-4 animate-in fade-in duration-300">
+               <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full relative">
+                   <button onClick={() => setShowRenderModal(false)} className="absolute top-4 right-4 p-2 hover:bg-stone-100 rounded-full transition"><X size={20} /></button>
+                   
+                   <div className="text-center mb-6">
+                       <h2 className="text-2xl font-serif font-bold text-stone-900">Project Summary</h2>
+                       <p className="text-stone-500 text-sm">Review your curated sanctuary</p>
+                   </div>
+
+                   <div className="max-h-60 overflow-y-auto mb-6 pr-2 space-y-3">
+                       {items.map((item, idx) => (
+                           <div key={idx} className="flex justify-between items-center text-sm p-3 bg-stone-50 rounded-lg border border-stone-100">
+                               <div className="flex items-center gap-3">
+                                   <img src={item.image} className="w-10 h-10 object-contain mix-blend-multiply" alt={item.name} />
+                                   <span className="font-medium text-stone-700 truncate max-w-[150px]">{item.name}</span>
+                               </div>
+                               <span className="font-bold text-stone-900">${item.price}</span>
+                           </div>
+                       ))}
+                       {items.length === 0 && <p className="text-center text-stone-400 py-4">Your room is empty!</p>}
+                   </div>
+
+                   <div className="flex justify-between items-center border-t border-stone-200 pt-4 mb-6">
+                       <span className="font-serif text-lg text-stone-600">Total Estimate</span>
+                       <span className="font-serif text-2xl font-bold text-stone-900">
+                           ${items.reduce((sum, i) => sum + i.price, 0).toLocaleString()}
+                       </span>
+                   </div>
+
+                   <div className="flex flex-col gap-3">
+                       <button className="w-full bg-stone-900 text-white py-3 rounded-xl font-bold hover:bg-stone-800 transition shadow-lg flex items-center justify-center gap-2">
+                           Export Shopping List <ExternalLink size={16} />
+                       </button>
+                       <button className="w-full bg-indigo-50 text-indigo-600 py-3 rounded-xl font-bold hover:bg-indigo-100 transition border border-indigo-100 flex items-center justify-center gap-2">
+                           <Camera size={18} /> Download 3D Render
+                       </button>
+                   </div>
                </div>
           </div>
       )}
