@@ -1,0 +1,70 @@
+{
+  "summary": "Executed backend API regression (pytest) and frontend Playwright integration checks for Lumina navigation, Studio filters, affiliate tracking, and lead forms. Backend APIs are healthy, but frontend-to-backend lead/affiliate integration fails on current preview URL due to API base URL wiring.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {
+        "flow": "Studio affiliate click tracking",
+        "issue": "Clicking Studio Check Price triggers /api/affiliate-click request that returns 404 on frontend preview URL, so tracking does not persist from UI path.",
+        "affected_selectors": [
+          "[data-testid^='studio-check-price-link-']"
+        ]
+      },
+      {
+        "flow": "Services consultation submit",
+        "issue": "Consultation form POST /api/leads/consultation returns 404 from frontend runtime; success state never appears.",
+        "affected_selectors": [
+          "[data-testid='services-form-submit-button']",
+          "[data-testid='services-form-success-message']"
+        ]
+      },
+      {
+        "flow": "Contact form submit",
+        "issue": "Contact form POST /api/leads/contact returns 404 from frontend runtime; success state never appears.",
+        "affected_selectors": [
+          "[data-testid='contact-submit-button']",
+          "[data-testid='contact-success-message']"
+        ]
+      }
+    ],
+    "design_issues": [
+      {
+        "screen": "Top navigation (desktop)",
+        "issues": [
+          "Brand text and first nav item appear visually merged as 'LuminaHome' at a glance, reducing scan clarity."
+        ]
+      }
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_monetization_endpoints.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Fix frontend API base URL usage in monetization service to use env-driven backend URL (per spec: process.env.REACT_APP_BACKEND_URL) instead of relative '/api' only.",
+    "Add/restore frontend .env with REACT_APP_BACKEND_URL for preview/prod parity.",
+    "Retest affiliate click and both lead forms from UI after API base URL fix."
+  ],
+  "critical_code_review_comments": [
+    "frontend/services/monetizationService.ts violates environment URL guideline by hardcoding relative API paths; this is the root cause of 404 integration failures in current runtime.",
+    "Required protected env key frontend/.env: REACT_APP_BACKEND_URL is missing in this workspace.",
+    "Backend currently stores events in process memory only; metrics/leads reset on restart (acceptable for MVP but should be persisted for monetization analytics)."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_monetization_endpoints.py",
+    "/app/test_reports/iteration_1.json"
+  ],
+  "success_rate": {
+    "backend": "100%",
+    "frontend": "70%"
+  },
+  "seed_data_creation": "Created TEST_* payloads through API tests for affiliate click and lead submissions.",
+  "retest_needed": true,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Backend endpoints pass when called directly on backend host. Frontend integrations fail with 404 on /api/* from current preview host. Start with fixing frontend API base URL resolution and then rerun Playwright flows for affiliate + services + contact success states.",
+  "rca of the issue": "RCA: Frontend monetization service uses relative endpoints ('/api/...') and does not consume REACT_APP_BACKEND_URL. In this preview runtime, frontend host does not route /api to backend, so UI requests return 404. Repro: open /#/services or /#/contact, submit valid form -> network POST /api/leads/* returns 404 -> only error message shows. Similar in Studio: click Check Price -> /api/affiliate-click returns 404 and metrics are not updated from click path. Mitigation: wire API client to env-configured backend URL and ensure env key exists in frontend runtime."
+}
