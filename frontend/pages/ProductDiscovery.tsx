@@ -233,6 +233,7 @@ const ProductDiscovery: React.FC = () => {
                                 className="w-full pl-11 pr-4 py-3 bg-stone-100 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-stone-900 transition-all text-sm outline-none font-medium placeholder:font-normal"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
+                                data-testid="studio-search-input"
                             />
                         </div>
 
@@ -248,6 +249,7 @@ const ProductDiscovery: React.FC = () => {
                                             ? 'bg-white text-stone-900 shadow-sm' 
                                             : 'text-stone-500 hover:text-stone-700 hover:bg-stone-200/50'
                                         }`}
+                                        data-testid={`studio-category-filter-${cat}`}
                                     >
                                         {cat.charAt(0).toUpperCase() + cat.slice(1)}
                                     </button>
@@ -262,14 +264,34 @@ const ProductDiscovery: React.FC = () => {
                                     value={sortOption}
                                     onChange={(e) => setSortOption(e.target.value as any)}
                                     className="appearance-none bg-white border border-stone-200 text-stone-700 py-3 pl-4 pr-10 rounded-xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-stone-900 cursor-pointer hover:border-stone-300 transition"
+                                    data-testid="studio-sort-select"
                                 >
                                     <option value="relevance">Relevance</option>
                                     <option value="price-asc">Price: Low to High</option>
                                     <option value="price-desc">Price: High to Low</option>
+                                    <option value="rating-desc">Ratings</option>
                                 </select>
                                 <ArrowUpDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
                             </div>
                         </div>
+                    </div>
+
+                    <div className="mt-4 flex flex-wrap gap-2" data-testid="studio-budget-filter-group">
+                        {[
+                            { id: 'all', label: 'All prices' },
+                            { id: 'under-100', label: 'Under $100' },
+                            { id: 'under-300', label: 'Under $300' },
+                            { id: 'under-500', label: 'Under $500' },
+                        ].map((budget) => (
+                            <button
+                                key={budget.id}
+                                onClick={() => setBudgetFilter(budget.id as 'all' | 'under-100' | 'under-300' | 'under-500')}
+                                className={`px-4 py-1.5 rounded-full text-xs font-bold border ${budgetFilter === budget.id ? 'bg-stone-900 text-white border-stone-900' : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400'}`}
+                                data-testid={`studio-budget-filter-${budget.id}`}
+                            >
+                                {budget.label}
+                            </button>
+                        ))}
                     </div>
                     
                     {/* Collections / Styles Filter */}
@@ -288,6 +310,10 @@ const ProductDiscovery: React.FC = () => {
                              </button>
                          ))}
                     </div>
+
+                    <p className="text-xs text-stone-500 mt-4" data-testid="studio-affiliate-disclosure">
+                        Disclosure: some outbound product links are affiliate links and may generate commission at no extra cost to users.
+                    </p>
                 </div>
             </div>
 
