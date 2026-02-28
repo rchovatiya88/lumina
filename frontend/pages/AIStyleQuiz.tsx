@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getStyleAdvice } from '../services/geminiService';
 import { Sparkles, Loader2, RefreshCw, ArrowRight } from 'lucide-react';
 
@@ -83,9 +84,9 @@ const AIStyleQuiz: React.FC = () => {
                   <button onClick={() => setResult(null)} className="text-sm text-stone-400 hover:text-white flex items-center gap-2" data-testid="ai-quiz-reset-button">
                     <RefreshCw size={14} /> Try Again
                   </button>
-                  <a href="/design" className="bg-white text-stone-900 px-6 py-2 rounded-full text-sm font-medium hover:bg-stone-100 transition flex items-center gap-2" data-testid="ai-quiz-start-designing-link">
+                  <Link to="/design" className="bg-white text-stone-900 px-6 py-2 rounded-full text-sm font-medium hover:bg-stone-100 transition flex items-center gap-2" data-testid="ai-quiz-start-designing-link">
                     Start Designing <ArrowRight size={14} />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
