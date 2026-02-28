@@ -197,6 +197,7 @@ const ProductDiscovery: React.FC = () => {
                 onClose={() => setSelectedProduct(null)}
                 onLike={toggleLike}
                 isLiked={selectedProduct ? likedItems.has(selectedProduct.id) : false}
+                onAffiliateClick={handleAffiliateClick}
             />
 
             {/* Hero Section */}
