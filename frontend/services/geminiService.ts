@@ -9,35 +9,6 @@ const getAiClient = () => {
   return new GoogleGenAI({apiKey});
 };
 
-export const getStyleAdvice = async (userDescription: string): Promise<string> => {
-  if (!apiKey) {
-    // Fallback for demo/no-key environment
-    return `**Style:** Modern Organic\n**Palette:** Warm Beige, Sage Green, Charcoal, Terracotta\n**Advice:** Focus on natural materials like wood and stone mixed with clean lines. Layer textures (jute, linen, wool) to add warmth without clutter. Use plants as living sculptural elements.`;
-  }
-
-  try {
-    const ai = getAiClient();
-    if (!ai) throw new Error("No API Client");
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: `You are a high-end interior designer assistant. 
-      Analyze the following user preference and provide a short, punchy paragraph (max 80 words) describing their design style (e.g., Mid-Century Modern, Scandi-Boho) and a suggested color palette (3-4 colors).
-      
-      User Input: "${userDescription}"
-      
-      Output format: 
-      **Style:** [Style Name]
-      **Palette:** [Color 1, Color 2, Color 3]
-      **Advice:** [Brief advice]
-      `,
-    });
-    return response.text || "Could not generate advice at this time.";
-  } catch (error) {
-    console.error("Gemini API Error:", error);
-    return "An error occurred while analyzing your style. Please try again later.";
-  }
-};
-
 export const generateRoomLayoutIdeas = async (items: string[]): Promise<string> => {
     if (!apiKey) {
          return `**Designer Tip:** With your current selection of ${items.slice(0, 3).join(', ')}, try floating the seating arrangement in the center of the room rather than pushing everything against the walls. This creates a more intimate conversation area and improves flow.`;
