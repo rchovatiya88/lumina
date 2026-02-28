@@ -8,6 +8,7 @@
 - Added lightweight FastAPI monetization backend at `/app/backend/server.py`.
 - Frontend monetization API calls use `REACT_APP_BACKEND_URL` with relative fallback.
 - Per latest user directive, removed AI Quiz and 3D Builder from both UI and code.
+- Simplified header taxonomy to short labels: **Studio** and **Trends**.
 
 ## What’s Implemented
 - Runtime/preview stabilized (previous 502 issue resolved).
@@ -19,6 +20,9 @@
   - Removed 3D Builder route/page and related UI links/CTAs.
   - Deleted related frontend files: `AIStyleQuiz.tsx`, `RoomDesign.tsx`, `ApartmentArchitecture.tsx`, `MoodboardStudio.tsx`, `ProductClipper.tsx`.
   - Removed quiz-specific service logic (`getStyleAdvice`).
+- Header rename update completed:
+  - `Studio / Shopping` -> `Studio`
+  - `Inspiration / Trends / Blog` -> `Trends`
 
 ## Prioritized Backlog
 ### P0
