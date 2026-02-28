@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Search, Heart, MessageCircle, ExternalLink, Plus, Filter, LayoutGrid, ArrowUpDown, X, Check, Eye, Sparkles } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Search, Heart, ExternalLink, Plus, ArrowUpDown, X, Eye, Sparkles } from 'lucide-react';
 import { MOCK_PRODUCTS } from '../constants';
 import SCRAPED_ITEMS from '../src/data/imported_products.json';
 import { Product } from '../types';
+import { fetchMonetizationMetrics, trackAffiliateClick } from '../services/monetizationService';
 
 // Quick View Modal Component
 const ProductModal = ({ product, isOpen, onClose, onLike, isLiked }: { product: Product | null, isOpen: boolean, onClose: () => void, onLike: (id: string) => void, isLiked: boolean }) => {
