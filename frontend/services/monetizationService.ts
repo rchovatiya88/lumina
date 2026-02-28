@@ -15,8 +15,18 @@ export interface LeadPayload {
   message: string;
 }
 
+const backendBaseUrl =
+  (typeof process !== 'undefined' && process.env?.REACT_APP_BACKEND_URL) ||
+  (typeof import.meta !== 'undefined' && (import.meta as any).env?.REACT_APP_BACKEND_URL) ||
+  '';
+
+const apiUrl = (path: string) => {
+  if (!backendBaseUrl) return path;
+  return `${backendBaseUrl.replace(/\/$/, '')}${path}`;
+};
+
 const postJson = async (path: string, payload: object) => {
-  const response = await fetch(path, {
+  const response = await fetch(apiUrl(path), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
@@ -38,7 +48,7 @@ export const submitContactLead = async (payload: LeadPayload) => {
 };
 
 export const fetchMonetizationMetrics = async () => {
-  const response = await fetch('/api/monetization/metrics');
+  const response = await fetch(apiUrl('/api/monetization/metrics'));
   if (!response.ok) throw new Error(`Metrics request failed: ${response.status}`);
   return response.json();
 };
