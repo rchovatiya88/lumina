@@ -24,7 +24,7 @@ const AIStyleQuiz: React.FC = () => {
           </div>
           <h1 className="text-4xl font-serif text-stone-900 mb-4">AI Style Matcher</h1>
           <p className="text-stone-500">
-            Describe your dream room, your favorite colors, or how you want to feel in the space. 
+            Single style quiz: describe your dream room, your favorite colors, or how you want to feel in the space. 
             Our AI will analyze your taste and suggest a style direction.
           </p>
         </div>
@@ -39,6 +39,7 @@ const AIStyleQuiz: React.FC = () => {
               onChange={(e) => setDescription(e.target.value)}
               className="w-full h-32 p-4 border border-stone-200 rounded-xl focus:ring-2 focus:ring-stone-500 focus:border-transparent resize-none text-stone-800 bg-stone-50"
               placeholder="e.g. I love natural light, plants, and cozy textures. I want my living room to feel like a calm sanctuary but still modern..."
+              data-testid="ai-quiz-description-input"
             ></textarea>
           </div>
           
@@ -46,6 +47,7 @@ const AIStyleQuiz: React.FC = () => {
             onClick={handleAnalyze}
             disabled={isLoading || !description.trim()}
             className="w-full bg-stone-900 text-white py-4 rounded-xl font-medium hover:bg-stone-800 transition disabled:opacity-50 flex items-center justify-center gap-2"
+            data-testid="ai-quiz-submit-button"
           >
             {isLoading ? (
               <>
@@ -78,10 +80,10 @@ const AIStyleQuiz: React.FC = () => {
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center">
-                  <button onClick={() => setResult(null)} className="text-sm text-stone-400 hover:text-white flex items-center gap-2">
+                  <button onClick={() => setResult(null)} className="text-sm text-stone-400 hover:text-white flex items-center gap-2" data-testid="ai-quiz-reset-button">
                     <RefreshCw size={14} /> Try Again
                   </button>
-                  <a href="/room-builder" className="bg-white text-stone-900 px-6 py-2 rounded-full text-sm font-medium hover:bg-stone-100 transition flex items-center gap-2">
+                  <a href="/design" className="bg-white text-stone-900 px-6 py-2 rounded-full text-sm font-medium hover:bg-stone-100 transition flex items-center gap-2" data-testid="ai-quiz-start-designing-link">
                     Start Designing <ArrowRight size={14} />
                   </a>
                 </div>
