@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, ShoppingBag, Home, PenTool, Sparkles, User, Menu, X, FileText, LogIn } from 'lucide-react';
+import { Sparkles, Menu, X, LogIn } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -31,28 +31,30 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <Link to="/" className={isActive('/')}>Home</Link>
-              <Link to="/journal" className={isActive('/journal')}>Journal</Link>
-              <Link to="/services" className={isActive('/services')}>Services</Link>
-              <Link to="/studio" className={isActive('/studio')}>Studio</Link>
-              <Link to="/design" className={isActive('/design')}>3D Builder</Link>
-              <Link to="/style-quiz" className={`flex items-center gap-1 ${isActive('/style-quiz')}`}>
+              <Link to="/" className={isActive('/')} data-testid="nav-home-link">Home</Link>
+              <Link to="/studio" className={isActive('/studio')} data-testid="nav-studio-link">Studio / Shopping</Link>
+              <Link to="/design" className={isActive('/design')} data-testid="nav-3d-builder-link">3D Builder</Link>
+              <Link to="/journal" className={isActive('/journal')} data-testid="nav-journal-link">Inspiration / Trends / Blog</Link>
+              <Link to="/services" className={isActive('/services')} data-testid="nav-services-link">Services</Link>
+              <Link to="/style-quiz" className={`flex items-center gap-1 ${isActive('/style-quiz')}`} data-testid="nav-ai-quiz-link">
                 <Sparkles size={16} /> AI Quiz
               </Link>
+              <Link to="/about" className={isActive('/about')} data-testid="nav-about-link">About</Link>
+              <Link to="/contact" className={isActive('/contact')} data-testid="nav-contact-link">Contact</Link>
               
               <div className="h-4 w-px bg-stone-300"></div>
 
-              <Link to="/login" className="text-stone-500 hover:text-stone-900 flex items-center gap-2 text-sm font-medium">
+              <Link to="/login" className="text-stone-500 hover:text-stone-900 flex items-center gap-2 text-sm font-medium" data-testid="nav-login-link">
                 <LogIn size={16} /> Client Login
               </Link>
-              <Link to="/services" className="bg-stone-900 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-stone-800 transition-colors shadow-sm">
+              <Link to="/contact" className="bg-stone-900 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-stone-800 transition-colors shadow-sm" data-testid="nav-book-consultation-link">
                 Book Consultation
               </Link>
             </div>
 
             {/* Mobile menu button */}
             <div className="md:hidden flex items-center">
-              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-stone-500 hover:text-stone-900">
+              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-stone-500 hover:text-stone-900" data-testid="mobile-menu-toggle-button">
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
@@ -63,14 +65,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {isMenuOpen && (
           <div className="md:hidden bg-white border-b border-stone-200">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Home</Link>
-              <Link to="/journal" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Journal</Link>
-              <Link to="/services" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Services</Link>
-              <Link to="/studio" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Studio</Link>
-              <Link to="/design" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">3D Builder</Link>
-              <Link to="/style-quiz" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">AI Style Quiz</Link>
-              <Link to="/dashboard" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Dashboard</Link>
-              <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50">Login</Link>
+              <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-home-link">Home</Link>
+              <Link to="/studio" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-studio-link">Studio / Shopping</Link>
+              <Link to="/design" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-3d-builder-link">3D Builder</Link>
+              <Link to="/journal" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-journal-link">Inspiration / Trends / Blog</Link>
+              <Link to="/services" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-services-link">Services</Link>
+              <Link to="/style-quiz" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-ai-quiz-link">AI Style Quiz</Link>
+              <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-about-link">About</Link>
+              <Link to="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-contact-link">Contact</Link>
+              <Link to="/dashboard" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-dashboard-link">Dashboard</Link>
+              <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-login-link">Login</Link>
             </div>
           </div>
         )}
@@ -97,6 +101,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <li><Link to="/journal" className="hover:text-white transition">Journal</Link></li>
                 <li><Link to="/services" className="hover:text-white transition">Design Services</Link></li>
                 <li><Link to="/style-quiz" className="hover:text-white transition">Style Quiz</Link></li>
+                <li><Link to="/about" className="hover:text-white transition">About Us</Link></li>
               </ul>
             </div>
             <div>
@@ -104,7 +109,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <ul className="space-y-2 text-sm">
                 <li><a href="#" className="hover:text-white transition">Instagram</a></li>
                 <li><a href="#" className="hover:text-white transition">Pinterest</a></li>
-                <li><a href="#" className="hover:text-white transition">Contact Us</a></li>
+                <li><Link to="/contact" className="hover:text-white transition">Contact Us</Link></li>
               </ul>
             </div>
           </div>
