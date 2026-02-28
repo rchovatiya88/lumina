@@ -106,6 +106,18 @@ const ProductModal = ({ product, isOpen, onClose, onLike, isLiked, onAffiliateCl
     );
 };
 
+const getProductRating = (product: Product) => {
+    const base = product.id.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
+    return Number((3.5 + (base % 15) / 10).toFixed(1));
+};
+
+const matchesBudget = (price: number, budgetFilter: string) => {
+    if (budgetFilter === 'under-100') return price <= 100;
+    if (budgetFilter === 'under-300') return price <= 300;
+    if (budgetFilter === 'under-500') return price <= 500;
+    return true;
+};
+
 const ProductDiscovery: React.FC = () => {
     // State
     const [searchQuery, setSearchQuery] = useState('');
