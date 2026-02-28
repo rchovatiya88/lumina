@@ -10,6 +10,8 @@ import Dashboard from './pages/Dashboard';
 import AIStyleQuiz from './pages/AIStyleQuiz';
 import Journal from './pages/Journal';
 import Login from './pages/Login';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 const App: React.FC = () => {
   return (
@@ -23,6 +25,8 @@ const App: React.FC = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/style-quiz" element={<AIStyleQuiz />} />
           <Route path="/journal" element={<Journal />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </Layout>
