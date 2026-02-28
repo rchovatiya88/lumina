@@ -8,11 +8,23 @@ const Journal: React.FC = () => {
       {/* Header */}
       <div className="bg-stone-50 py-20 px-4">
          <div className="max-w-7xl mx-auto text-center">
-            <span className="text-stone-500 uppercase tracking-widest text-xs font-semibold mb-3 block">The Journal</span>
+            <span className="text-stone-500 uppercase tracking-widest text-xs font-semibold mb-3 block">Inspiration • Trends • Blog</span>
             <h1 className="font-serif text-4xl md:text-6xl text-stone-900 mb-6">Design Notes & Living</h1>
             <p className="text-xl text-stone-600 font-light max-w-2xl mx-auto">
                Curated inspiration, industry trends, and practical guides for the modern home.
             </p>
+         </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+         <div className="rounded-2xl border border-stone-200 bg-stone-50 p-8">
+            <h2 className="font-serif text-3xl text-stone-900 mb-3">Content roadmap</h2>
+            <p className="text-stone-600 mb-4">Topics to publish next for growth: apartment setups, budget luxury under $100, and vendor spotlight guides.</p>
+            <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm text-stone-700">
+               <li className="bg-white border border-stone-200 rounded-xl px-4 py-3">Small-space layout plans</li>
+               <li className="bg-white border border-stone-200 rounded-xl px-4 py-3">Best couches under $500</li>
+               <li className="bg-white border border-stone-200 rounded-xl px-4 py-3">Interior trends this month</li>
+            </ul>
          </div>
       </div>
 
@@ -84,8 +96,9 @@ const Journal: React.FC = () => {
                  type="email" 
                  placeholder="Your email address" 
                  className="flex-1 px-4 py-3 rounded-lg bg-stone-800 border border-stone-700 text-white focus:outline-none focus:ring-2 focus:ring-stone-500"
+                 data-testid="journal-newsletter-email-input"
                />
-               <button className="bg-white text-stone-900 px-8 py-3 rounded-lg font-medium hover:bg-stone-100 transition">
+               <button className="bg-white text-stone-900 px-8 py-3 rounded-lg font-medium hover:bg-stone-100 transition" data-testid="journal-newsletter-subscribe-button">
                   Subscribe
                </button>
             </div>
