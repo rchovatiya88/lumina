@@ -122,11 +122,22 @@ const ProductDiscovery: React.FC = () => {
     // State
     const [searchQuery, setSearchQuery] = useState('');
     const [categoryFilter, setCategoryFilter] = useState('all');
-    const [sortOption, setSortOption] = useState<'relevance' | 'price-asc' | 'price-desc'>('relevance');
+    const [sortOption, setSortOption] = useState<'relevance' | 'price-asc' | 'price-desc' | 'rating-desc'>('relevance');
     const [likedItems, setLikedItems] = useState<Set<string>>(new Set());
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
     const [styleFilter, setStyleFilter] = useState('all');
+    const [budgetFilter, setBudgetFilter] = useState<'all' | 'under-100' | 'under-300' | 'under-500'>('all');
+    const [metrics, setMetrics] = useState({
+        affiliate_clicks: 0,
+        consultation_leads: 0,
+        estimated_affiliate_revenue: 0,
+    });
+
+    useEffect(() => {
+        fetchMonetizationMetrics()
+            .then((data) => setMetrics(data))
+            .catch(() => null);
+    }, []);
 
     // Combine Data
     const scrapedProducts = Array.isArray(SCRAPED_ITEMS) ? SCRAPED_ITEMS : [];
@@ -138,13 +149,15 @@ const ProductDiscovery: React.FC = () => {
                               product.store.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesCategory = categoryFilter === 'all' || product.category === categoryFilter;
         const matchesStyle = styleFilter === 'all' || (product.style && product.style.toLowerCase() === styleFilter);
-        return matchesSearch && matchesCategory && matchesStyle;
+        const matchesPrice = matchesBudget(product.price || 0, budgetFilter);
+        return matchesSearch && matchesCategory && matchesStyle && matchesPrice;
     });
 
     // Sort Logic
     const sortedProducts = [...filteredProducts].sort((a, b) => {
         if (sortOption === 'price-asc') return a.price - b.price;
         if (sortOption === 'price-desc') return b.price - a.price;
+        if (sortOption === 'rating-desc') return getProductRating(b) - getProductRating(a);
         return 0; // relevance (default order)
     });
 
@@ -153,6 +166,23 @@ const ProductDiscovery: React.FC = () => {
         if (newLiked.has(id)) newLiked.delete(id);
         else newLiked.add(id);
         setLikedItems(newLiked);
+    };
+
+    const handleAffiliateClick = async (product: Product, url: string) => {
+        if (!url || url === '#') return;
+        try {
+            await trackAffiliateClick({
+                product_id: product.id,
+                product_name: product.name,
+                store: product.store,
+                price: product.price || 0,
+                destination_url: url,
+            });
+            const updated = await fetchMonetizationMetrics();
+            setMetrics(updated);
+        } catch {
+            // no-op so UX doesn't break if tracking fails
+        }
     };
 
     const categories = ['all', 'sofa', 'chair', 'table', 'lamp', 'rug', 'decor'];
