@@ -31,11 +31,33 @@ const Home: React.FC = () => {
             Get a custom shoppable room design in days, not months.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/room-builder" className="bg-white text-stone-900 px-8 py-4 rounded-full font-medium hover:bg-stone-100 transition shadow-xl flex items-center justify-center gap-2">
+            <Link to="/design" className="bg-white text-stone-900 px-8 py-4 rounded-full font-medium hover:bg-stone-100 transition shadow-xl flex items-center justify-center gap-2" data-testid="home-start-room-builder-link">
               Start Room Builder <Layout size={18} />
             </Link>
-            <Link to="/services" className="bg-stone-900/80 backdrop-blur text-white px-8 py-4 rounded-full font-medium hover:bg-stone-900 transition shadow-xl border border-white/10">
+            <Link to="/services" className="bg-stone-900/80 backdrop-blur text-white px-8 py-4 rounded-full font-medium hover:bg-stone-900 transition shadow-xl border border-white/10" data-testid="home-view-design-packages-link">
               View Design Packages
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-stone-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Link to="/studio" className="bg-white p-8 rounded-2xl border border-stone-200 hover:shadow-md transition" data-testid="home-platform-moodboard-link">
+              <p className="text-xs uppercase tracking-wide text-stone-500 mb-2">Platform</p>
+              <h3 className="font-serif text-2xl text-stone-900 mb-2">Moodboard Studio</h3>
+              <p className="text-stone-600 text-sm">Browse curated products, filter by budget, and save collections.</p>
+            </Link>
+            <Link to="/journal" className="bg-white p-8 rounded-2xl border border-stone-200 hover:shadow-md transition" data-testid="home-platform-journal-link">
+              <p className="text-xs uppercase tracking-wide text-stone-500 mb-2">Content</p>
+              <h3 className="font-serif text-2xl text-stone-900 mb-2">Journal • Join the Circle</h3>
+              <p className="text-stone-600 text-sm">Get trends, practical guides, and weekly shopping inspiration.</p>
+            </Link>
+            <Link to="/services" className="bg-white p-8 rounded-2xl border border-stone-200 hover:shadow-md transition" data-testid="home-platform-services-link">
+              <p className="text-xs uppercase tracking-wide text-stone-500 mb-2">Conversion</p>
+              <h3 className="font-serif text-2xl text-stone-900 mb-2">Design Services</h3>
+              <p className="text-stone-600 text-sm">Book paid design support and optional coordination for installation.</p>
             </Link>
           </div>
         </div>
@@ -116,13 +138,35 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-3xl border border-stone-200 p-8 md:p-12 bg-gradient-to-br from-stone-900 to-stone-700 text-white" data-testid="home-monetization-plan-card">
+            <h2 className="text-3xl font-serif mb-6">How Lumina grows revenue</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm md:text-base">
+              <div data-testid="home-revenue-stream-affiliate">
+                <p className="font-semibold mb-2">1) Affiliate Shopping</p>
+                <p className="text-stone-200">Users discover products in Studio and buy through partner links.</p>
+              </div>
+              <div data-testid="home-revenue-stream-consulting">
+                <p className="font-semibold mb-2">2) Paid Design Packages</p>
+                <p className="text-stone-200">Convert quiz and journal visitors into consultation bookings.</p>
+              </div>
+              <div data-testid="home-revenue-stream-coordination">
+                <p className="font-semibold mb-2">3) Coordination Add-On</p>
+                <p className="text-stone-200">Offer vendor scheduling and installation coordination for a service fee.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-24 bg-stone-900 text-white text-center px-4">
         <h2 className="text-3xl md:text-5xl font-serif mb-6">Not sure where to start?</h2>
         <p className="text-stone-300 max-w-2xl mx-auto mb-10 text-lg">
           Take our 2-minute AI-powered style quiz. We'll analyze your preferences and generate a free custom mood board just for you.
         </p>
-        <Link to="/style-quiz" className="inline-block bg-white text-stone-900 px-10 py-4 rounded-full font-medium hover:bg-stone-100 transition shadow-lg text-lg">
+        <Link to="/style-quiz" className="inline-block bg-white text-stone-900 px-10 py-4 rounded-full font-medium hover:bg-stone-100 transition shadow-lg text-lg" data-testid="home-take-style-quiz-link">
           Take the Style Quiz
         </Link>
       </section>
