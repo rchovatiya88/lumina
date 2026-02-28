@@ -205,7 +205,7 @@ const ProductDiscovery: React.FC = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-4 mb-6">
                         <div>
-                            <h1 className="text-3xl font-serif font-bold text-stone-900 tracking-tight" data-testid="studio-page-title">Studio / Shopping</h1>
+                            <h1 className="text-3xl font-serif font-bold text-stone-900 tracking-tight" data-testid="studio-page-title">Studio</h1>
                             <p className="text-stone-500 mt-1 font-medium" data-testid="studio-page-subtitle">Curate your sanctuary with discovered treasures and track affiliate-ready clicks.</p>
                         </div>
                         <div className="flex gap-3 flex-wrap justify-end">
