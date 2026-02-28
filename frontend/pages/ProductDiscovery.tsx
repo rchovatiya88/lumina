@@ -417,8 +417,9 @@ const ProductDiscovery: React.FC = () => {
                         <h3 className="text-xl font-serif font-bold text-stone-900 mb-2">No treasures found</h3>
                         <p className="text-stone-500 max-w-sm mx-auto">We couldn't find any matches for your search. Try adjusting your filters.</p>
                         <button 
-                            onClick={() => {setSearchQuery(''); setCategoryFilter('all');}}
+                            onClick={() => {setSearchQuery(''); setCategoryFilter('all'); setStyleFilter('all'); setBudgetFilter('all');}}
                             className="mt-8 bg-stone-900 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-stone-800 transition"
+                            data-testid="studio-clear-filters-button"
                         >
                             Clear All Filters
                         </button>
@@ -449,8 +450,8 @@ const ProductDiscovery: React.FC = () => {
                                 </div>
                             </div>
                             <div className="flex gap-3">
-                                <button className="text-sm font-medium text-stone-500 hover:text-stone-900" onClick={() => setLikedItems(new Set())}>Clear</button>
-                                <button className="bg-stone-900 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-stone-800 transition">
+                                <button className="text-sm font-medium text-stone-500 hover:text-stone-900" onClick={() => setLikedItems(new Set())} data-testid="studio-collection-clear-button">Clear</button>
+                                <button className="bg-stone-900 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-stone-800 transition" data-testid="studio-create-moodboard-button">
                                     Create Moodboard
                                 </button>
                             </div>
