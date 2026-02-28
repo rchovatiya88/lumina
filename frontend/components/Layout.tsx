@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Sparkles, Menu, X, LogIn } from 'lucide-react';
+import { Menu, X, LogIn } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -33,12 +33,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div className="hidden md:flex items-center space-x-8 ml-10">
               <Link to="/" className={isActive('/')} data-testid="nav-home-link">Home</Link>
               <Link to="/studio" className={isActive('/studio')} data-testid="nav-studio-link">Studio / Shopping</Link>
-              <Link to="/design" className={isActive('/design')} data-testid="nav-3d-builder-link">3D Builder</Link>
               <Link to="/journal" className={isActive('/journal')} data-testid="nav-journal-link">Inspiration / Trends / Blog</Link>
               <Link to="/services" className={isActive('/services')} data-testid="nav-services-link">Services</Link>
-              <Link to="/style-quiz" className={`flex items-center gap-1 ${isActive('/style-quiz')}`} data-testid="nav-ai-quiz-link">
-                <Sparkles size={16} /> AI Quiz
-              </Link>
               <Link to="/about" className={isActive('/about')} data-testid="nav-about-link">About</Link>
               <Link to="/contact" className={isActive('/contact')} data-testid="nav-contact-link">Contact</Link>
               
@@ -67,10 +63,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-home-link">Home</Link>
               <Link to="/studio" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-studio-link">Studio / Shopping</Link>
-              <Link to="/design" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-3d-builder-link">3D Builder</Link>
               <Link to="/journal" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-journal-link">Inspiration / Trends / Blog</Link>
               <Link to="/services" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-services-link">Services</Link>
-              <Link to="/style-quiz" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-ai-quiz-link">AI Style Quiz</Link>
               <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-about-link">About</Link>
               <Link to="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-contact-link">Contact</Link>
               <Link to="/dashboard" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-dashboard-link">Dashboard</Link>
@@ -100,7 +94,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <li><Link to="/studio" className="hover:text-white transition">Moodboard Studio</Link></li>
                 <li><Link to="/journal" className="hover:text-white transition">Journal</Link></li>
                 <li><Link to="/services" className="hover:text-white transition">Design Services</Link></li>
-                <li><Link to="/style-quiz" className="hover:text-white transition">Style Quiz</Link></li>
                 <li><Link to="/about" className="hover:text-white transition">About Us</Link></li>
               </ul>
             </div>
