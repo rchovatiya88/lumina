@@ -32,8 +32,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8 ml-10">
               <Link to="/" className={isActive('/')} data-testid="nav-home-link">Home</Link>
-              <Link to="/studio" className={isActive('/studio')} data-testid="nav-studio-link">Studio / Shopping</Link>
-              <Link to="/journal" className={isActive('/journal')} data-testid="nav-journal-link">Inspiration / Trends / Blog</Link>
+              <Link to="/studio" className={isActive('/studio')} data-testid="nav-studio-link">Studio</Link>
+              <Link to="/journal" className={isActive('/journal')} data-testid="nav-journal-link">Trends</Link>
               <Link to="/services" className={isActive('/services')} data-testid="nav-services-link">Services</Link>
               <Link to="/about" className={isActive('/about')} data-testid="nav-about-link">About</Link>
               <Link to="/contact" className={isActive('/contact')} data-testid="nav-contact-link">Contact</Link>
@@ -62,8 +62,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div className="md:hidden bg-white border-b border-stone-200">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-home-link">Home</Link>
-              <Link to="/studio" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-studio-link">Studio / Shopping</Link>
-              <Link to="/journal" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-journal-link">Inspiration / Trends / Blog</Link>
+              <Link to="/studio" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-studio-link">Studio</Link>
+              <Link to="/journal" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-journal-link">Trends</Link>
               <Link to="/services" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-services-link">Services</Link>
               <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-about-link">About</Link>
               <Link to="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50" data-testid="mobile-nav-contact-link">Contact</Link>
