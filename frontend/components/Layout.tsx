@@ -30,7 +30,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
             
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-8 ml-10">
               <Link to="/" className={isActive('/')} data-testid="nav-home-link">Home</Link>
               <Link to="/studio" className={isActive('/studio')} data-testid="nav-studio-link">Studio / Shopping</Link>
               <Link to="/design" className={isActive('/design')} data-testid="nav-3d-builder-link">3D Builder</Link>
