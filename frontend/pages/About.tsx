@@ -58,7 +58,7 @@ const About: React.FC = () => {
           <h2 className="font-serif text-3xl mb-4">How we help you save money upfront</h2>
           <ul className="space-y-3 text-stone-200">
             {[
-              'Single style quiz to avoid indecisive buying',
+              'Curated product paths to avoid indecisive buying',
               'Price filters and relevance sorting to stay in budget',
               'Designer-backed shopping links so purchases are intentional',
             ].map((item) => (
