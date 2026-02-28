@@ -30,14 +30,9 @@ const Home: React.FC = () => {
             Professional interior design services meets modern technology. 
             Get a custom shoppable room design in days, not months.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/design" className="bg-white text-stone-900 px-8 py-4 rounded-full font-medium hover:bg-stone-100 transition shadow-xl flex items-center justify-center gap-2" data-testid="home-start-room-builder-link">
-              Start Room Builder <Layout size={18} />
-            </Link>
-            <Link to="/services" className="bg-stone-900/80 backdrop-blur text-white px-8 py-4 rounded-full font-medium hover:bg-stone-900 transition shadow-xl border border-white/10" data-testid="home-view-design-packages-link">
-              View Design Packages
-            </Link>
-          </div>
+          <Link to="/services" className="inline-flex bg-stone-900/80 backdrop-blur text-white px-8 py-4 rounded-full font-medium hover:bg-stone-900 transition shadow-xl border border-white/10" data-testid="home-view-design-packages-link">
+            View Design Packages
+          </Link>
         </div>
       </section>
 
@@ -149,7 +144,7 @@ const Home: React.FC = () => {
               </div>
               <div data-testid="home-revenue-stream-consulting">
                 <p className="font-semibold mb-2">2) Paid Design Packages</p>
-                <p className="text-stone-200">Convert quiz and journal visitors into consultation bookings.</p>
+                <p className="text-stone-200">Convert journal and studio visitors into consultation bookings.</p>
               </div>
               <div data-testid="home-revenue-stream-coordination">
                 <p className="font-semibold mb-2">3) Coordination Add-On</p>
@@ -162,12 +157,12 @@ const Home: React.FC = () => {
 
       {/* CTA Section */}
       <section className="py-24 bg-stone-900 text-white text-center px-4">
-        <h2 className="text-3xl md:text-5xl font-serif mb-6">Not sure where to start?</h2>
+        <h2 className="text-3xl md:text-5xl font-serif mb-6">Ready to design your space?</h2>
         <p className="text-stone-300 max-w-2xl mx-auto mb-10 text-lg">
-          Take our 2-minute AI-powered style quiz. We'll analyze your preferences and generate a free custom mood board just for you.
+          Explore curated products in Studio, then book paid support when you want a complete room plan.
         </p>
-        <Link to="/style-quiz" className="inline-block bg-white text-stone-900 px-10 py-4 rounded-full font-medium hover:bg-stone-100 transition shadow-lg text-lg" data-testid="home-take-style-quiz-link">
-          Take the Style Quiz
+        <Link to="/studio" className="inline-block bg-white text-stone-900 px-10 py-4 rounded-full font-medium hover:bg-stone-100 transition shadow-lg text-lg" data-testid="home-explore-studio-link">
+          Explore Studio
         </Link>
       </section>
     </div>
