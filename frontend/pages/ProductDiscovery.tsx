@@ -305,6 +305,7 @@ const ProductDiscovery: React.FC = () => {
                                     ? 'bg-stone-800 text-white border-stone-800'
                                     : 'bg-white text-stone-500 border-stone-200 hover:border-stone-400'
                                 }`}
+                                data-testid={`studio-style-filter-${style}`}
                              >
                                  {style}
                              </button>
@@ -321,7 +322,7 @@ const ProductDiscovery: React.FC = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {sortedProducts.map(product => (
-                        <div key={product.id} className="group bg-white rounded-3xl border border-stone-100 overflow-hidden hover:shadow-2xl hover:border-stone-200 hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
+                        <div key={product.id} className="group bg-white rounded-3xl border border-stone-100 overflow-hidden hover:shadow-2xl hover:border-stone-200 hover:-translate-y-1 transition-all duration-300 flex flex-col h-full" data-testid={`studio-product-card-${product.id}`}>
                             {/* Image Area */}
                             <div 
                                 className="aspect-square bg-stone-50 relative p-8 flex items-center justify-center overflow-hidden cursor-pointer"
@@ -346,12 +347,14 @@ const ProductDiscovery: React.FC = () => {
                                     <button 
                                         onClick={(e) => { e.stopPropagation(); toggleLike(product.id); }}
                                         className={`p-3 rounded-full shadow-lg hover:scale-110 transition ${likedItems.has(product.id) ? "bg-red-50 text-red-500" : "bg-white text-stone-400 hover:text-stone-900"}`}
+                                        data-testid={`studio-like-button-${product.id}`}
                                     >
                                         <Heart size={20} fill={likedItems.has(product.id) ? "currentColor" : "none"} />
                                     </button>
                                     <button 
                                         className="p-3 bg-white rounded-full shadow-lg hover:scale-110 transition text-stone-400 hover:text-indigo-600"
                                         onClick={(e) => { e.stopPropagation(); setSelectedProduct(product); }}
+                                        data-testid={`studio-quick-view-button-${product.id}`}
                                     >
                                         <Eye size={20} />
                                     </button>
@@ -378,19 +381,24 @@ const ProductDiscovery: React.FC = () => {
                                     >
                                         {product.name}
                                     </h3>
+                                    <p className="text-xs text-amber-700 font-semibold" data-testid={`studio-product-rating-${product.id}`}>★ {getProductRating(product)} rating</p>
                                     <p className="text-stone-500 text-sm line-clamp-2">{product.description || "A curated piece for your sanctuary."}</p>
                                 </div>
                                 
                                 <div className="mt-auto flex items-center justify-between pt-4 border-t border-stone-100">
                                     <span className="text-xs font-bold uppercase tracking-wider text-stone-400">{product.category}</span>
                                     
-                                    {product.buyUrl && (
+                                    {(product.buyUrl || product.affiliateLink) && (product.buyUrl || product.affiliateLink) !== '#' && (
                                         <a 
-                                            href={product.buyUrl} 
+                                            href={(product.buyUrl || product.affiliateLink)!} 
                                             target="_blank" 
                                             rel="noopener noreferrer"
                                             className="text-sm font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 group/link bg-indigo-50 px-3 py-1.5 rounded-full hover:bg-indigo-100 transition-colors"
-                                            onClick={(e) => e.stopPropagation()}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleAffiliateClick(product, (product.buyUrl || product.affiliateLink)!);
+                                            }}
+                                            data-testid={`studio-check-price-link-${product.id}`}
                                         >
                                             Check Price <ExternalLink size={14} className="group-hover/link:translate-x-0.5 transition-transform" />
                                         </a>
