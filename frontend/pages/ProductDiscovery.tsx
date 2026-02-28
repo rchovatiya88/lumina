@@ -205,15 +205,18 @@ const ProductDiscovery: React.FC = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-4 mb-6">
                         <div>
-                            <h1 className="text-3xl font-serif font-bold text-stone-900 tracking-tight">Design Studio</h1>
-                            <p className="text-stone-500 mt-1 font-medium">Curate your sanctuary with discovered treasures.</p>
+                            <h1 className="text-3xl font-serif font-bold text-stone-900 tracking-tight" data-testid="studio-page-title">Studio / Shopping</h1>
+                            <p className="text-stone-500 mt-1 font-medium" data-testid="studio-page-subtitle">Curate your sanctuary with discovered treasures and track affiliate-ready clicks.</p>
                         </div>
-                        <div className="flex gap-3">
-                             <div className="bg-stone-100 rounded-full px-4 py-2 flex items-center gap-2 text-sm font-medium text-stone-600">
+                        <div className="flex gap-3 flex-wrap justify-end">
+                             <div className="bg-stone-100 rounded-full px-4 py-2 flex items-center gap-2 text-sm font-medium text-stone-600" data-testid="studio-saved-count-chip">
                                 <Heart size={16} className="text-red-500 fill-current" />
                                 <span>{likedItems.size} Saved</span>
                              </div>
-                            <button className="bg-stone-900 text-white px-5 py-2.5 rounded-full font-bold hover:bg-stone-800 transition flex items-center gap-2 text-sm shadow-lg shadow-stone-200 active:scale-95">
+                             <div className="bg-emerald-50 rounded-full px-4 py-2 text-sm font-semibold text-emerald-800" data-testid="studio-affiliate-metrics-chip">
+                                ${metrics.estimated_affiliate_revenue.toFixed(2)} est. affiliate revenue
+                             </div>
+                            <button className="bg-stone-900 text-white px-5 py-2.5 rounded-full font-bold hover:bg-stone-800 transition flex items-center gap-2 text-sm shadow-lg shadow-stone-200 active:scale-95" data-testid="studio-new-moodboard-button">
                                 <Plus size={18} /> New Moodboard
                             </button>
                         </div>
