@@ -6,8 +6,10 @@ import { Product } from '../types';
 import { fetchMonetizationMetrics, trackAffiliateClick } from '../services/monetizationService';
 
 // Quick View Modal Component
-const ProductModal = ({ product, isOpen, onClose, onLike, isLiked }: { product: Product | null, isOpen: boolean, onClose: () => void, onLike: (id: string) => void, isLiked: boolean }) => {
+const ProductModal = ({ product, isOpen, onClose, onLike, isLiked, onAffiliateClick }: { product: Product | null, isOpen: boolean, onClose: () => void, onLike: (id: string) => void, isLiked: boolean, onAffiliateClick: (product: Product, url: string) => void }) => {
     if (!isOpen || !product) return null;
+    const destinationUrl = product.buyUrl || product.affiliateLink || '';
+    const canBuy = Boolean(destinationUrl && destinationUrl !== '#');
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -81,12 +83,14 @@ const ProductModal = ({ product, isOpen, onClose, onLike, isLiked }: { product: 
                             {isLiked ? 'Saved' : 'Save Item'}
                         </button>
                         
-                        {product.buyUrl ? (
+                        {canBuy ? (
                             <a 
-                                href={product.buyUrl}
+                                href={destinationUrl}
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 className="flex-[2] bg-stone-900 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-800 transition shadow-lg shadow-stone-200"
+                                onClick={() => onAffiliateClick(product, destinationUrl)}
+                                data-testid="product-modal-visit-store-link"
                             >
                                 Visit Store <ExternalLink size={18} />
                             </a>
