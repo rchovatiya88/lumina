@@ -8,7 +8,7 @@ const Journal: React.FC = () => {
       {/* Header */}
       <div className="bg-stone-50 py-20 px-4">
          <div className="max-w-7xl mx-auto text-center">
-            <span className="text-stone-500 uppercase tracking-widest text-xs font-semibold mb-3 block">Inspiration • Trends • Blog</span>
+            <span className="text-stone-500 uppercase tracking-widest text-xs font-semibold mb-3 block">Trends</span>
             <h1 className="font-serif text-4xl md:text-6xl text-stone-900 mb-6">Design Notes & Living</h1>
             <p className="text-xl text-stone-600 font-light max-w-2xl mx-auto">
                Curated inspiration, industry trends, and practical guides for the modern home.
