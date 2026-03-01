@@ -1,12 +1,21 @@
 from datetime import datetime, timezone
 from uuid import uuid4
+from typing import Optional
+import asyncio
+import hashlib
+import re
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from duckduckgo_search import DDGS
 
 
 app = FastAPI(title="Lumina Backend", version="1.0.0")
+
+# Simple in-memory cache for search results
+search_cache: dict[str, dict] = {}
+CACHE_TTL_SECONDS = 3600  # 1 hour
 
 app.add_middleware(
     CORSMiddleware,
