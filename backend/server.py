@@ -435,43 +435,28 @@ def parse_concatenated_products(text: str) -> list[dict]:
     Parse products that were accidentally pasted into a single cell.
     Handles format: "Product1,price,url,... Product2,price,url,..."
     """
-    products = []
-    
-    # Split by http patterns to separate products (each product has a URL at the end)
-    # Pattern: ends with a URL, then space and new product name starts
     import re
-    
-    # Find all product entries by splitting on the pattern where URL ends and new product starts
-    # Look for: "...url https://..." or "...url Product Name,price,..."
-    parts = re.split(r'(https?://[^\s,]+)\s+([A-Z])', text)
-    
-    if len(parts) <= 1:
-        # Try another approach - split by known store names followed by comma
-        parts = re.split(r',([a-z]+),(https?://[^\s]+)\s+', text, flags=re.IGNORECASE)
-    
-    # Simpler approach: find all comma-separated groups of 7 items
-    # Expected: name,price,image_url,store,category,style,affiliate_url
+    products = []
     
     # Remove quotes and clean up
     text = text.replace('"', '').strip()
     
-    # Split by URLs to find product boundaries
-    url_pattern = r'https?://[^\s,]+'
-    urls = re.findall(url_pattern, text)
-    
-    if not urls:
+    # Skip if it looks like just headers
+    if text.startswith('name,price') or len(text) < 50:
         return products
     
-    # Each product has 2 URLs (image + affiliate), so products = urls / 2
-    # Let's try to extract by finding patterns
-    
-    # Alternative: try to split the concatenated mess
-    # Pattern for each product: "Name,Price,ImageURL,Store,Category,Style,AffiliateURL"
-    product_pattern = r'([^,]+),(\d+),(https?://[^,]+),([^,]+),([^,]+),([^,]+),(https?://[^\s]+)'
+    # Pattern: name,price,image_url,store,category,style,affiliate_url
+    # Name must start with capital letter and not be a header word
+    product_pattern = r'([A-Z][A-Za-z\s\-]+),(\d+),(https?://[^,]+),([^,]+),([^,]+),([^,]+),(https?://[^\s]+)'
     matches = re.findall(product_pattern, text)
     
     for match in matches:
         name, price, image, store, category, style, affiliate = match
+        
+        # Skip if this looks like header data
+        if 'affiliate_link' in name.lower() or 'price' in name.lower():
+            continue
+            
         try:
             price_val = float(price)
         except:
