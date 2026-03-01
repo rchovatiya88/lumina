@@ -32,8 +32,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8 ml-10">
               <Link to="/" className={isActive('/')} data-testid="nav-home-link">Home</Link>
-              <Link to="/search" className={isActive('/search')} data-testid="nav-search-link">Search</Link>
-              <Link to="/studio" className={isActive('/studio')} data-testid="nav-studio-link">Studio</Link>
+              <Link to="/search" className={isActive('/search')} data-testid="nav-shop-link">Shop</Link>
               <Link to="/journal" className={isActive('/journal')} data-testid="nav-journal-link">Trends</Link>
               <Link to="/services" className={isActive('/services')} data-testid="nav-services-link">Services</Link>
               <Link to="/about" className={isActive('/about')} data-testid="nav-about-link">About</Link>
