@@ -1,8 +1,7 @@
 import React from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
-import ProductDiscovery from './pages/ProductDiscovery';
 import Services from './pages/Services';
 import Dashboard from './pages/Dashboard';
 import Journal from './pages/Journal';
@@ -18,7 +17,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/studio" element={<ProductDiscovery />} />
+          <Route path="/studio" element={<Navigate to="/search" replace />} />
           <Route path="/services" element={<Services />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/journal" element={<Journal />} />
