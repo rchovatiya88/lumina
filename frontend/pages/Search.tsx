@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Search, ExternalLink, Filter, X, Loader2, ImageIcon, Grid3X3, Store, DollarSign, Sparkles } from 'lucide-react';
+import { Search, ExternalLink, Filter, Loader2, ImageIcon, Store, DollarSign, Sparkles, Star, Heart, ShoppingBag } from 'lucide-react';
 import { trackAffiliateClick } from '../services/monetizationService';
 
 interface Product {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   price: number | null;
-  url: string;
+  url?: string;
+  buyUrl?: string;
+  affiliateLink?: string;
   store: string;
   category: string;
   style: string;
-  image: string | null;
+  image?: string | null;
+  source?: 'curated' | 'web';
 }
 
 interface ImageResult {
@@ -24,14 +27,14 @@ interface ImageResult {
 }
 
 const CATEGORIES = ['all', 'sofa', 'chair', 'table', 'bed', 'lamp', 'rug', 'storage', 'decor'];
-const STYLES = ['all', 'modern', 'boho', 'industrial', 'mid-century', 'scandinavian', 'farmhouse', 'glam', 'coastal'];
+const STYLES = ['all', 'modern', 'boho', 'industrial', 'mid-century', 'mcm', 'scandi', 'japandi', 'glam', 'coastal'];
 const PRICE_RANGES = [
   { label: 'All Prices', min: null, max: null },
-  { label: 'Under $100', min: null, max: 100 },
-  { label: '$100 - $300', min: 100, max: 300 },
-  { label: '$300 - $500', min: 300, max: 500 },
+  { label: 'Under $200', min: null, max: 200 },
+  { label: '$200 - $500', min: 200, max: 500 },
   { label: '$500 - $1000', min: 500, max: 1000 },
-  { label: 'Over $1000', min: 1000, max: null },
+  { label: '$1000 - $2000', min: 1000, max: 2000 },
+  { label: 'Over $2000', min: 2000, max: null },
 ];
 
 const backendUrl =
@@ -48,8 +51,11 @@ const SearchPage: React.FC = () => {
   const [query, setQuery] = useState('');
   const [searchedQuery, setSearchedQuery] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
+  const [curatedCount, setCuratedCount] = useState(0);
+  const [webCount, setWebCount] = useState(0);
   const [images, setImages] = useState<ImageResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [viewMode, setViewMode] = useState<'products' | 'images'>('products');
   
   // Filters
@@ -61,6 +67,32 @@ const SearchPage: React.FC = () => {
   // Suggestions
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  
+  // Saved items
+  const [savedItems, setSavedItems] = useState<Set<string>>(new Set());
+
+  // Load curated products on mount
+  useEffect(() => {
+    loadCuratedProducts();
+  }, []);
+
+  const loadCuratedProducts = async () => {
+    setInitialLoading(true);
+    try {
+      const params = new URLSearchParams({ limit: '50' });
+      const res = await fetch(apiUrl(`/api/products/curated?${params}`));
+      const data = await res.json();
+      if (data.ok) {
+        setProducts(data.products || []);
+        setCuratedCount(data.total || 0);
+        setWebCount(0);
+      }
+    } catch (error) {
+      console.error('Error loading curated products:', error);
+    } finally {
+      setInitialLoading(false);
+    }
+  };
 
   // Debounced suggestion fetching
   useEffect(() => {
@@ -85,15 +117,13 @@ const SearchPage: React.FC = () => {
   }, [query]);
 
   const handleSearch = useCallback(async (searchQuery: string) => {
-    if (!searchQuery.trim()) return;
-    
     setLoading(true);
     setSearchedQuery(searchQuery);
     setShowSuggestions(false);
     
     const params = new URLSearchParams({
       q: searchQuery,
-      max_results: '20',
+      max_results: '40',
     });
     
     if (category !== 'all') params.append('category', category);
@@ -104,18 +134,22 @@ const SearchPage: React.FC = () => {
     if (range.max !== null) params.append('max_price', String(range.max));
     
     try {
-      // Fetch products
-      const productRes = await fetch(apiUrl(`/api/search/products?${params}`));
+      // Use unified discover endpoint
+      const productRes = await fetch(apiUrl(`/api/products/discover?${params}`));
       const productData = await productRes.json();
       if (productData.ok) {
         setProducts(productData.products || []);
+        setCuratedCount(productData.curated_count || 0);
+        setWebCount(productData.web_count || 0);
       }
       
-      // Fetch images
-      const imageRes = await fetch(apiUrl(`/api/search/images?q=${encodeURIComponent(searchQuery)}&max_results=12`));
-      const imageData = await imageRes.json();
-      if (imageData.ok) {
-        setImages(imageData.images || []);
+      // Fetch images if we have a query
+      if (searchQuery) {
+        const imageRes = await fetch(apiUrl(`/api/search/images?q=${encodeURIComponent(searchQuery)}&max_results=12`));
+        const imageData = await imageRes.json();
+        if (imageData.ok) {
+          setImages(imageData.images || []);
+        }
       }
     } catch (error) {
       console.error('Search error:', error);
@@ -124,7 +158,16 @@ const SearchPage: React.FC = () => {
     }
   }, [category, style, priceRange]);
 
+  // Re-search when filters change (if there's an active search)
+  useEffect(() => {
+    if (searchedQuery) {
+      handleSearch(searchedQuery);
+    }
+  }, [category, style, priceRange]);
+
   const handleProductClick = async (product: Product) => {
+    const destinationUrl = product.buyUrl || product.affiliateLink || product.url || '#';
+    
     // Track the click
     try {
       await trackAffiliateClick({
@@ -132,13 +175,27 @@ const SearchPage: React.FC = () => {
         product_name: product.name,
         store: product.store,
         price: product.price || 0,
-        destination_url: product.url,
+        destination_url: destinationUrl,
       });
     } catch {
       // Tracking failed, still open the link
     }
     
-    window.open(product.url, '_blank');
+    if (destinationUrl && destinationUrl !== '#') {
+      window.open(destinationUrl, '_blank');
+    }
+  };
+
+  const toggleSaved = (productId: string) => {
+    setSavedItems(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(productId)) {
+        newSet.delete(productId);
+      } else {
+        newSet.add(productId);
+      }
+      return newSet;
+    });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -152,35 +209,45 @@ const SearchPage: React.FC = () => {
     handleSearch(suggestion);
   };
 
+  const clearSearch = () => {
+    setQuery('');
+    setSearchedQuery('');
+    loadCuratedProducts();
+  };
+
   const popularSearches = [
-    'modern velvet sofa',
-    'mid-century chair',
-    'marble coffee table',
-    'scandinavian bookshelf',
-    'boho area rug',
-    'industrial floor lamp',
+    'velvet sofa',
+    'mid century chair',
+    'marble table',
+    'rattan lamp',
+    'boho rug',
+    'japandi decor',
   ];
+
+  const getProductUrl = (product: Product) => {
+    return product.buyUrl || product.affiliateLink || product.url || '#';
+  };
 
   return (
     <div className="min-h-screen bg-stone-50" data-testid="search-page">
       {/* Hero Search Section */}
-      <div className="bg-gradient-to-b from-stone-900 to-stone-800 text-white py-16 px-4">
+      <div className="bg-gradient-to-b from-stone-900 to-stone-800 text-white py-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Sparkles className="text-amber-400" size={24} />
-            <span className="text-amber-400 text-sm font-medium uppercase tracking-wider">Live Product Search</span>
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <ShoppingBag className="text-amber-400" size={22} />
+            <span className="text-amber-400 text-sm font-medium uppercase tracking-wider">Product Discovery</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-serif mb-4" data-testid="search-page-title">
-            Find Your Perfect Piece
+          <h1 className="text-3xl md:text-4xl font-serif mb-3" data-testid="search-page-title">
+            Discover Your Perfect Piece
           </h1>
-          <p className="text-stone-300 text-lg mb-8 max-w-2xl mx-auto">
-            Search across Amazon, Wayfair, IKEA, West Elm, and more. Discover furniture from the entire web in one place.
+          <p className="text-stone-300 text-base mb-6 max-w-xl mx-auto">
+            {curatedCount > 0 ? `${curatedCount}+ curated products` : 'Curated picks'} + live search across Amazon, Wayfair, IKEA & more
           </p>
           
           {/* Search Input */}
           <div className="relative max-w-2xl mx-auto">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={22} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={20} />
               <input
                 type="text"
                 value={query}
@@ -190,17 +257,17 @@ const SearchPage: React.FC = () => {
                 }}
                 onKeyDown={handleKeyDown}
                 onFocus={() => setShowSuggestions(true)}
-                placeholder="Search for furniture... e.g., 'velvet sofa under $800'"
-                className="w-full pl-12 pr-32 py-4 bg-white text-stone-900 rounded-2xl text-lg focus:outline-none focus:ring-4 focus:ring-amber-400/30 shadow-xl"
+                placeholder="Search... e.g., 'velvet sofa' or 'boho lamp'"
+                className="w-full pl-11 pr-28 py-3.5 bg-white text-stone-900 rounded-xl text-base focus:outline-none focus:ring-4 focus:ring-amber-400/30 shadow-lg"
                 data-testid="search-input"
               />
               <button
                 onClick={() => handleSearch(query)}
-                disabled={loading || !query.trim()}
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-stone-900 text-white px-6 py-2.5 rounded-xl font-medium hover:bg-stone-800 disabled:opacity-50 transition flex items-center gap-2"
+                disabled={loading}
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-stone-900 text-white px-5 py-2 rounded-lg font-medium hover:bg-stone-800 disabled:opacity-50 transition flex items-center gap-2 text-sm"
                 data-testid="search-button"
               >
-                {loading ? <Loader2 className="animate-spin" size={18} /> : <Search size={18} />}
+                {loading ? <Loader2 className="animate-spin" size={16} /> : <Search size={16} />}
                 Search
               </button>
             </div>
@@ -212,9 +279,9 @@ const SearchPage: React.FC = () => {
                   <button
                     key={idx}
                     onClick={() => selectSuggestion(suggestion)}
-                    className="w-full px-4 py-3 text-left text-stone-700 hover:bg-stone-50 flex items-center gap-3 border-b border-stone-100 last:border-0"
+                    className="w-full px-4 py-2.5 text-left text-stone-700 hover:bg-stone-50 flex items-center gap-3 border-b border-stone-100 last:border-0 text-sm"
                   >
-                    <Search size={16} className="text-stone-400" />
+                    <Search size={14} className="text-stone-400" />
                     {suggestion}
                   </button>
                 ))}
@@ -223,306 +290,307 @@ const SearchPage: React.FC = () => {
           </div>
           
           {/* Popular Searches */}
-          {!searchedQuery && (
-            <div className="mt-6 flex flex-wrap justify-center gap-2">
-              <span className="text-stone-400 text-sm">Try:</span>
-              {popularSearches.map((term) => (
-                <button
-                  key={term}
-                  onClick={() => {
-                    setQuery(term);
-                    handleSearch(term);
-                  }}
-                  className="text-sm px-3 py-1 bg-white/10 hover:bg-white/20 rounded-full transition"
-                  data-testid={`popular-search-${term.replace(/\s+/g, '-')}`}
-                >
-                  {term}
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="mt-4 flex flex-wrap justify-center gap-2">
+            <span className="text-stone-400 text-xs">Popular:</span>
+            {popularSearches.map((term) => (
+              <button
+                key={term}
+                onClick={() => {
+                  setQuery(term);
+                  handleSearch(term);
+                }}
+                className="text-xs px-3 py-1 bg-white/10 hover:bg-white/20 rounded-full transition"
+                data-testid={`popular-search-${term.replace(/\s+/g, '-')}`}
+              >
+                {term}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Results Section */}
-      {searchedQuery && (
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          {/* Filters Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-            <div className="flex items-center gap-4">
-              <h2 className="text-xl font-serif text-stone-900">
-                Results for "<span className="text-amber-700">{searchedQuery}</span>"
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        {/* Results Header */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
+          <div className="flex items-center gap-3">
+            {searchedQuery ? (
+              <>
+                <h2 className="text-lg font-serif text-stone-900">
+                  Results for "<span className="text-amber-700">{searchedQuery}</span>"
+                </h2>
+                <button onClick={clearSearch} className="text-xs text-stone-500 hover:text-stone-700 underline">
+                  Clear
+                </button>
+              </>
+            ) : (
+              <h2 className="text-lg font-serif text-stone-900">
+                Browse Curated Collection
               </h2>
-              <span className="text-stone-500 text-sm">
-                {viewMode === 'products' ? products.length : images.length} items
-              </span>
+            )}
+            <div className="flex items-center gap-2 text-xs text-stone-500">
+              {curatedCount > 0 && (
+                <span className="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <Star size={10} fill="currentColor" /> {curatedCount} curated
+                </span>
+              )}
+              {webCount > 0 && (
+                <span className="bg-stone-100 text-stone-600 px-2 py-0.5 rounded-full">
+                  +{webCount} from web
+                </span>
+              )}
             </div>
-            
-            <div className="flex items-center gap-3">
-              {/* View Mode Toggle */}
-              <div className="flex bg-stone-200 rounded-lg p-1">
-                <button
-                  onClick={() => setViewMode('products')}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition ${
-                    viewMode === 'products' ? 'bg-white shadow text-stone-900' : 'text-stone-600'
-                  }`}
-                  data-testid="view-products-btn"
-                >
-                  <Store size={16} className="inline mr-1" /> Products
-                </button>
-                <button
-                  onClick={() => setViewMode('images')}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition ${
-                    viewMode === 'images' ? 'bg-white shadow text-stone-900' : 'text-stone-600'
-                  }`}
-                  data-testid="view-images-btn"
-                >
-                  <ImageIcon size={16} className="inline mr-1" /> Images
-                </button>
-              </div>
-              
-              {/* Filter Toggle */}
+          </div>
+          
+          <div className="flex items-center gap-2">
+            {/* View Mode Toggle */}
+            <div className="flex bg-stone-200 rounded-lg p-0.5">
               <button
-                onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition ${
-                  showFilters ? 'bg-stone-900 text-white border-stone-900' : 'bg-white text-stone-700 border-stone-300 hover:border-stone-400'
+                onClick={() => setViewMode('products')}
+                className={`px-3 py-1 rounded-md text-xs font-medium transition ${
+                  viewMode === 'products' ? 'bg-white shadow text-stone-900' : 'text-stone-600'
                 }`}
-                data-testid="toggle-filters-btn"
+                data-testid="view-products-btn"
               >
-                <Filter size={18} />
-                Filters
+                <Store size={14} className="inline mr-1" /> Products
+              </button>
+              <button
+                onClick={() => setViewMode('images')}
+                className={`px-3 py-1 rounded-md text-xs font-medium transition ${
+                  viewMode === 'images' ? 'bg-white shadow text-stone-900' : 'text-stone-600'
+                }`}
+                data-testid="view-images-btn"
+              >
+                <ImageIcon size={14} className="inline mr-1" /> Images
               </button>
             </div>
+            
+            {/* Filter Toggle */}
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs transition ${
+                showFilters ? 'bg-stone-900 text-white border-stone-900' : 'bg-white text-stone-700 border-stone-300 hover:border-stone-400'
+              }`}
+              data-testid="toggle-filters-btn"
+            >
+              <Filter size={14} />
+              Filters
+            </button>
           </div>
-          
-          {/* Filters Panel */}
-          {showFilters && (
-            <div className="bg-white rounded-2xl border border-stone-200 p-6 mb-6 shadow-sm" data-testid="filters-panel">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Category Filter */}
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Category</label>
-                  <select
-                    value={category}
-                    onChange={(e) => {
-                      setCategory(e.target.value);
-                      handleSearch(query);
-                    }}
-                    className="w-full border border-stone-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    data-testid="category-filter"
-                  >
-                    {CATEGORIES.map((cat) => (
-                      <option key={cat} value={cat}>
-                        {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                
-                {/* Style Filter */}
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Style</label>
-                  <select
-                    value={style}
-                    onChange={(e) => {
-                      setStyle(e.target.value);
-                      handleSearch(query);
-                    }}
-                    className="w-full border border-stone-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    data-testid="style-filter"
-                  >
-                    {STYLES.map((s) => (
-                      <option key={s} value={s}>
-                        {s.charAt(0).toUpperCase() + s.slice(1).replace('-', ' ')}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                
-                {/* Price Filter */}
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Price Range</label>
-                  <select
-                    value={priceRange}
-                    onChange={(e) => {
-                      setPriceRange(Number(e.target.value));
-                      handleSearch(query);
-                    }}
-                    className="w-full border border-stone-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    data-testid="price-filter"
-                  >
-                    {PRICE_RANGES.map((range, idx) => (
-                      <option key={idx} value={idx}>
-                        {range.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+        </div>
+        
+        {/* Filters Panel */}
+        {showFilters && (
+          <div className="bg-white rounded-xl border border-stone-200 p-4 mb-5 shadow-sm" data-testid="filters-panel">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Category Filter */}
+              <div>
+                <label className="block text-xs font-medium text-stone-700 mb-1.5">Category</label>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  data-testid="category-filter"
+                >
+                  {CATEGORIES.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              {/* Style Filter */}
+              <div>
+                <label className="block text-xs font-medium text-stone-700 mb-1.5">Style</label>
+                <select
+                  value={style}
+                  onChange={(e) => setStyle(e.target.value)}
+                  className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  data-testid="style-filter"
+                >
+                  {STYLES.map((s) => (
+                    <option key={s} value={s}>
+                      {s.charAt(0).toUpperCase() + s.slice(1).replace('-', ' ')}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              {/* Price Filter */}
+              <div>
+                <label className="block text-xs font-medium text-stone-700 mb-1.5">Price Range</label>
+                <select
+                  value={priceRange}
+                  onChange={(e) => setPriceRange(Number(e.target.value))}
+                  className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  data-testid="price-filter"
+                >
+                  {PRICE_RANGES.map((range, idx) => (
+                    <option key={idx} value={idx}>
+                      {range.label}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          {/* Loading State */}
-          {loading && (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="animate-spin text-stone-400" size={40} />
-            </div>
-          )}
+        {/* Loading State */}
+        {(loading || initialLoading) && (
+          <div className="flex items-center justify-center py-16">
+            <Loader2 className="animate-spin text-stone-400" size={36} />
+          </div>
+        )}
 
-          {/* Products Grid */}
-          {!loading && viewMode === 'products' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {products.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-white rounded-2xl border border-stone-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+        {/* Products Grid */}
+        {!loading && !initialLoading && viewMode === 'products' && (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {products.map((product) => (
+              <div
+                key={product.id}
+                className="bg-white rounded-xl border border-stone-200 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 group"
+                data-testid={`product-card-${product.id}`}
+              >
+                {/* Product Image */}
+                <div 
+                  className="aspect-square bg-stone-100 relative overflow-hidden cursor-pointer"
                   onClick={() => handleProductClick(product)}
-                  data-testid={`product-card-${product.id}`}
                 >
-                  {/* Product Image Placeholder */}
-                  <div className="aspect-[4/3] bg-gradient-to-br from-stone-100 to-stone-50 flex items-center justify-center relative overflow-hidden">
-                    <div className="text-center p-4">
-                      <Store className="text-stone-300 mx-auto mb-2" size={32} />
-                      <span className="text-stone-400 text-sm">View on {product.store}</span>
+                  {product.image ? (
+                    <img
+                      src={product.image.startsWith('http') ? product.image : `https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=300&h=300`}
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=300&h=300';
+                      }}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-stone-100 to-stone-50">
+                      <Store className="text-stone-300" size={32} />
                     </div>
-                    
-                    {/* Store Badge */}
-                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-stone-700 shadow-sm">
-                      {product.store}
-                    </div>
-                    
-                    {/* Category Badge */}
-                    <div className="absolute top-3 right-3 bg-stone-900/80 text-white px-2 py-1 rounded-md text-xs uppercase">
-                      {product.category}
-                    </div>
+                  )}
+                  
+                  {/* Badges */}
+                  <div className="absolute top-2 left-2 flex flex-col gap-1">
+                    {product.source === 'curated' && (
+                      <span className="bg-amber-500 text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase flex items-center gap-1">
+                        <Star size={8} fill="currentColor" /> Curated
+                      </span>
+                    )}
+                    {product.source === 'web' && (
+                      <span className="bg-stone-700 text-white px-2 py-0.5 rounded text-[10px] font-medium">
+                        Web
+                      </span>
+                    )}
                   </div>
                   
-                  {/* Product Info */}
-                  <div className="p-5">
-                    <h3 className="font-medium text-stone-900 mb-2 line-clamp-2 group-hover:text-amber-700 transition">
-                      {product.name}
-                    </h3>
-                    
-                    {product.description && (
-                      <p className="text-stone-500 text-sm mb-3 line-clamp-2">
-                        {product.description}
-                      </p>
+                  {/* Save Button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleSaved(product.id);
+                    }}
+                    className={`absolute top-2 right-2 p-1.5 rounded-full transition ${
+                      savedItems.has(product.id) 
+                        ? 'bg-red-500 text-white' 
+                        : 'bg-white/80 text-stone-600 hover:bg-white'
+                    }`}
+                  >
+                    <Heart size={14} fill={savedItems.has(product.id) ? "currentColor" : "none"} />
+                  </button>
+                  
+                  {/* Store Badge */}
+                  <div className="absolute bottom-2 left-2 bg-white/90 backdrop-blur px-2 py-0.5 rounded text-[10px] font-bold text-stone-700">
+                    {product.store}
+                  </div>
+                </div>
+                
+                {/* Product Info */}
+                <div className="p-3">
+                  <h3 
+                    className="font-medium text-stone-900 text-sm line-clamp-2 mb-1 cursor-pointer hover:text-amber-700 transition"
+                    onClick={() => handleProductClick(product)}
+                  >
+                    {product.name}
+                  </h3>
+                  
+                  <div className="flex items-center justify-between">
+                    {product.price && product.price > 0 ? (
+                      <span className="text-base font-bold text-stone-900">
+                        ${product.price.toLocaleString()}
+                      </span>
+                    ) : (
+                      <span className="text-xs text-stone-500">View price</span>
                     )}
                     
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        {product.price ? (
-                          <span className="text-lg font-bold text-stone-900">
-                            ${product.price.toLocaleString()}
-                          </span>
-                        ) : (
-                          <span className="text-sm text-stone-500">View price on site</span>
-                        )}
-                      </div>
-                      
-                      <span className="text-xs px-2 py-1 bg-stone-100 text-stone-600 rounded-full capitalize">
-                        {product.style}
-                      </span>
-                    </div>
-                    
-                    <button className="w-full mt-4 flex items-center justify-center gap-2 bg-stone-900 text-white py-2.5 rounded-xl font-medium hover:bg-stone-800 transition">
-                      View Product <ExternalLink size={16} />
+                    <span className="text-[10px] px-1.5 py-0.5 bg-stone-100 text-stone-600 rounded capitalize">
+                      {product.category}
+                    </span>
+                  </div>
+                  
+                  {getProductUrl(product) !== '#' && (
+                    <button 
+                      onClick={() => handleProductClick(product)}
+                      className="w-full mt-2 flex items-center justify-center gap-1 bg-stone-900 text-white py-2 rounded-lg text-xs font-medium hover:bg-stone-800 transition"
+                    >
+                      View <ExternalLink size={12} />
                     </button>
-                  </div>
+                  )}
                 </div>
-              ))}
-              
-              {products.length === 0 && (
-                <div className="col-span-full text-center py-16">
-                  <Search className="text-stone-300 mx-auto mb-4" size={48} />
-                  <h3 className="text-xl font-serif text-stone-900 mb-2">No products found</h3>
-                  <p className="text-stone-500">Try adjusting your search or filters</p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Images Grid */}
-          {!loading && viewMode === 'images' && (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {images.map((image) => (
-                <a
-                  key={image.id}
-                  href={image.source_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative aspect-square bg-stone-100 rounded-xl overflow-hidden hover:shadow-xl transition"
-                  data-testid={`image-card-${image.id}`}
-                >
-                  <img
-                    src={image.thumbnail || image.url}
-                    alt={image.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    onError={(e) => {
-                      e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZpbGw9IiNhOGEyOWUiIGR5PSIuM2VtIiBzdHlsZT0iZm9udC1mYW1pbHk6c2Fucy1zZXJpZjtmb250LXNpemU6MTRweDt0ZXh0LWFuY2hvcjptaWRkbGUiPkltYWdlPC90ZXh0Pjwvc3ZnPg==';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="absolute bottom-0 left-0 right-0 p-3">
-                      <p className="text-white text-sm font-medium line-clamp-2">{image.title}</p>
-                      <p className="text-white/70 text-xs mt-1">{image.source}</p>
-                    </div>
-                  </div>
-                </a>
-              ))}
-              
-              {images.length === 0 && (
-                <div className="col-span-full text-center py-16">
-                  <ImageIcon className="text-stone-300 mx-auto mb-4" size={48} />
-                  <h3 className="text-xl font-serif text-stone-900 mb-2">No images found</h3>
-                  <p className="text-stone-500">Try a different search term</p>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Empty State */}
-      {!searchedQuery && !loading && (
-        <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="bg-white rounded-2xl p-6 border border-stone-200">
-              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="text-amber-700" size={24} />
               </div>
-              <h3 className="font-serif text-lg mb-2">Search Anything</h3>
-              <p className="text-stone-500 text-sm">
-                "blue velvet sofa", "mid-century chair under $500", "boho rug"
-              </p>
-            </div>
+            ))}
             
-            <div className="bg-white rounded-2xl p-6 border border-stone-200">
-              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Store className="text-amber-700" size={24} />
+            {products.length === 0 && (
+              <div className="col-span-full text-center py-12">
+                <Search className="text-stone-300 mx-auto mb-3" size={40} />
+                <h3 className="text-lg font-serif text-stone-900 mb-1">No products found</h3>
+                <p className="text-stone-500 text-sm">Try adjusting your search or filters</p>
               </div>
-              <h3 className="font-serif text-lg mb-2">Compare Stores</h3>
-              <p className="text-stone-500 text-sm">
-                See products from Amazon, Wayfair, IKEA, West Elm & more
-              </p>
-            </div>
-            
-            <div className="bg-white rounded-2xl p-6 border border-stone-200">
-              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <DollarSign className="text-amber-700" size={24} />
-              </div>
-              <h3 className="font-serif text-lg mb-2">Best Prices</h3>
-              <p className="text-stone-500 text-sm">
-                Filter by budget and find the best deals across the web
-              </p>
-            </div>
+            )}
           </div>
-          
-          <p className="text-stone-400 text-sm">
-            Powered by live web search. Results update in real-time.
-          </p>
-        </div>
-      )}
+        )}
+
+        {/* Images Grid */}
+        {!loading && !initialLoading && viewMode === 'images' && (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {images.map((image) => (
+              <a
+                key={image.id}
+                href={image.source_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative aspect-square bg-stone-100 rounded-lg overflow-hidden hover:shadow-lg transition"
+                data-testid={`image-card-${image.id}`}
+              >
+                <img
+                  src={image.thumbnail || image.url}
+                  alt={image.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  onError={(e) => {
+                    e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZpbGw9IiNhOGEyOWUiIGR5PSIuM2VtIiBzdHlsZT0iZm9udC1mYW1pbHk6c2Fucy1zZXJpZjtmb250LXNpemU6MTRweDt0ZXh0LWFuY2hvcjptaWRkbGUiPkltYWdlPC90ZXh0Pjwvc3ZnPg==';
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="absolute bottom-0 left-0 right-0 p-2">
+                    <p className="text-white text-xs font-medium line-clamp-2">{image.title}</p>
+                  </div>
+                </div>
+              </a>
+            ))}
+            
+            {images.length === 0 && (
+              <div className="col-span-full text-center py-12">
+                <ImageIcon className="text-stone-300 mx-auto mb-3" size={40} />
+                <h3 className="text-lg font-serif text-stone-900 mb-1">No images yet</h3>
+                <p className="text-stone-500 text-sm">Search for something to see images</p>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
