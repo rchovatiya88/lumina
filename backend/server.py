@@ -441,14 +441,20 @@ def parse_concatenated_products(text: str) -> list[dict]:
     # Remove quotes and clean up
     text = text.replace('"', '').strip()
     
+    print(f"parse_concatenated_products input length: {len(text)}")
+    print(f"First 100 chars: {text[:100]}")
+    
     # Skip if it looks like just headers
-    if text.startswith('name,price') or len(text) < 50:
+    if text.startswith('name,price') and len(text) < 100:
+        print("Skipping - looks like just headers")
         return products
     
     # Pattern: name,price,image_url,store,category,style,affiliate_url
     # Name must start with capital letter and not be a header word
     product_pattern = r'([A-Z][A-Za-z\s\-]+),(\d+),(https?://[^,]+),([^,]+),([^,]+),([^,]+),(https?://[^\s]+)'
     matches = re.findall(product_pattern, text)
+    
+    print(f"Regex found {len(matches)} matches")
     
     for match in matches:
         name, price, image, store, category, style, affiliate = match
@@ -461,6 +467,8 @@ def parse_concatenated_products(text: str) -> list[dict]:
             price_val = float(price)
         except:
             price_val = 0
+        
+        print(f"Adding product: {name[:30]} | ${price_val} | {store}")
             
         products.append({
             "id": f"sheet-{hashlib.md5(name.encode()).hexdigest()[:8]}",
