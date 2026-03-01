@@ -41,8 +41,8 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* NEW: Search Feature Highlight */}
-      <section className="py-12 bg-gradient-to-r from-amber-50 to-orange-50 border-y border-amber-200">
+      {/* Feature Highlight */}
+      <section className="py-10 bg-gradient-to-r from-amber-50 to-orange-50 border-y border-amber-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
@@ -50,12 +50,12 @@ const Home: React.FC = () => {
                 <Sparkles className="text-amber-600" size={24} />
               </div>
               <div>
-                <h3 className="font-serif text-xl text-stone-900">NEW: Live Product Search</h3>
-                <p className="text-stone-600">Search across 10+ stores in real-time. Find the best deals instantly.</p>
+                <h3 className="font-serif text-xl text-stone-900">Curated + Live Search</h3>
+                <p className="text-stone-600">120+ curated picks + search across Amazon, Wayfair, IKEA & more.</p>
               </div>
             </div>
             <Link to="/search" className="flex items-center gap-2 bg-stone-900 text-white px-6 py-3 rounded-full font-medium hover:bg-stone-800 transition" data-testid="home-try-search-link">
-              Try It Now <ArrowRight size={18} />
+              Start Shopping <ArrowRight size={18} />
             </Link>
           </div>
         </div>
@@ -63,16 +63,11 @@ const Home: React.FC = () => {
 
       <section className="py-16 bg-stone-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <Link to="/search" className="bg-gradient-to-br from-amber-500 to-orange-500 p-8 rounded-2xl text-white hover:shadow-lg transition" data-testid="home-platform-search-link">
-              <p className="text-xs uppercase tracking-wide text-amber-100 mb-2">New Feature</p>
-              <h3 className="font-serif text-2xl mb-2">Live Search</h3>
-              <p className="text-amber-50 text-sm">Search furniture across the entire web in real-time.</p>
-            </Link>
-            <Link to="/studio" className="bg-white p-8 rounded-2xl border border-stone-200 hover:shadow-md transition" data-testid="home-platform-moodboard-link">
-              <p className="text-xs uppercase tracking-wide text-stone-500 mb-2">Platform</p>
-              <h3 className="font-serif text-2xl text-stone-900 mb-2">Moodboard Studio</h3>
-              <p className="text-stone-600 text-sm">Browse curated products, filter by budget, and save collections.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Link to="/search" className="bg-gradient-to-br from-amber-500 to-orange-500 p-8 rounded-2xl text-white hover:shadow-lg transition" data-testid="home-platform-shop-link">
+              <p className="text-xs uppercase tracking-wide text-amber-100 mb-2">Shop</p>
+              <h3 className="font-serif text-2xl mb-2">Product Discovery</h3>
+              <p className="text-amber-50 text-sm">Browse curated products or search the entire web for furniture.</p>
             </Link>
             <Link to="/journal" className="bg-white p-8 rounded-2xl border border-stone-200 hover:shadow-md transition" data-testid="home-platform-journal-link">
               <p className="text-xs uppercase tracking-wide text-stone-500 mb-2">Content</p>
