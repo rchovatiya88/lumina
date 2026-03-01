@@ -504,7 +504,16 @@ def fetch_google_sheet_products() -> list[dict]:
         raw_text = response.text
         print(f"Raw sheet data length: {len(raw_text)}")
         
-        # Parse CSV
+        # First, check if the entire text contains concatenated data
+        # This happens when all products are pasted into one cell
+        if raw_text.count('https://') > 4:  # Multiple URLs suggest concatenated data
+            print("Detected potential concatenated data in sheet, attempting to parse...")
+            concat_products = parse_concatenated_products(raw_text)
+            if concat_products:
+                print(f"Successfully parsed {len(concat_products)} concatenated products")
+                return concat_products
+        
+        # Parse CSV normally
         import csv
         reader = csv.DictReader(StringIO(raw_text))
         products = []
@@ -516,7 +525,7 @@ def fetch_google_sheet_products() -> list[dict]:
             # Check if this looks like concatenated data (contains multiple URLs)
             if name_value and name_value.count('https://') > 1:
                 # This is concatenated data - parse it specially
-                print(f"Detected concatenated data, parsing...")
+                print(f"Detected concatenated data in row, parsing...")
                 concat_products = parse_concatenated_products(name_value)
                 products.extend(concat_products)
                 continue
