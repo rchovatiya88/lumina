@@ -8,7 +8,7 @@ import re
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from duckduckgo_search import DDGS
+from ddgs import DDGS
 
 
 app = FastAPI(title="Lumina Backend", version="1.0.0")
