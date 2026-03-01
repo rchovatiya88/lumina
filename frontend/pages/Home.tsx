@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Star, Layout, ShoppingBag, CheckCircle } from 'lucide-react';
+import { ArrowRight, Star, Layout, ShoppingBag, CheckCircle, Search, Sparkles } from 'lucide-react';
 import { SERVICE_TIERS } from '../constants';
 import NewsletterModal from '../components/NewsletterModal';
 
@@ -27,18 +27,48 @@ const Home: React.FC = () => {
             Designed by Us.<br/> Styled by You.
           </h1>
           <p className="text-lg md:text-xl text-stone-100 mb-10 max-w-2xl mx-auto font-light">
-            Professional interior design services meets modern technology. 
+            Search furniture across Amazon, Wayfair, IKEA and more. 
             Get a custom shoppable room design in days, not months.
           </p>
-          <Link to="/services" className="inline-flex bg-stone-900/80 backdrop-blur text-white px-8 py-4 rounded-full font-medium hover:bg-stone-900 transition shadow-xl border border-white/10" data-testid="home-view-design-packages-link">
-            View Design Packages
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/search" className="inline-flex items-center gap-2 bg-white text-stone-900 px-8 py-4 rounded-full font-medium hover:bg-stone-100 transition shadow-xl" data-testid="home-search-furniture-link">
+              <Search size={20} /> Search Furniture
+            </Link>
+            <Link to="/services" className="inline-flex bg-stone-900/80 backdrop-blur text-white px-8 py-4 rounded-full font-medium hover:bg-stone-900 transition shadow-xl border border-white/10" data-testid="home-view-design-packages-link">
+              View Design Packages
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* NEW: Search Feature Highlight */}
+      <section className="py-12 bg-gradient-to-r from-amber-50 to-orange-50 border-y border-amber-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                <Sparkles className="text-amber-600" size={24} />
+              </div>
+              <div>
+                <h3 className="font-serif text-xl text-stone-900">NEW: Live Product Search</h3>
+                <p className="text-stone-600">Search across 10+ stores in real-time. Find the best deals instantly.</p>
+              </div>
+            </div>
+            <Link to="/search" className="flex items-center gap-2 bg-stone-900 text-white px-6 py-3 rounded-full font-medium hover:bg-stone-800 transition" data-testid="home-try-search-link">
+              Try It Now <ArrowRight size={18} />
+            </Link>
+          </div>
         </div>
       </section>
 
       <section className="py-16 bg-stone-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <Link to="/search" className="bg-gradient-to-br from-amber-500 to-orange-500 p-8 rounded-2xl text-white hover:shadow-lg transition" data-testid="home-platform-search-link">
+              <p className="text-xs uppercase tracking-wide text-amber-100 mb-2">New Feature</p>
+              <h3 className="font-serif text-2xl mb-2">Live Search</h3>
+              <p className="text-amber-50 text-sm">Search furniture across the entire web in real-time.</p>
+            </Link>
             <Link to="/studio" className="bg-white p-8 rounded-2xl border border-stone-200 hover:shadow-md transition" data-testid="home-platform-moodboard-link">
               <p className="text-xs uppercase tracking-wide text-stone-500 mb-2">Platform</p>
               <h3 className="font-serif text-2xl text-stone-900 mb-2">Moodboard Studio</h3>
@@ -46,13 +76,13 @@ const Home: React.FC = () => {
             </Link>
             <Link to="/journal" className="bg-white p-8 rounded-2xl border border-stone-200 hover:shadow-md transition" data-testid="home-platform-journal-link">
               <p className="text-xs uppercase tracking-wide text-stone-500 mb-2">Content</p>
-              <h3 className="font-serif text-2xl text-stone-900 mb-2">Journal • Join the Circle</h3>
+              <h3 className="font-serif text-2xl text-stone-900 mb-2">Journal • Trends</h3>
               <p className="text-stone-600 text-sm">Get trends, practical guides, and weekly shopping inspiration.</p>
             </Link>
             <Link to="/services" className="bg-white p-8 rounded-2xl border border-stone-200 hover:shadow-md transition" data-testid="home-platform-services-link">
-              <p className="text-xs uppercase tracking-wide text-stone-500 mb-2">Conversion</p>
-              <h3 className="font-serif text-2xl text-stone-900 mb-2">Design Services</h3>
-              <p className="text-stone-600 text-sm">Book paid design support and optional coordination for installation.</p>
+              <p className="text-xs uppercase tracking-wide text-stone-500 mb-2">Services</p>
+              <h3 className="font-serif text-2xl text-stone-900 mb-2">Design Packages</h3>
+              <p className="text-stone-600 text-sm">Book paid design support and coordination for installation.</p>
             </Link>
           </div>
         </div>
