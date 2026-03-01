@@ -425,3 +425,301 @@ def get_search_suggestions(
         "ok": True,
         "suggestions": furniture_suggestions,
     }
+
+
+
+# ============== CURATED PRODUCTS (Google Sheets + JSON) ==============
+
+def fetch_google_sheet_products() -> list[dict]:
+    """
+    Fetch products from a public Google Sheet.
+    Sheet should have columns: name, price, image, store, category, style, affiliate_link
+    """
+    if not GOOGLE_SHEET_URL:
+        return []
+    
+    try:
+        # Extract sheet ID from URL
+        if "/spreadsheets/d/" in GOOGLE_SHEET_URL:
+            sheet_id = GOOGLE_SHEET_URL.split("/spreadsheets/d/")[1].split("/")[0]
+        else:
+            sheet_id = GOOGLE_SHEET_URL
+        
+        # Build CSV export URL
+        csv_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
+        
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+        response = requests.get(csv_url, headers=headers, timeout=10)
+        response.raise_for_status()
+        
+        # Parse CSV
+        import csv
+        reader = csv.DictReader(StringIO(response.text))
+        products = []
+        
+        for row in reader:
+            # Skip empty rows
+            if not row.get('name'):
+                continue
+            
+            try:
+                price = float(row.get('price', 0) or 0)
+            except (ValueError, TypeError):
+                price = 0
+            
+            products.append({
+                "id": f"sheet-{hashlib.md5(row.get('name', '').encode()).hexdigest()[:8]}",
+                "name": row.get('name', ''),
+                "price": price,
+                "image": row.get('image', ''),
+                "store": row.get('store', 'Curated'),
+                "category": row.get('category', 'decor').lower(),
+                "style": row.get('style', 'modern').lower(),
+                "affiliate_link": row.get('affiliate_link', ''),
+                "buyUrl": row.get('affiliate_link', '') or row.get('buyUrl', ''),
+                "source": "curated",  # Mark as curated
+            })
+        
+        return products
+    except Exception as e:
+        print(f"Error fetching Google Sheet: {e}")
+        return []
+
+
+def load_json_products() -> list[dict]:
+    """Load products from the local JSON file."""
+    try:
+        json_path = os.path.join(os.path.dirname(__file__), '..', 'frontend', 'src', 'data', 'imported_products.json')
+        if os.path.exists(json_path):
+            with open(json_path, 'r') as f:
+                products = json.load(f)
+                # Mark as curated
+                for p in products:
+                    p['source'] = 'curated'
+                return products
+    except Exception as e:
+        print(f"Error loading JSON products: {e}")
+    return []
+
+
+def get_all_curated_products() -> list[dict]:
+    """
+    Get all curated products from both Google Sheets and JSON file.
+    Results are cached for 5 minutes.
+    """
+    cache_key = "all_curated"
+    
+    # Check cache
+    if cache_key in curated_products_cache:
+        cached = curated_products_cache[cache_key]
+        if (datetime.now(timezone.utc).timestamp() - cached.get("cached_at", 0)) < CURATED_CACHE_TTL:
+            return cached["products"]
+    
+    # Fetch from both sources
+    sheet_products = fetch_google_sheet_products()
+    json_products = load_json_products()
+    
+    # Combine and dedupe (prefer sheet products if same name)
+    seen_names = set()
+    all_products = []
+    
+    # Sheet products first (higher priority)
+    for p in sheet_products:
+        name_key = p.get('name', '').lower()[:50]
+        if name_key and name_key not in seen_names:
+            seen_names.add(name_key)
+            all_products.append(p)
+    
+    # Then JSON products
+    for p in json_products:
+        name_key = p.get('name', '').lower()[:50]
+        if name_key and name_key not in seen_names:
+            seen_names.add(name_key)
+            all_products.append(p)
+    
+    # Cache results
+    curated_products_cache[cache_key] = {
+        "products": all_products,
+        "cached_at": datetime.now(timezone.utc).timestamp(),
+    }
+    
+    return all_products
+
+
+@app.get("/api/products/curated")
+def get_curated_products(
+    category: Optional[str] = Query(None),
+    style: Optional[str] = Query(None),
+    min_price: Optional[float] = Query(None, ge=0),
+    max_price: Optional[float] = Query(None, ge=0),
+    search: Optional[str] = Query(None),
+    limit: int = Query(50, ge=1, le=200),
+):
+    """
+    Get curated products from Google Sheets and local JSON.
+    These are hand-picked products with verified images and affiliate links.
+    """
+    products = get_all_curated_products()
+    
+    # Apply filters
+    filtered = products
+    
+    if search:
+        search_lower = search.lower()
+        filtered = [p for p in filtered if search_lower in p.get('name', '').lower() 
+                   or search_lower in p.get('category', '').lower()
+                   or search_lower in p.get('style', '').lower()]
+    
+    if category and category != 'all':
+        filtered = [p for p in filtered if p.get('category', '').lower() == category.lower()]
+    
+    if style and style != 'all':
+        filtered = [p for p in filtered if p.get('style', '').lower() == style.lower()]
+    
+    if min_price is not None:
+        filtered = [p for p in filtered if (p.get('price') or 0) >= min_price]
+    
+    if max_price is not None:
+        filtered = [p for p in filtered if (p.get('price') or 0) <= max_price]
+    
+    return {
+        "ok": True,
+        "total": len(filtered),
+        "products": filtered[:limit],
+        "source": "curated",
+    }
+
+
+@app.get("/api/products/discover")
+def discover_products(
+    q: str = Query("", description="Search query"),
+    category: Optional[str] = Query(None),
+    style: Optional[str] = Query(None),
+    min_price: Optional[float] = Query(None, ge=0),
+    max_price: Optional[float] = Query(None, ge=0),
+    max_results: int = Query(30, ge=5, le=100),
+):
+    """
+    UNIFIED DISCOVERY: Combines curated products + live web search.
+    Curated products appear first, web results fill the rest.
+    """
+    # Step 1: Search curated products first
+    curated = get_all_curated_products()
+    curated_matches = []
+    
+    if q:
+        q_lower = q.lower()
+        curated_matches = [p for p in curated if 
+                          q_lower in p.get('name', '').lower() or
+                          q_lower in p.get('category', '').lower() or
+                          q_lower in p.get('style', '').lower() or
+                          q_lower in p.get('store', '').lower()]
+    else:
+        curated_matches = curated
+    
+    # Apply filters to curated
+    if category and category != 'all':
+        curated_matches = [p for p in curated_matches if p.get('category', '').lower() == category.lower()]
+    
+    if style and style != 'all':
+        curated_matches = [p for p in curated_matches if p.get('style', '').lower() == style.lower()]
+    
+    if min_price is not None:
+        curated_matches = [p for p in curated_matches if (p.get('price') or 0) >= min_price]
+    
+    if max_price is not None:
+        curated_matches = [p for p in curated_matches if (p.get('price') or 0) <= max_price]
+    
+    # Limit curated results
+    curated_results = curated_matches[:min(15, max_results // 2)]
+    
+    # Step 2: If we need more results, search the web
+    web_results = []
+    remaining_slots = max_results - len(curated_results)
+    
+    if remaining_slots > 0 and q:
+        # Use the existing search functionality
+        search_query = f"{q} furniture buy online"
+        cache_key = hashlib.md5(f"{search_query}:{remaining_slots}".encode()).hexdigest()
+        
+        if cache_key in search_cache and (datetime.now(timezone.utc).timestamp() - search_cache[cache_key].get("cached_at", 0)) < CACHE_TTL_SECONDS:
+            web_results = search_cache[cache_key]["results"][:remaining_slots]
+        else:
+            try:
+                with DDGS() as ddgs:
+                    raw_results = list(ddgs.text(
+                        search_query,
+                        max_results=remaining_slots * 2,
+                        region="us-en",
+                    ))
+                
+                seen_titles = {p.get('name', '').lower()[:50] for p in curated_results}
+                
+                for item in raw_results:
+                    title = item.get("title", "")
+                    url = item.get("href", "")
+                    body = item.get("body", "")
+                    
+                    title_key = title.lower()[:50]
+                    if title_key in seen_titles:
+                        continue
+                    seen_titles.add(title_key)
+                    
+                    store = detect_store(url)
+                    price = extract_price(title) or extract_price(body)
+                    full_text = f"{title} {body}"
+                    
+                    web_results.append({
+                        "id": hashlib.md5(url.encode()).hexdigest()[:12],
+                        "name": title[:100],
+                        "description": body[:200] if body else "",
+                        "price": price,
+                        "url": url,
+                        "buyUrl": url,
+                        "store": store,
+                        "category": detect_category(full_text),
+                        "style": detect_style(full_text),
+                        "image": None,
+                        "source": "web",  # Mark as web result
+                    })
+                    
+                    if len(web_results) >= remaining_slots:
+                        break
+                
+                search_cache[cache_key] = {
+                    "results": web_results,
+                    "cached_at": datetime.now(timezone.utc).timestamp(),
+                }
+            except Exception as e:
+                print(f"Web search error: {e}")
+    
+    return {
+        "ok": True,
+        "query": q,
+        "curated_count": len(curated_results),
+        "web_count": len(web_results),
+        "total": len(curated_results) + len(web_results),
+        "products": curated_results + web_results,
+    }
+
+
+@app.post("/api/products/sheets/configure")
+def configure_sheets_url(url: str = Query(..., description="Public Google Sheets URL")):
+    """
+    Configure the Google Sheets URL for curated products.
+    Note: This is temporary - URL should be set via environment variable in production.
+    """
+    global GOOGLE_SHEET_URL
+    GOOGLE_SHEET_URL = url
+    
+    # Clear cache to force refresh
+    curated_products_cache.clear()
+    
+    # Test the connection
+    products = fetch_google_sheet_products()
+    
+    return {
+        "ok": True,
+        "message": f"Configured Google Sheets. Found {len(products)} products.",
+        "sample": products[:3] if products else [],
+    }
