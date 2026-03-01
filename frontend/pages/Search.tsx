@@ -34,8 +34,8 @@ const PRICE_RANGES = [
   { label: 'Over $1000', min: 1000, max: null },
 ];
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL || 
-  (typeof process !== 'undefined' && process.env?.REACT_APP_BACKEND_URL) || '';
+const backendUrl = (import.meta as any).env?.VITE_BACKEND_URL || 
+  (import.meta as any).env?.REACT_APP_BACKEND_URL || '';
 
 const apiUrl = (path: string) => {
   if (!backendUrl) return path;
