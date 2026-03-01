@@ -430,10 +430,74 @@ def get_search_suggestions(
 
 # ============== CURATED PRODUCTS (Google Sheets + JSON) ==============
 
+def parse_concatenated_products(text: str) -> list[dict]:
+    """
+    Parse products that were accidentally pasted into a single cell.
+    Handles format: "Product1,price,url,... Product2,price,url,..."
+    """
+    products = []
+    
+    # Split by http patterns to separate products (each product has a URL at the end)
+    # Pattern: ends with a URL, then space and new product name starts
+    import re
+    
+    # Find all product entries by splitting on the pattern where URL ends and new product starts
+    # Look for: "...url https://..." or "...url Product Name,price,..."
+    parts = re.split(r'(https?://[^\s,]+)\s+([A-Z])', text)
+    
+    if len(parts) <= 1:
+        # Try another approach - split by known store names followed by comma
+        parts = re.split(r',([a-z]+),(https?://[^\s]+)\s+', text, flags=re.IGNORECASE)
+    
+    # Simpler approach: find all comma-separated groups of 7 items
+    # Expected: name,price,image_url,store,category,style,affiliate_url
+    
+    # Remove quotes and clean up
+    text = text.replace('"', '').strip()
+    
+    # Split by URLs to find product boundaries
+    url_pattern = r'https?://[^\s,]+'
+    urls = re.findall(url_pattern, text)
+    
+    if not urls:
+        return products
+    
+    # Each product has 2 URLs (image + affiliate), so products = urls / 2
+    # Let's try to extract by finding patterns
+    
+    # Alternative: try to split the concatenated mess
+    # Pattern for each product: "Name,Price,ImageURL,Store,Category,Style,AffiliateURL"
+    product_pattern = r'([^,]+),(\d+),(https?://[^,]+),([^,]+),([^,]+),([^,]+),(https?://[^\s]+)'
+    matches = re.findall(product_pattern, text)
+    
+    for match in matches:
+        name, price, image, store, category, style, affiliate = match
+        try:
+            price_val = float(price)
+        except:
+            price_val = 0
+            
+        products.append({
+            "id": f"sheet-{hashlib.md5(name.encode()).hexdigest()[:8]}",
+            "name": name.strip(),
+            "price": price_val,
+            "image": image.strip(),
+            "store": store.strip(),
+            "category": category.strip().lower(),
+            "style": style.strip().lower(),
+            "affiliate_link": affiliate.strip(),
+            "buyUrl": affiliate.strip(),
+            "source": "curated",
+        })
+    
+    return products
+
+
 def fetch_google_sheet_products() -> list[dict]:
     """
     Fetch products from a public Google Sheet.
     Sheet should have columns: name, price, image, store, category, style, affiliate_link
+    Handles both proper CSV format and concatenated single-cell data.
     """
     if not GOOGLE_SHEET_URL:
         return []
@@ -452,14 +516,28 @@ def fetch_google_sheet_products() -> list[dict]:
         response = requests.get(csv_url, headers=headers, timeout=10)
         response.raise_for_status()
         
+        raw_text = response.text
+        print(f"Raw sheet data length: {len(raw_text)}")
+        
         # Parse CSV
         import csv
-        reader = csv.DictReader(StringIO(response.text))
+        reader = csv.DictReader(StringIO(raw_text))
         products = []
         
         for row in reader:
-            # Skip empty rows
-            if not row.get('name'):
+            # Get the first column value (might be 'name' or concatenated data)
+            name_value = row.get('name', '')
+            
+            # Check if this looks like concatenated data (contains multiple URLs)
+            if name_value and name_value.count('https://') > 1:
+                # This is concatenated data - parse it specially
+                print(f"Detected concatenated data, parsing...")
+                concat_products = parse_concatenated_products(name_value)
+                products.extend(concat_products)
+                continue
+            
+            # Normal row processing
+            if not name_value:
                 continue
             
             try:
@@ -468,8 +546,8 @@ def fetch_google_sheet_products() -> list[dict]:
                 price = 0
             
             products.append({
-                "id": f"sheet-{hashlib.md5(row.get('name', '').encode()).hexdigest()[:8]}",
-                "name": row.get('name', ''),
+                "id": f"sheet-{hashlib.md5(name_value.encode()).hexdigest()[:8]}",
+                "name": name_value,
                 "price": price,
                 "image": row.get('image', ''),
                 "store": row.get('store', 'Curated'),
@@ -480,9 +558,12 @@ def fetch_google_sheet_products() -> list[dict]:
                 "source": "curated",  # Mark as curated
             })
         
+        print(f"Parsed {len(products)} products from sheet")
         return products
     except Exception as e:
         print(f"Error fetching Google Sheet: {e}")
+        import traceback
+        traceback.print_exc()
         return []
 
 
