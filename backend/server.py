@@ -4,18 +4,27 @@ from typing import Optional
 import asyncio
 import hashlib
 import re
+import json
+import os
+from io import StringIO
 
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from ddgs import DDGS
+import requests
 
 
 app = FastAPI(title="Lumina Backend", version="1.0.0")
 
 # Simple in-memory cache for search results
 search_cache: dict[str, dict] = {}
+curated_products_cache: dict[str, any] = {}
 CACHE_TTL_SECONDS = 3600  # 1 hour
+CURATED_CACHE_TTL = 300  # 5 minutes for curated products
+
+# Google Sheets URL for curated products (public sheet)
+GOOGLE_SHEET_URL = os.environ.get("GOOGLE_SHEET_URL", "")
 
 app.add_middleware(
     CORSMiddleware,
