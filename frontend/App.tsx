@@ -9,6 +9,7 @@ import Journal from './pages/Journal';
 import Login from './pages/Login';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Search from './pages/Search';
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/studio" element={<ProductDiscovery />} />
           <Route path="/services" element={<Services />} />
           <Route path="/dashboard" element={<Dashboard />} />
