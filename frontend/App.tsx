@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Search from './pages/Search';
+import MoodBoard from './pages/MoodBoard';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/moodboard" element={<MoodBoard />} />
           <Route path="/studio" element={<Navigate to="/search" replace />} />
           <Route path="/services" element={<Services />} />
           <Route path="/dashboard" element={<Dashboard />} />
