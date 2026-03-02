@@ -1038,186 +1038,274 @@ def build_index():
 def normalize_product_name(name: str) -> str:
     """Normalize product name for comparison"""
     name = name.lower()
-    # Remove store names
     for store in ['amazon', 'wayfair', 'ikea', 'target', 'west elm', 'cb2', 'pottery barn']:
         name = name.replace(store, '')
-    # Remove special characters
     name = re.sub(r'[^\w\s]', '', name)
-    # Remove extra whitespace
     name = re.sub(r'\s+', ' ', name).strip()
     return name
 
 
 def find_similar_products(products: list, target: dict, threshold: float = 0.6) -> list:
     """Find products similar to target using fuzzy matching"""
-    try:
-        from difflib import SequenceMatcher
-    except ImportError:
-        return []
-    
+    from difflib import SequenceMatcher
+
     target_name = normalize_product_name(target.get('name', ''))
     if not target_name:
         return []
-    
+
     similar = []
     for p in products:
         if p.get('id') == target.get('id'):
             continue
-        
         p_name = normalize_product_name(p.get('name', ''))
         if not p_name:
             continue
-        
-        # Calculate similarity ratio
         ratio = SequenceMatcher(None, target_name, p_name).ratio()
-        
         if ratio >= threshold:
-            similar.append({
-                **p,
-                "similarity": round(ratio, 2)
-            })
-    
-    # Sort by similarity
+            similar.append({**p, "similarity": round(ratio, 2)})
+
     similar.sort(key=lambda x: x['similarity'], reverse=True)
     return similar[:10]
 
 
+def live_search_product_prices(product_name: str, target_store: str = "") -> list:
+    """
+    Perform live DuckDuckGo searches for a product across major stores.
+    Returns a list of store offerings with prices.
+    """
+    # Clean the product name for better search results
+    clean_name = product_name
+    # Remove store name from product name if present
+    for store in ['amazon', 'wayfair', 'ikea', 'target', 'west elm', 'cb2', 'pottery barn',
+                  'overstock', 'home depot', 'etsy', 'article', 'allmodern', 'world market']:
+        clean_name = re.sub(re.escape(store), '', clean_name, flags=re.IGNORECASE)
+    clean_name = re.sub(r'\s+', ' ', clean_name).strip()
+
+    # Truncate very long names
+    if len(clean_name) > 60:
+        clean_name = ' '.join(clean_name.split()[:8])
+
+    web_results = []
+    seen_stores = set()
+    if target_store:
+        seen_stores.add(target_store.lower())
+
+    # Strategy: do a single broad search with "buy" keyword
+    search_query = f"{clean_name} buy price"
+
+    try:
+        with DDGS() as ddgs:
+            raw = list(ddgs.text(search_query, max_results=25, region="us-en"))
+    except Exception as e:
+        print(f"Live price search error: {e}")
+        raw = []
+
+    for item in raw:
+        title = item.get("title", "")
+        url = item.get("href", "")
+        body = item.get("body", "")
+        full_text = f"{title} {body}"
+
+        store = detect_store(url)
+        store_key = store.lower()
+
+        # Skip if we already have this store or it's "Other"
+        if store_key in seen_stores or store == "Other":
+            continue
+
+        price = extract_price(title) or extract_price(body)
+
+        seen_stores.add(store_key)
+        product_id = hashlib.md5(url.encode()).hexdigest()[:12]
+
+        web_results.append({
+            "id": product_id,
+            "name": title[:120],
+            "price": price,
+            "url": url,
+            "buyUrl": url,
+            "store": store,
+            "category": detect_category(full_text),
+            "style": detect_style(full_text),
+            "image": None,
+            "source": "web",
+        })
+
+        # Cap at 8 stores
+        if len(web_results) >= 8:
+            break
+
+    return web_results
+
+
 @app.get("/api/products/compare")
 def compare_prices(
-    product_id: str = Query(..., description="Product ID to compare"),
+    product_id: str = Query(None, description="Product ID to compare"),
+    product_name: str = Query(None, description="Product name for live lookup"),
 ):
     """
     Find the same or similar product across different stores.
-    Returns price comparison data.
+    Combines curated database matches with live web price lookups.
     """
-    # Get all products
     curated = get_all_curated_products()
-    
-    # Find the target product
+
     target = None
-    for p in curated:
-        if p.get('id') == product_id:
-            target = p
-            break
-    
-    if not target:
-        return {"ok": False, "error": "Product not found"}
-    
-    # Find similar products
-    similar = find_similar_products(curated, target)
-    
-    # Group by store
-    stores = {}
-    
-    # Add target product
-    target_store = target.get('store', 'Unknown')
-    stores[target_store] = {
-        "store": target_store,
-        "price": target.get('price'),
-        "product": target,
-        "is_target": True,
-    }
-    
-    # Add similar products from different stores
-    for p in similar:
-        store = p.get('store', 'Unknown')
-        if store not in stores:
-            stores[store] = {
-                "store": store,
+    if product_id:
+        for p in curated:
+            if p.get('id') == product_id:
+                target = p
+                break
+
+    # If no target found by ID, try using product_name
+    if not target and product_name:
+        target = {
+            "id": hashlib.md5(product_name.encode()).hexdigest()[:12],
+            "name": product_name,
+            "price": None,
+            "store": "Unknown",
+            "category": detect_category(product_name),
+            "style": detect_style(product_name),
+            "source": "query",
+        }
+    elif not target:
+        return {"ok": False, "error": "Product not found. Provide product_id or product_name."}
+
+    name = target.get('name', '')
+
+    # Step 1: Find similar curated products
+    curated_similar = find_similar_products(curated, target) if product_id else []
+
+    # Step 2: Live web price lookup
+    web_results = live_search_product_prices(name, target.get('store', ''))
+
+    # Step 3: Combine into store listings
+    stores = []
+
+    # Add target product if it has a price
+    if target.get('price') and target.get('source') != 'query':
+        stores.append({
+            "store": target.get('store', 'Unknown'),
+            "price": target['price'],
+            "product": target,
+            "is_target": True,
+            "source": "curated",
+        })
+
+    # Add curated matches from different stores
+    seen_stores = {target.get('store', '').lower()}
+    for p in curated_similar:
+        store_key = p.get('store', '').lower()
+        if store_key not in seen_stores and p.get('price'):
+            seen_stores.add(store_key)
+            stores.append({
+                "store": p.get('store', 'Unknown'),
                 "price": p.get('price'),
                 "product": p,
                 "is_target": False,
-            }
-        elif p.get('price') and (stores[store].get('price') is None or p['price'] < stores[store]['price']):
-            # Keep the cheaper option from same store
-            stores[store] = {
-                "store": store,
-                "price": p.get('price'),
-                "product": p,
+                "source": "curated",
+            })
+
+    # Add live web results
+    for w in web_results:
+        store_key = w['store'].lower()
+        if store_key not in seen_stores:
+            seen_stores.add(store_key)
+            stores.append({
+                "store": w['store'],
+                "price": w.get('price'),
+                "product": w,
                 "is_target": False,
-            }
-    
-    # Calculate savings
-    prices = [s['price'] for s in stores.values() if s['price'] and s['price'] > 0]
-    
+                "source": "web",
+            })
+
+    # Sort: priced items first (cheapest first), then unpriced
+    stores.sort(key=lambda s: (0 if s['price'] else 1, s['price'] or 999999))
+
+    prices = [s['price'] for s in stores if s['price'] and s['price'] > 0]
+
     comparison = {
         "target_product": target,
-        "stores": list(stores.values()),
+        "stores": stores,
         "price_range": {
             "min": min(prices) if prices else None,
             "max": max(prices) if prices else None,
             "potential_savings": round(max(prices) - min(prices), 2) if len(prices) >= 2 else 0,
         },
-        "similar_products": similar,
+        "curated_matches": len(curated_similar),
+        "web_matches": len(web_results),
+        "similar_products": curated_similar[:4],
     }
-    
-    return {
-        "ok": True,
-        "comparison": comparison,
-    }
+
+    return {"ok": True, "comparison": comparison}
 
 
 @app.get("/api/products/grouped")
 def get_grouped_products(
     q: str = Query("", description="Search query"),
     category: Optional[str] = Query(None),
+    live: bool = Query(False, description="Include live web price lookups"),
 ):
     """
     Get products grouped by similarity for price comparison view.
+    When live=True, enriches top groups with real-time web prices.
     """
     curated = get_all_curated_products()
-    
-    # Filter by query and category
+
     filtered = curated
     if q:
         q_lower = q.lower()
-        filtered = [p for p in filtered if q_lower in p.get('name', '').lower()]
-    
+        filtered = [p for p in filtered if q_lower in p.get('name', '').lower()
+                    or q_lower in p.get('category', '').lower()
+                    or q_lower in p.get('style', '').lower()]
+
     if category and category != 'all':
         filtered = [p for p in filtered if p.get('category', '').lower() == category.lower()]
-    
-    # Group similar products
+
     groups = []
     used_ids = set()
-    
+
     for product in filtered:
         if product.get('id') in used_ids:
             continue
-        
+
         similar = find_similar_products(filtered, product, threshold=0.5)
         group_products = [product] + [p for p in similar if p.get('id') not in used_ids]
-        
-        # Mark all as used
+
         for p in group_products:
             used_ids.add(p.get('id'))
-        
-        if len(group_products) > 1:
-            # This product has alternatives
-            prices = [p.get('price') for p in group_products if p.get('price')]
-            groups.append({
-                "main_product": product,
-                "alternatives": group_products[1:],
-                "store_count": len(set(p.get('store') for p in group_products)),
-                "price_range": {
-                    "min": min(prices) if prices else None,
-                    "max": max(prices) if prices else None,
-                },
-            })
-        else:
-            groups.append({
-                "main_product": product,
-                "alternatives": [],
-                "store_count": 1,
-                "price_range": {
-                    "min": product.get('price'),
-                    "max": product.get('price'),
-                },
-            })
-    
+
+        prices = [p.get('price') for p in group_products if p.get('price')]
+
+        group = {
+            "main_product": product,
+            "alternatives": group_products[1:],
+            "store_count": len(set(p.get('store') for p in group_products)),
+            "price_range": {
+                "min": min(prices) if prices else None,
+                "max": max(prices) if prices else None,
+            },
+            "web_alternatives": [],
+        }
+        groups.append(group)
+
+    # If live=True, enrich top 5 groups with web prices
+    if live:
+        for group in groups[:5]:
+            main = group["main_product"]
+            web_results = live_search_product_prices(main.get('name', ''), main.get('store', ''))
+            group["web_alternatives"] = web_results
+            group["store_count"] += len(web_results)
+            web_prices = [w['price'] for w in web_results if w.get('price')]
+            if web_prices:
+                all_prices = [p for p in [group["price_range"]["min"], group["price_range"]["max"]] + web_prices if p]
+                group["price_range"]["min"] = min(all_prices) if all_prices else None
+                group["price_range"]["max"] = max(all_prices) if all_prices else None
+
     return {
         "ok": True,
         "total": len(groups),
-        "groups": groups[:50],  # Limit to 50 groups
+        "groups": groups[:50],
+        "live_enriched": live,
     }
 
 
