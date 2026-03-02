@@ -29,7 +29,7 @@ interface ImageResult {
   source_url: string;
 }
 
-const CATEGORIES = ['all', 'sofa', 'chair', 'table', 'bed', 'lamp', 'rug', 'storage', 'decor'];
+const CATEGORIES = ['all', 'sofa', 'chair', 'table', 'bed', 'lamp', 'rug', 'storage', 'vase', 'art', 'mirror', 'wall-decor', 'textile', 'decor'];
 const STYLES = ['all', 'modern', 'boho', 'industrial', 'mid-century', 'mcm', 'scandi', 'japandi', 'glam', 'coastal'];
 const PRICE_RANGES = [
   { label: 'All Prices', min: null, max: null },
