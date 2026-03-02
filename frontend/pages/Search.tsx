@@ -313,6 +313,26 @@ const SearchPage: React.FC = () => {
               </button>
             ))}
           </div>
+          
+          {/* Action Buttons */}
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <button
+              onClick={() => setShowVisualSearch(true)}
+              className="flex items-center gap-2 bg-amber-500 text-white px-5 py-2.5 rounded-full font-medium hover:bg-amber-600 transition text-sm"
+              data-testid="visual-search-btn"
+            >
+              <Camera size={18} />
+              Search by Image
+            </button>
+            <Link
+              to="/moodboard"
+              className="flex items-center gap-2 bg-white/10 border border-white/30 text-white px-5 py-2.5 rounded-full font-medium hover:bg-white/20 transition text-sm"
+              data-testid="moodboard-link"
+            >
+              <Grid3X3 size={18} />
+              Mood Board
+            </Link>
+          </div>
         </div>
       </div>
 
