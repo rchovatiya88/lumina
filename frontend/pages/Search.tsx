@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Search, ExternalLink, Filter, Loader2, ImageIcon, Store, DollarSign, Sparkles, Star, Heart, ShoppingBag } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Search, ExternalLink, Filter, Loader2, ImageIcon, Store, DollarSign, Sparkles, Star, Heart, ShoppingBag, Camera, TrendingDown, Grid3X3 } from 'lucide-react';
 import { trackAffiliateClick } from '../services/monetizationService';
+import VisualSearch from '../components/VisualSearch';
+import PriceComparison from '../components/PriceComparison';
 
 interface Product {
   id: string;
