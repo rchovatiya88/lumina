@@ -1,18 +1,20 @@
 from datetime import datetime, timezone
 from uuid import uuid4
-from typing import Optional
+from typing import Optional, List
 import asyncio
 import hashlib
 import re
 import json
 import os
-from io import StringIO
+from io import StringIO, BytesIO
+import base64
 
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from ddgs import DDGS
 import requests
+import numpy as np
 
 
 app = FastAPI(title="Lumina Backend", version="1.0.0")
@@ -20,11 +22,18 @@ app = FastAPI(title="Lumina Backend", version="1.0.0")
 # Simple in-memory cache for search results
 search_cache: dict[str, dict] = {}
 curated_products_cache: dict[str, any] = {}
+visual_search_index: dict = {"embeddings": None, "products": [], "initialized": False}
+mood_boards: dict[str, dict] = {}  # In-memory mood board storage
+
 CACHE_TTL_SECONDS = 3600  # 1 hour
 CURATED_CACHE_TTL = 300  # 5 minutes for curated products
 
 # Google Sheets URL for curated products (public sheet)
 GOOGLE_SHEET_URL = os.environ.get("GOOGLE_SHEET_URL", "")
+
+# CLIP model (lazy loaded)
+clip_model = None
+clip_processor = None
 
 app.add_middleware(
     CORSMiddleware,
