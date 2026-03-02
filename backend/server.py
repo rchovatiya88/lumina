@@ -585,9 +585,44 @@ def load_json_products() -> list[dict]:
         if os.path.exists(json_path):
             with open(json_path, 'r') as f:
                 products = json.load(f)
-                # Mark as curated
+                # Process and fix each product
                 for p in products:
                     p['source'] = 'curated'
+                    
+                    # Fix relative image paths to full URLs
+                    img = p.get('image', '')
+                    if img and not img.startswith('http'):
+                        # Convert relative path to full URL
+                        # e.g., "products/scraped/xxx.jpg" -> "/products/scraped/xxx.jpg"
+                        if not img.startswith('/'):
+                            img = '/' + img
+                        p['image'] = img
+                    
+                    # Ensure style is normalized
+                    style = p.get('style', 'modern').lower()
+                    if style == 'mid-century modern':
+                        style = 'mcm'
+                    p['style'] = style
+                    
+                    # Ensure category is normalized
+                    category = p.get('category', 'decor').lower()
+                    if category == 'scraped':
+                        # Try to detect category from name
+                        name_lower = p.get('name', '').lower()
+                        if 'sofa' in name_lower or 'couch' in name_lower:
+                            category = 'sofa'
+                        elif 'chair' in name_lower:
+                            category = 'chair'
+                        elif 'table' in name_lower:
+                            category = 'table'
+                        elif 'lamp' in name_lower or 'light' in name_lower:
+                            category = 'lamp'
+                        elif 'rug' in name_lower:
+                            category = 'rug'
+                        else:
+                            category = 'decor'
+                    p['category'] = category
+                    
                 return products
     except Exception as e:
         print(f"Error loading JSON products: {e}")
