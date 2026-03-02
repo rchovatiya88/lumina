@@ -474,7 +474,7 @@ def parse_concatenated_products(text: str) -> list[dict]:
             
         try:
             price_val = float(price)
-        except:
+        except (ValueError, TypeError):
             price_val = 0
         
         print(f"Adding product: {name[:30]} | ${price_val} | {store}")
