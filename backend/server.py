@@ -542,7 +542,7 @@ def fetch_google_sheet_products() -> list[dict]:
             # Check if this looks like concatenated data (contains multiple URLs)
             if name_value and name_value.count('https://') > 1:
                 # This is concatenated data - parse it specially
-                print(f"Detected concatenated data in row, parsing...")
+                print("Detected concatenated data in row, parsing...")
                 concat_products = parse_concatenated_products(name_value)
                 products.extend(concat_products)
                 continue
