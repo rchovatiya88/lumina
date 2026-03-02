@@ -815,3 +815,517 @@ def configure_sheets_url(url: str = Query(..., description="Public Google Sheets
         "message": f"Configured Google Sheets. Found {len(products)} products.",
         "sample": products[:3] if products else [],
     }
+
+
+
+# ============== VISUAL SEARCH (CLIP) ==============
+
+def load_clip_model():
+    """Lazy load CLIP model"""
+    global clip_model, clip_processor
+    if clip_model is None:
+        try:
+            from transformers import CLIPProcessor, CLIPModel
+            print("Loading CLIP model...")
+            clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+            clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+            print("CLIP model loaded successfully")
+        except Exception as e:
+            print(f"Error loading CLIP model: {e}")
+            return False
+    return True
+
+
+def get_image_embedding(image_data: bytes) -> Optional[np.ndarray]:
+    """Generate CLIP embedding for an image"""
+    if not load_clip_model():
+        return None
+    
+    try:
+        from PIL import Image
+        import torch
+        
+        image = Image.open(BytesIO(image_data)).convert("RGB")
+        inputs = clip_processor(images=image, return_tensors="pt")
+        
+        with torch.no_grad():
+            embedding = clip_model.get_image_features(**inputs).numpy()
+        
+        # Normalize for cosine similarity
+        embedding = embedding / np.linalg.norm(embedding)
+        return embedding.flatten()
+    except Exception as e:
+        print(f"Error generating embedding: {e}")
+        return None
+
+
+def get_image_from_url(url: str) -> Optional[bytes]:
+    """Download image from URL"""
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        response = requests.get(url, headers=headers, timeout=10)
+        response.raise_for_status()
+        return response.content
+    except Exception as e:
+        print(f"Error downloading image from {url}: {e}")
+        return None
+
+
+def build_visual_search_index():
+    """Build CLIP embedding index for all curated products with images"""
+    global visual_search_index
+    
+    if not load_clip_model():
+        return False
+    
+    products = get_all_curated_products()
+    products_with_images = [p for p in products if p.get('image') and p['image'].startswith('http')]
+    
+    print(f"Building visual search index for {len(products_with_images)} products...")
+    
+    embeddings = []
+    indexed_products = []
+    
+    for i, product in enumerate(products_with_images[:100]):  # Limit to 100 for performance
+        image_data = get_image_from_url(product['image'])
+        if image_data:
+            embedding = get_image_embedding(image_data)
+            if embedding is not None:
+                embeddings.append(embedding)
+                indexed_products.append(product)
+                print(f"Indexed {i+1}/{min(100, len(products_with_images))}: {product['name'][:30]}")
+    
+    if embeddings:
+        visual_search_index["embeddings"] = np.array(embeddings)
+        visual_search_index["products"] = indexed_products
+        visual_search_index["initialized"] = True
+        print(f"Visual search index built with {len(indexed_products)} products")
+        return True
+    
+    return False
+
+
+@app.post("/api/search/visual")
+async def visual_search(
+    file: Optional[UploadFile] = File(None),
+    image_url: Optional[str] = Form(None),
+    top_k: int = Form(12),
+):
+    """
+    Visual search: Upload an image or provide URL to find similar products.
+    Uses CLIP embeddings for semantic similarity.
+    """
+    # Get image data
+    image_data = None
+    
+    if file:
+        image_data = await file.read()
+    elif image_url:
+        image_data = get_image_from_url(image_url)
+    
+    if not image_data:
+        return {"ok": False, "error": "No image provided or could not download image"}
+    
+    # Build index if not initialized
+    if not visual_search_index["initialized"]:
+        if not build_visual_search_index():
+            return {"ok": False, "error": "Visual search index not ready. Try again later."}
+    
+    # Generate embedding for query image
+    query_embedding = get_image_embedding(image_data)
+    if query_embedding is None:
+        return {"ok": False, "error": "Could not process image"}
+    
+    # Calculate similarities
+    embeddings = visual_search_index["embeddings"]
+    products = visual_search_index["products"]
+    
+    # Cosine similarity (embeddings are already normalized)
+    similarities = np.dot(embeddings, query_embedding)
+    
+    # Get top-k indices
+    top_indices = np.argsort(similarities)[::-1][:top_k]
+    
+    results = []
+    for idx in top_indices:
+        product = products[idx].copy()
+        product["similarity_score"] = float(similarities[idx])
+        results.append(product)
+    
+    return {
+        "ok": True,
+        "total": len(results),
+        "products": results,
+    }
+
+
+@app.get("/api/search/visual/status")
+def visual_search_status():
+    """Check if visual search index is ready"""
+    return {
+        "initialized": visual_search_index["initialized"],
+        "indexed_products": len(visual_search_index["products"]) if visual_search_index["initialized"] else 0,
+    }
+
+
+@app.post("/api/search/visual/build-index")
+def build_index():
+    """Manually trigger visual search index build"""
+    success = build_visual_search_index()
+    return {
+        "ok": success,
+        "indexed_products": len(visual_search_index["products"]) if success else 0,
+    }
+
+
+# ============== PRICE COMPARISON ==============
+
+def normalize_product_name(name: str) -> str:
+    """Normalize product name for comparison"""
+    name = name.lower()
+    # Remove store names
+    for store in ['amazon', 'wayfair', 'ikea', 'target', 'west elm', 'cb2', 'pottery barn']:
+        name = name.replace(store, '')
+    # Remove special characters
+    name = re.sub(r'[^\w\s]', '', name)
+    # Remove extra whitespace
+    name = re.sub(r'\s+', ' ', name).strip()
+    return name
+
+
+def find_similar_products(products: list, target: dict, threshold: float = 0.6) -> list:
+    """Find products similar to target using fuzzy matching"""
+    try:
+        from difflib import SequenceMatcher
+    except ImportError:
+        return []
+    
+    target_name = normalize_product_name(target.get('name', ''))
+    if not target_name:
+        return []
+    
+    similar = []
+    for p in products:
+        if p.get('id') == target.get('id'):
+            continue
+        
+        p_name = normalize_product_name(p.get('name', ''))
+        if not p_name:
+            continue
+        
+        # Calculate similarity ratio
+        ratio = SequenceMatcher(None, target_name, p_name).ratio()
+        
+        if ratio >= threshold:
+            similar.append({
+                **p,
+                "similarity": round(ratio, 2)
+            })
+    
+    # Sort by similarity
+    similar.sort(key=lambda x: x['similarity'], reverse=True)
+    return similar[:10]
+
+
+@app.get("/api/products/compare")
+def compare_prices(
+    product_id: str = Query(..., description="Product ID to compare"),
+):
+    """
+    Find the same or similar product across different stores.
+    Returns price comparison data.
+    """
+    # Get all products
+    curated = get_all_curated_products()
+    
+    # Find the target product
+    target = None
+    for p in curated:
+        if p.get('id') == product_id:
+            target = p
+            break
+    
+    if not target:
+        return {"ok": False, "error": "Product not found"}
+    
+    # Find similar products
+    similar = find_similar_products(curated, target)
+    
+    # Group by store
+    stores = {}
+    
+    # Add target product
+    target_store = target.get('store', 'Unknown')
+    stores[target_store] = {
+        "store": target_store,
+        "price": target.get('price'),
+        "product": target,
+        "is_target": True,
+    }
+    
+    # Add similar products from different stores
+    for p in similar:
+        store = p.get('store', 'Unknown')
+        if store not in stores:
+            stores[store] = {
+                "store": store,
+                "price": p.get('price'),
+                "product": p,
+                "is_target": False,
+            }
+        elif p.get('price') and (stores[store].get('price') is None or p['price'] < stores[store]['price']):
+            # Keep the cheaper option from same store
+            stores[store] = {
+                "store": store,
+                "price": p.get('price'),
+                "product": p,
+                "is_target": False,
+            }
+    
+    # Calculate savings
+    prices = [s['price'] for s in stores.values() if s['price'] and s['price'] > 0]
+    
+    comparison = {
+        "target_product": target,
+        "stores": list(stores.values()),
+        "price_range": {
+            "min": min(prices) if prices else None,
+            "max": max(prices) if prices else None,
+            "potential_savings": round(max(prices) - min(prices), 2) if len(prices) >= 2 else 0,
+        },
+        "similar_products": similar,
+    }
+    
+    return {
+        "ok": True,
+        "comparison": comparison,
+    }
+
+
+@app.get("/api/products/grouped")
+def get_grouped_products(
+    q: str = Query("", description="Search query"),
+    category: Optional[str] = Query(None),
+):
+    """
+    Get products grouped by similarity for price comparison view.
+    """
+    curated = get_all_curated_products()
+    
+    # Filter by query and category
+    filtered = curated
+    if q:
+        q_lower = q.lower()
+        filtered = [p for p in filtered if q_lower in p.get('name', '').lower()]
+    
+    if category and category != 'all':
+        filtered = [p for p in filtered if p.get('category', '').lower() == category.lower()]
+    
+    # Group similar products
+    groups = []
+    used_ids = set()
+    
+    for product in filtered:
+        if product.get('id') in used_ids:
+            continue
+        
+        similar = find_similar_products(filtered, product, threshold=0.5)
+        group_products = [product] + [p for p in similar if p.get('id') not in used_ids]
+        
+        # Mark all as used
+        for p in group_products:
+            used_ids.add(p.get('id'))
+        
+        if len(group_products) > 1:
+            # This product has alternatives
+            prices = [p.get('price') for p in group_products if p.get('price')]
+            groups.append({
+                "main_product": product,
+                "alternatives": group_products[1:],
+                "store_count": len(set(p.get('store') for p in group_products)),
+                "price_range": {
+                    "min": min(prices) if prices else None,
+                    "max": max(prices) if prices else None,
+                },
+            })
+        else:
+            groups.append({
+                "main_product": product,
+                "alternatives": [],
+                "store_count": 1,
+                "price_range": {
+                    "min": product.get('price'),
+                    "max": product.get('price'),
+                },
+            })
+    
+    return {
+        "ok": True,
+        "total": len(groups),
+        "groups": groups[:50],  # Limit to 50 groups
+    }
+
+
+# ============== MOOD BOARD BUILDER ==============
+
+class MoodBoardItem(BaseModel):
+    product_id: str
+    x: float  # Position X (0-100%)
+    y: float  # Position Y (0-100%)
+    width: float  # Width (0-100%)
+    height: float  # Height (0-100%)
+    rotation: float = 0  # Rotation in degrees
+    z_index: int = 0  # Layer order
+
+
+class MoodBoardCreate(BaseModel):
+    name: str
+    items: List[MoodBoardItem] = []
+
+
+class MoodBoardUpdate(BaseModel):
+    name: Optional[str] = None
+    items: Optional[List[MoodBoardItem]] = None
+
+
+@app.post("/api/moodboards")
+def create_mood_board(board: MoodBoardCreate):
+    """Create a new mood board"""
+    board_id = str(uuid4())[:8]
+    
+    mood_boards[board_id] = {
+        "id": board_id,
+        "name": board.name,
+        "items": [item.dict() for item in board.items],
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+    }
+    
+    return {
+        "ok": True,
+        "board": mood_boards[board_id],
+    }
+
+
+@app.get("/api/moodboards")
+def list_mood_boards():
+    """List all mood boards"""
+    boards = list(mood_boards.values())
+    boards.sort(key=lambda x: x.get('updated_at', ''), reverse=True)
+    
+    return {
+        "ok": True,
+        "total": len(boards),
+        "boards": boards,
+    }
+
+
+@app.get("/api/moodboards/{board_id}")
+def get_mood_board(board_id: str):
+    """Get a specific mood board with full product details"""
+    if board_id not in mood_boards:
+        return {"ok": False, "error": "Mood board not found"}
+    
+    board = mood_boards[board_id].copy()
+    
+    # Enrich items with product details
+    curated = get_all_curated_products()
+    product_map = {p.get('id'): p for p in curated}
+    
+    enriched_items = []
+    for item in board.get('items', []):
+        product = product_map.get(item['product_id'])
+        if product:
+            enriched_items.append({
+                **item,
+                "product": product,
+            })
+    
+    board['items'] = enriched_items
+    
+    return {
+        "ok": True,
+        "board": board,
+    }
+
+
+@app.put("/api/moodboards/{board_id}")
+def update_mood_board(board_id: str, update: MoodBoardUpdate):
+    """Update a mood board"""
+    if board_id not in mood_boards:
+        return {"ok": False, "error": "Mood board not found"}
+    
+    board = mood_boards[board_id]
+    
+    if update.name is not None:
+        board['name'] = update.name
+    
+    if update.items is not None:
+        board['items'] = [item.dict() for item in update.items]
+    
+    board['updated_at'] = datetime.now(timezone.utc).isoformat()
+    
+    return {
+        "ok": True,
+        "board": board,
+    }
+
+
+@app.delete("/api/moodboards/{board_id}")
+def delete_mood_board(board_id: str):
+    """Delete a mood board"""
+    if board_id not in mood_boards:
+        return {"ok": False, "error": "Mood board not found"}
+    
+    del mood_boards[board_id]
+    
+    return {"ok": True}
+
+
+@app.post("/api/moodboards/{board_id}/items")
+def add_item_to_board(board_id: str, item: MoodBoardItem):
+    """Add a product to a mood board"""
+    if board_id not in mood_boards:
+        return {"ok": False, "error": "Mood board not found"}
+    
+    board = mood_boards[board_id]
+    board['items'].append(item.dict())
+    board['updated_at'] = datetime.now(timezone.utc).isoformat()
+    
+    return {
+        "ok": True,
+        "board": board,
+    }
+
+
+@app.delete("/api/moodboards/{board_id}/items/{product_id}")
+def remove_item_from_board(board_id: str, product_id: str):
+    """Remove a product from a mood board"""
+    if board_id not in mood_boards:
+        return {"ok": False, "error": "Mood board not found"}
+    
+    board = mood_boards[board_id]
+    board['items'] = [item for item in board['items'] if item['product_id'] != product_id]
+    board['updated_at'] = datetime.now(timezone.utc).isoformat()
+    
+    return {
+        "ok": True,
+        "board": board,
+    }
+
+
+@app.get("/api/moodboards/{board_id}/share")
+def get_shareable_link(board_id: str):
+    """Get a shareable link for a mood board"""
+    if board_id not in mood_boards:
+        return {"ok": False, "error": "Mood board not found"}
+    
+    # In production, this would generate a proper shareable URL
+    board = mood_boards[board_id]
+    
+    return {
+        "ok": True,
+        "share_url": f"/moodboard/{board_id}",
+        "board_name": board['name'],
+        "item_count": len(board['items']),
+    }
