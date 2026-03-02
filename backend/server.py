@@ -604,23 +604,43 @@ def load_json_products() -> list[dict]:
                         style = 'mcm'
                     p['style'] = style
                     
-                    # Ensure category is normalized
+                    # Enhanced category detection from name
+                    name_lower = p.get('name', '').lower()
                     category = p.get('category', 'decor').lower()
-                    if category == 'scraped':
-                        # Try to detect category from name
-                        name_lower = p.get('name', '').lower()
-                        if 'sofa' in name_lower or 'couch' in name_lower:
+                    
+                    # Only re-categorize if category is 'scraped' or 'decor' (generic)
+                    if category in ['scraped', 'decor', 'unknown']:
+                        # Furniture
+                        if any(kw in name_lower for kw in ['sofa', 'couch', 'sectional', 'loveseat', 'futon']):
                             category = 'sofa'
-                        elif 'chair' in name_lower:
+                        elif any(kw in name_lower for kw in ['chair', 'stool', 'seating', 'armchair', 'recliner']):
                             category = 'chair'
-                        elif 'table' in name_lower:
+                        elif any(kw in name_lower for kw in ['table', 'desk', 'console', 'nightstand', 'end table', 'coffee']):
                             category = 'table'
-                        elif 'lamp' in name_lower or 'light' in name_lower:
+                        elif any(kw in name_lower for kw in ['bed', 'mattress', 'headboard', 'bedframe']):
+                            category = 'bed'
+                        elif any(kw in name_lower for kw in ['shelf', 'bookcase', 'cabinet', 'dresser', 'storage', 'shelving', 'bookshelf']):
+                            category = 'storage'
+                        # Lighting
+                        elif any(kw in name_lower for kw in ['lamp', 'light', 'pendant', 'chandelier', 'sconce', 'fixture']):
                             category = 'lamp'
-                        elif 'rug' in name_lower:
+                        # Textiles
+                        elif any(kw in name_lower for kw in ['rug', 'carpet', 'runner', 'mat']):
                             category = 'rug'
+                        elif any(kw in name_lower for kw in ['pillow', 'throw', 'blanket', 'cushion', 'curtain', 'drape']):
+                            category = 'textile'
+                        # Decor
+                        elif any(kw in name_lower for kw in ['vase', 'pot', 'planter', 'ceramic']):
+                            category = 'vase'
+                        elif any(kw in name_lower for kw in ['mirror']):
+                            category = 'mirror'
+                        elif any(kw in name_lower for kw in ['art', 'print', 'painting', 'canvas', 'poster', 'frame']):
+                            category = 'art'
+                        elif any(kw in name_lower for kw in ['clock', 'wall decor', 'macrame', 'tapestry']):
+                            category = 'wall-decor'
                         else:
-                            category = 'decor'
+                            category = 'decor'  # Keep as general decor
+                    
                     p['category'] = category
                     
                 return products
