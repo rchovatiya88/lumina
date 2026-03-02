@@ -20,6 +20,9 @@ Lumina is an interior design monetization platform that combines **curated produ
 | Google Sheets CMS | ✅ Live | Real-time sync |
 | Live Web Search | ✅ Live | DuckDuckGo API |
 | Unified Search API | ✅ Live | Curated + Web combined |
+| **Visual Search** | ✅ NEW | Upload image → find similar |
+| **Price Comparison** | ✅ NEW | Same product across stores |
+| **Mood Board Builder** | ✅ NEW | Drag-drop canvas |
 | Affiliate Click Tracking | ⚠️ In-Memory | Needs MongoDB |
 | Lead Forms | ⚠️ In-Memory | Needs persistence |
 | Design Packages Page | ✅ UI Only | Needs Stripe |
