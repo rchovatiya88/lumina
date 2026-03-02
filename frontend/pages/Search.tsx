@@ -73,6 +73,10 @@ const SearchPage: React.FC = () => {
   
   // Saved items
   const [savedItems, setSavedItems] = useState<Set<string>>(new Set());
+  
+  // Visual search & price comparison
+  const [showVisualSearch, setShowVisualSearch] = useState(false);
+  const [showPriceComparison, setShowPriceComparison] = useState<{productId: string; productName: string} | null>(null);
 
   // Load curated products on mount
   useEffect(() => {
