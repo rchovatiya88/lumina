@@ -390,3 +390,45 @@ THIS MONTH:
 [ ] Publish 4 blog posts
 [ ] Reach 1,000 Pinterest monthly views
 ```
+
+---
+
+## 🧠 THE COMPLETE LUMINA FLYWHEEL
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         LUMINA GROWTH FLYWHEEL                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│                           ┌─────────────┐                               │
+│                           │   CONTENT   │                               │
+│                           │  (Pinterest │                               │
+│                           │   + Blog)   │                               │
+│                           └──────┬──────┘                               │
+│                                  │                                       │
+│                                  ▼                                       │
+│    ┌─────────────┐        ┌─────────────┐        ┌─────────────┐        │
+│    │   CURATION  │◄───────│   TRAFFIC   │───────►│   REVENUE   │        │
+│    │  (Products  │        │  (Visitors) │        │ (Affiliate  │        │
+│    │   + Style)  │        │             │        │   + Leads)  │        │
+│    └──────┬──────┘        └─────────────┘        └──────┬──────┘        │
+│           │                      ▲                      │               │
+│           │                      │                      │               │
+│           │               ┌──────┴──────┐               │               │
+│           └──────────────►│    DATA     │◄──────────────┘               │
+│                           │  (Clicks +  │                               │
+│                           │  Searches)  │                               │
+│                           └─────────────┘                               │
+│                                                                          │
+│  The flywheel:                                                          │
+│  1. Curate great products → 2. Create content → 3. Get traffic          │
+│  4. Users search/click → 5. Data improves curation → 6. Repeat         │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+**The insight: Traffic and product quality feed each other.**
+- Better products → More shares → More traffic
+- More traffic → More data → Better curation
+- Better curation → Higher trust → More affiliate clicks
+- More clicks → More revenue → More investment in content
