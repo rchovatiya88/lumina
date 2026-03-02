@@ -559,12 +559,25 @@ const SearchPage: React.FC = () => {
                   </div>
                   
                   {getProductUrl(product) !== '#' && (
-                    <button 
-                      onClick={() => handleProductClick(product)}
-                      className="w-full mt-2 flex items-center justify-center gap-1 bg-stone-900 text-white py-2 rounded-lg text-xs font-medium hover:bg-stone-800 transition"
-                    >
-                      View <ExternalLink size={12} />
-                    </button>
+                    <div className="flex gap-2 mt-2">
+                      <button 
+                        onClick={() => handleProductClick(product)}
+                        className="flex-1 flex items-center justify-center gap-1 bg-stone-900 text-white py-2 rounded-lg text-xs font-medium hover:bg-stone-800 transition"
+                      >
+                        View <ExternalLink size={12} />
+                      </button>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowPriceComparison({ productId: product.id, productName: product.name });
+                        }}
+                        className="p-2 bg-stone-100 text-stone-600 rounded-lg hover:bg-stone-200 transition"
+                        title="Compare prices"
+                        data-testid={`compare-price-${product.id}`}
+                      >
+                        <TrendingDown size={14} />
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
