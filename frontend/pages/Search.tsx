@@ -631,6 +631,29 @@ const SearchPage: React.FC = () => {
           </div>
         )}
       </div>
+      
+      {/* Visual Search Modal */}
+      {showVisualSearch && (
+        <VisualSearch 
+          onResults={(products) => {
+            setProducts(products);
+            setCuratedCount(products.length);
+            setWebCount(0);
+            setSearchedQuery('Visual Search Results');
+            setShowVisualSearch(false);
+          }}
+          onClose={() => setShowVisualSearch(false)}
+        />
+      )}
+      
+      {/* Price Comparison Modal */}
+      {showPriceComparison && (
+        <PriceComparison
+          productId={showPriceComparison.productId}
+          productName={showPriceComparison.productName}
+          onClose={() => setShowPriceComparison(null)}
+        />
+      )}
     </div>
   );
 };
